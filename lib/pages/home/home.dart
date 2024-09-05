@@ -3,6 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../messages/messages.dart';
+
 class Home extends StatelessWidget {
   const Home({super.key});
 
@@ -73,21 +75,61 @@ class Home extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Optionally, add a header to your drawer
-            DrawerHeader(
-              child: Text(
-                'Menu',
-                style: GoogleFonts.raleway(
-                  textStyle: const TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 24,
+            Center(
+              child: DrawerHeader(
+                child: Text(
+                  'Menu',
+                  style: GoogleFonts.raleway(
+                    textStyle: const TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 24,
+                    ),
                   ),
                 ),
               ),
             ),
-            // Other drawer items can go here
+            SizedBox(height: 50),
+            ListTile(
+              leading: Icon(Icons.message, color: Color(0xff0D6EFD)),
+              title: Text(
+                'Messages',
+                style: GoogleFonts.raleway(
+                  textStyle: const TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.normal,
+                    fontSize: 16,
+                  ),
+                ),
+              ),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Messages()),
+                );
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.settings, color: Color(0xff0D6EFD)),
+              title: Text(
+                'Paramètres',
+                style: GoogleFonts.raleway(
+                  textStyle: const TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.normal,
+                    fontSize: 18,
+                  ),
+                ),
+              ),
+              onTap: () {
+                // Navigate to the messages page or perform an action
+                Navigator.pushNamed(context, '/settings');
+              },
+            ),
+
             const Spacer(),
             _logout(context),
           ],
@@ -108,9 +150,8 @@ class Home extends StatelessWidget {
       ),
       onPressed: () async {
         await AuthService().signout(context: context);
-        // Optionally navigate back to the login page after signing out
         Navigator.pop(context); // Close the drawer
-        Navigator.pushReplacementNamed(context, '/login'); // Replace with the correct route name
+        Navigator.pushReplacementNamed(context, '/login'); // Navigation vers la page de connexion
       },
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,

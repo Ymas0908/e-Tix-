@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class Login extends StatefulWidget {
-  Login({super.key});
+  const Login({super.key});
 
   @override
   _LoginState createState() => _LoginState();
@@ -18,6 +18,13 @@ class _LoginState extends State<Login> {
   final RegExp _emailRegExp = RegExp(
     r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$",
   );
+  bool _obscureText = true;
+
+  void _togglePasswordView() {
+    setState(() {
+      _obscureText = !_obscureText;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +53,8 @@ class _LoginState extends State<Login> {
                 const SizedBox(
                   height: 15,
                 ),
-                Text("Connectez-vous pour continuer",
+                Text(
+                  "Connectez-vous pour continuer",
                   style: GoogleFonts.raleway(
                       textStyle: const TextStyle(
                           color: Colors.black,
@@ -94,17 +102,16 @@ class _LoginState extends State<Login> {
               textStyle: const TextStyle(
                   color: Colors.black,
                   fontWeight: FontWeight.normal,
-                  fontSize: 16
-              )
-          ),
+                  fontSize: 16)),
           controller: _emailController,
           decoration: InputDecoration(
-              hintText: 'Saisir votre adresse e-mail',
-              filled: true,
-              fillColor: const Color(0xffF7F7F9) ,
-              border: OutlineInputBorder(
-                  borderSide: BorderSide.none,
-                  borderRadius: BorderRadius.circular(14))),
+            hintText: 'Saisir votre adresse e-mail',
+            filled: true,
+            fillColor: const Color(0xffF7F7F9),
+            border: OutlineInputBorder(
+                borderSide: BorderSide.none,
+                borderRadius: BorderRadius.circular(14)),
+          ),
           validator: (value) {
             if (value == null || value.isEmpty) {
               return 'Veuillez entrer une adresse e-mail';
@@ -114,8 +121,7 @@ class _LoginState extends State<Login> {
             }
             return null;
           },
-              )
-
+        ),
       ],
     );
   }
@@ -141,18 +147,24 @@ class _LoginState extends State<Login> {
               textStyle: const TextStyle(
                   color: Colors.black,
                   fontWeight: FontWeight.normal,
-                  fontSize: 16
-              )
-          ),
+                  fontSize: 16)),
           controller: _passwordController,
-          obscureText: true,
+          obscureText: _obscureText, // Masquage du mot de passe
           decoration: InputDecoration(
-              hintText: 'Saisir votre mot de passe',
-              filled: true,
-              fillColor: const Color(0xffF7F7F9) ,
-              border: OutlineInputBorder(
-                  borderSide: BorderSide.none,
-                  borderRadius: BorderRadius.circular(14))),
+            hintText: 'Saisir votre mot de passe',
+            filled: true,
+            fillColor: const Color(0xffF7F7F9),
+            border: OutlineInputBorder(
+                borderSide: BorderSide.none,
+                borderRadius: BorderRadius.circular(14)),
+            suffixIcon: IconButton(
+              icon: Icon(
+                _obscureText ? Icons.visibility_off : Icons.visibility,
+                color: Colors.grey,
+              ),
+              onPressed: _togglePasswordView, // Basculer la visibilité
+            ),
+          ),
           validator: (value) {
             if (value == null || value.isEmpty) {
               return 'Veuillez entrer un mot de passe';
@@ -162,87 +174,89 @@ class _LoginState extends State<Login> {
             }
             return null;
           },
-
-              )
-
-
-
+        ),
       ],
     );
   }
 
   Widget _signin(BuildContext context) {
     return ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: const Color(0xff0D6EFD),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(14),
-          ),
-          minimumSize: const Size(double.infinity, 60),
-          elevation: 0,
+      style: ElevatedButton.styleFrom(
+        backgroundColor: const Color(0xff0D6EFD),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(14),
         ),
-        onPressed: () {
-          if (_formKey.currentState?.validate() ?? false) {
-            // Process data
-            AuthService().signin(
-                email: _emailController.text,
-                password: _passwordController.text,
-                context: context);
-          }
-        },
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Icon(
-              Icons.login,
-              color: Colors.white,
+        minimumSize: const Size(double.infinity, 60),
+        elevation: 0,
+      ),
+      onPressed: () {
+        if (_formKey.currentState?.validate() ?? false) {
+          // Process data
+          AuthService().signin(
+            email: _emailController.text,
+            password: _passwordController.text,
+            context: context,
+          );
+        }
+      },
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Icon(
+            Icons.login,
+            color: Colors.white,
+          ),
+          const SizedBox(
+            width: 10,
+          ),
+          Text(
+            "Se connecter",
+            style: GoogleFonts.raleway(
+              textStyle: const TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.normal,
+                fontSize: 16,
+              ),
             ),
-            const SizedBox(
-              width: 10,
-            ),
-            Text(
-              "Se connecter",
-              style: GoogleFonts.raleway(
-                  textStyle: const TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.normal,
-                      fontSize: 16)),
-            ),
-          ],
-        ));
-  }
-
-  Widget _signinWithGoogle(BuildContext context) {
-    return Container();
+          ),
+        ],
+      ),
+    );
   }
 
   Widget _signup(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 16),
       child: RichText(
-          textAlign: TextAlign.center,
-          text: TextSpan(children: [
+        textAlign: TextAlign.center,
+        text: TextSpan(
+          children: [
             const TextSpan(
               text: "Nouvel utilisateur ? ",
               style: TextStyle(
-                  color: Color(0xff6A6A6A),
-                  fontWeight: FontWeight.normal,
-                  fontSize: 16),
+                color: Color(0xff6A6A6A),
+                fontWeight: FontWeight.normal,
+                fontSize: 16,
+              ),
             ),
             TextSpan(
-                text: "Créer un compte",
-                style: const TextStyle(
-                    color: Color(0xff1A1D1E),
-                    fontWeight: FontWeight.normal,
-                    fontSize: 16),
-                recognizer: TapGestureRecognizer()
-                  ..onTap = () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Signup()),
-                    );
-                  }),
-          ])),
+              text: "Créer un compte",
+              style: const TextStyle(
+                color: Color(0xff1A1D1E),
+                fontWeight: FontWeight.normal,
+                fontSize: 16,
+              ),
+              recognizer: TapGestureRecognizer()
+                ..onTap = () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Signup()),
+                  );
+                },
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
