@@ -4,6 +4,8 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../resetpassword/resetpassaword.dart';
+
 class Login extends StatefulWidget {
   const Login({super.key});
 
@@ -31,50 +33,54 @@ class _LoginState extends State<Login> {
     return Scaffold(
       backgroundColor: Colors.white,
       resizeToAvoidBottomInset: true,
-      bottomNavigationBar: _signup(context),
-      body: Center(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Center(
-                  child: Text(
-                    'Bienvenue sur Auth App',
-                    style: GoogleFonts.raleway(
-                        textStyle: const TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 25)),
-                  ),
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                Text(
-                  "Connectez-vous pour continuer",
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        toolbarHeight: 50,
+      ),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Center(
+                child: Text(
+                  'Bienvenue sur Auth App',
                   style: GoogleFonts.raleway(
                       textStyle: const TextStyle(
                           color: Colors.black,
-                          fontWeight: FontWeight.normal,
-                          fontSize: 16)),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 25)),
                 ),
-                const SizedBox(
-                  height: 50,
-                ),
-                _emailAddress(),
-                const SizedBox(
-                  height: 20,
-                ),
-                _password(),
-                const SizedBox(
-                  height: 50,
-                ),
-                _signin(context),
-              ],
-            ),
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              Text(
+                "Connectez-vous pour continuer",
+                style: GoogleFonts.raleway(
+                    textStyle: const TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.normal,
+                        fontSize: 16)),
+              ),
+              const SizedBox(
+                height: 50,
+              ),
+              _emailAddress(),
+              const SizedBox(
+                height: 20,
+              ),
+              _password(),
+              _forgortPassword(context),
+              const SizedBox(
+                height: 50,
+              ),
+              _signin(context),
+
+            ],
           ),
         ),
       ),
@@ -179,6 +185,34 @@ class _LoginState extends State<Login> {
     );
   }
 
+  Widget _forgortPassword(BuildContext context) {
+    return Align(
+      alignment: Alignment.centerRight,
+      child: TextButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (BuildContext context) => ResetPassword(),
+            ),
+          );
+           AuthService().resetPassword
+             (email: _emailController.text,
+             context: context,
+           );
+        },
+        child: Text(
+          'Mot de passe oublié ?',
+          style: GoogleFonts.raleway(
+              textStyle: const TextStyle(
+                  color: Color(0xff0D6EFD),
+                  fontWeight: FontWeight.normal,
+                  fontSize: 14)),
+        ),
+      ),
+    );
+  }
+
   Widget _signin(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
@@ -199,6 +233,7 @@ class _LoginState extends State<Login> {
           );
         }
       },
+
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -231,20 +266,24 @@ class _LoginState extends State<Login> {
         textAlign: TextAlign.center,
         text: TextSpan(
           children: [
-            const TextSpan(
+             TextSpan(
               text: "Nouvel utilisateur ? ",
-              style: TextStyle(
-                color: Color(0xff6A6A6A),
-                fontWeight: FontWeight.normal,
-                fontSize: 16,
+              style: GoogleFonts.raleway(
+                textStyle: const TextStyle(
+                  color: Colors.black87,
+                  fontWeight: FontWeight.normal,
+                  fontSize: 16,
+                ),
               ),
             ),
             TextSpan(
               text: "Créer un compte",
-              style: const TextStyle(
-                color: Color(0xff1A1D1E),
-                fontWeight: FontWeight.normal,
-                fontSize: 16,
+              style: GoogleFonts.raleway(
+                textStyle: const TextStyle(
+                  color: Color(0xff0D6EFD),
+                  fontWeight: FontWeight.normal,
+                  fontSize: 16,
+                ),
               ),
               recognizer: TapGestureRecognizer()
                 ..onTap = () {

@@ -240,20 +240,24 @@ class _SignupState extends State<Signup> {
         textAlign: TextAlign.center,
         text: TextSpan(
           children: [
-            const TextSpan(
+            TextSpan(
               text: "Possédez-vous déjà un compte ? ",
-              style: TextStyle(
-                color: Color(0xff6A6A6A),
-                fontWeight: FontWeight.normal,
-                fontSize: 16,
+              style: GoogleFonts.raleway(
+                textStyle: const TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.normal,
+                  fontSize: 16,
+                ),
               ),
             ),
             TextSpan(
               text: "Se connecter",
-              style: const TextStyle(
-                color: Color(0xff1A1D1E),
-                fontWeight: FontWeight.normal,
-                fontSize: 16,
+              style: GoogleFonts.raleway(
+                textStyle: const TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.normal,
+                  fontSize: 16,
+                ),
               ),
               recognizer: TapGestureRecognizer()
                 ..onTap = () {
