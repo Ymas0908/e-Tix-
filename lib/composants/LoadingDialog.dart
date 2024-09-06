@@ -20,7 +20,7 @@ class LoadingDialog extends StatelessWidget {
             const SizedBox(height: 20),
             Text(
               message,
-              style: const TextStyle(fontSize: 16),
+              style: const TextStyle(fontSize: 17),
               textAlign: TextAlign.center,
             ),
           ],

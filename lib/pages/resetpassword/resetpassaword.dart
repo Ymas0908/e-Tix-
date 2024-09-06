@@ -118,7 +118,7 @@ class _ResetPasswordState extends State<ResetPassword> {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(14),
         ),
-        minimumSize: const Size(double.infinity, 60),
+        minimumSize: const Size(double.infinity, 50),
         elevation: 0,
       ),
       onPressed: () {

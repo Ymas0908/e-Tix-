@@ -52,7 +52,7 @@ class Pageacceuil extends StatelessWidget {
               ),
               _signin(context),
               const SizedBox(
-                height: 50,
+                height: 51,
               ),
               _signup(context)
             ],
