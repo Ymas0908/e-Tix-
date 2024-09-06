@@ -1,5 +1,6 @@
 import 'package:auth_firebase/firebase_options.dart';
 import 'package:auth_firebase/pages/login/login.dart';
+import 'package:auth_firebase/pages/pageacceuil.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'pages/signup/signup.dart';
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Login()
+      home: Pageacceuil()
     );
   }
 }
