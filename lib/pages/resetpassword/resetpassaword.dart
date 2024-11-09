@@ -19,6 +19,14 @@ class _ResetPasswordState extends State<ResetPassword> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Rénitialisation de mot de passe', style: GoogleFonts.raleway()
+        ),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        toolbarHeight: 50,
+      ),
+
       backgroundColor: Colors.white,
       body: Center(
         child: SingleChildScrollView(
@@ -145,15 +153,28 @@ class _ResetPasswordState extends State<ResetPassword> {
           );
         }
       },
-      child: Text(
-        "Envoyer ",
-        style: GoogleFonts.raleway(
-          textStyle: const TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.normal,
-            fontSize: 16,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            "Envoyer ",
+            style: GoogleFonts.raleway(
+              textStyle: const TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.normal,
+                fontSize: 16,
+              ),
+            ),
           ),
-        ),
+          const SizedBox(
+            width: 10,
+          ),
+          const Icon(
+            Icons.send,
+            color: Colors.white,
+          ),
+
+        ],
       ),
     );
   }

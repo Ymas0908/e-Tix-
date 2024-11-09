@@ -47,7 +47,7 @@ class _LoginState extends State<Login> {
             children: [
               Center(
                 child: Text(
-                  'Bienvenue sur Auth App',
+                  'e-Tix',
                   style: GoogleFonts.raleway(
                       textStyle: const TextStyle(
                           color: Colors.black,
