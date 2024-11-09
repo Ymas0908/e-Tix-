@@ -1,10 +1,10 @@
-import 'package:auth_firebase/pages/signup/signup.dart';
 import 'package:auth_firebase/services/auth_service.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../resetpassword/resetpassaword.dart';
+import '../signup/signup.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});

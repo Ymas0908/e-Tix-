@@ -1,8 +1,10 @@
+import 'package:auth_firebase/views/evenements/evenements_a_venir_view.dart';
+import 'package:auth_firebase/views/evenements/evenements_populaires_view.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:auth_firebase/services/auth_service.dart';
-import 'package:auth_firebase/pages/login/login.dart';
+import '../login/login.dart';
 import '../messages/messages.dart';
 
 class Home extends StatefulWidget {
@@ -13,23 +15,23 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  final List<Map<String, dynamic>> upcomingEvents = [
-    {
-      'title': 'Concert Jazz Festival',
-      'date': '15 Dec 2024',
-      'location': 'Palais des Congrès',
-      'price': '50€',
-      'image': 'assets/images/jazz.jpg'
-    },
-    {
-      'title': 'Match de Football',
-      'date': '20 Dec 2024',
-      'location': 'Stade Municipal',
-      'price': '35€',
-      'image': 'assets/images/football.jpg'
-    },
-    // Ajoutez plus d'événements ici
-  ];
+  // final List<Map<String, dynamic>> upcomingEvents = [
+  //   {
+  //     'title': 'Concert Jazz Festival',
+  //     'date': '15 Dec 2024',
+  //     'location': 'Palais des Congrès',
+  //     'price': '50€',
+  //     'image': 'assets/images/jazz.jpg'
+  //   },
+  //   {
+  //     'title': 'Match de Football',
+  //     'date': '20 Dec 2024',
+  //     'location': 'Stade Municipal',
+  //     'price': '35€',
+  //     'image': 'assets/images/football.jpg'
+  //   },
+  //   // Ajoutez plus d'événements ici
+  // ];
 
   final List<String> categories = [
     'Tous',
@@ -60,6 +62,7 @@ class _HomeState extends State<Home> {
         leading: Builder(
           builder: (BuildContext context) {
             return IconButton(
+              color: Colors.white,
               icon: const Icon(Icons.menu),
               onPressed: () {
                 Scaffold.of(context).openDrawer();
@@ -69,6 +72,8 @@ class _HomeState extends State<Home> {
         ),
         actions: [
           IconButton(
+            color: Colors.white,
+
             icon: const Icon(Icons.search),
             onPressed: () {
               // Implémenter la recherche
@@ -168,9 +173,10 @@ class _HomeState extends State<Home> {
                 //   physics: const NeverScrollableScrollPhysics(),
                 //   itemCount: upcomingEvents.length,
                 //   itemBuilder: (context, index) {
-                //     // return EventCard(event: upcomingEvents[index]);
+                //     return EvenementsAVenirView(event: upcomingEvents[index]);
                 //   },
                 // ),
+
 
                 const SizedBox(height: 24),
 
@@ -183,16 +189,16 @@ class _HomeState extends State<Home> {
                   ),
                 ),
                 const SizedBox(height: 16),
-                // SizedBox(
-                //   height: 200,
-                //   child: ListView.builder(
-                //     scrollDirection: Axis.horizontal,
-                //     itemCount: upcomingEvents.length,
-                //     itemBuilder: (context, index) {
-                //       return PopularEventCard(event: upcomingEvents[index]);
-                //     },
-                //   ),
-                // ),
+                SizedBox(
+                  height: 200,
+                  // child: ListView.builder(
+                  //   scrollDirection: Axis.horizontal,
+                  //   itemCount: upcomingEvents.length,
+                  //   itemBuilder: (context, index) {
+                  //     return PopularEventCard(event: upcomingEvents[index]);
+                  //   },
+                  // ),
+                ),
               ],
             ),
           ),
@@ -235,6 +241,36 @@ class _HomeState extends State<Home> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => Messages()),
+                );
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.event, color: Color(0xff0D6EFD)),
+              title: Text(
+                'Evénements à venir',
+                style: GoogleFonts.raleway(
+                  fontSize: 16,
+                ),
+              ),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => EvenementsAVenirView()),
+                );
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.event, color: Color(0xff0D6EFD)),
+              title: Text(
+                'Evénements populaires',
+                style: GoogleFonts.raleway(
+                  fontSize: 16,
+                ),
+              ),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => EvenementsPopulairesView()),
                 );
               },
             ),
@@ -381,7 +417,7 @@ class _HomeState extends State<Home> {
 //     );
 //   }
 // }
-//
+
 // class PopularEventCard extends StatelessWidget {
 //   final Map<String, dynamic> event;
 //
