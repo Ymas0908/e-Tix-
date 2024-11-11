@@ -1,7 +1,8 @@
-import 'package:auth_firebase/pages/login/login.dart';
-import 'package:auth_firebase/pages/signup/signup.dart';
+import 'package:auth_firebase/views/signup/signup.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import 'login/login.dart';
 
 class Pageacceuil extends StatelessWidget {
   const Pageacceuil({super.key});
