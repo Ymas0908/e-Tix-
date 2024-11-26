@@ -160,13 +160,13 @@ class _HomeState extends State<Home> {
                 const SizedBox(height: 24),
 
                 // Événements à venir
-                Text(
-                  'Événements à venir',
-                  style: GoogleFonts.raleway(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+                // Text(
+                //   'Événements à venir',
+                //   style: GoogleFonts.raleway(
+                //     fontSize: 20,
+                //     fontWeight: FontWeight.bold,
+                //   ),
+                // ),
                 const SizedBox(height: 16),
                 // ListView.builder(
                 //   shrinkWrap: true,
@@ -181,13 +181,13 @@ class _HomeState extends State<Home> {
                 const SizedBox(height: 24),
 
                 // Événements populaires
-                Text(
-                  'Événements populaires',
-                  style: GoogleFonts.raleway(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+                // Text(
+                //   'Événements populaires',
+                //   style: GoogleFonts.raleway(
+                //     fontSize: 20,
+                //     fontWeight: FontWeight.bold,
+                //   ),
+                // ),
                 const SizedBox(height: 16),
                 SizedBox(
                   height: 200,

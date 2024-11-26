@@ -89,7 +89,7 @@ class _SignupState extends State<Signup> {
           style: GoogleFonts.raleway(
             textStyle: const TextStyle(
               color: Colors.black,
-              fontWeight: FontWeight.normal,
+              fontWeight: FontWeight.bold,
               fontSize: 16,
             ),
           ),
@@ -139,7 +139,7 @@ class _SignupState extends State<Signup> {
           style: GoogleFonts.raleway(
               textStyle: const TextStyle(
                   color: Colors.black,
-                  fontWeight: FontWeight.normal,
+                  fontWeight: FontWeight.bold,
                   fontSize: 16)),
         ),
         const SizedBox(

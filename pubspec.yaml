@@ -22,6 +22,7 @@ dependencies:
   firebase_auth: ^4.16.0
   fluttertoast: ^8.2.5
   flutter_screenutil: ^5.9.3
+  either_dart: ^1.0.0
 
 
 

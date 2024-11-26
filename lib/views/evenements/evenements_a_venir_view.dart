@@ -82,16 +82,16 @@ class _EvenementsAVenirViewState extends State<EvenementsAVenirView> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              'Catégories',
-              style: GoogleFonts.raleway(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
+          // Align(
+          //   alignment: Alignment.centerLeft,
+          //   child: Text(
+          //     'Catégories',
+          //     style: GoogleFonts.raleway(
+          //       fontSize: 20,
+          //       fontWeight: FontWeight.bold,
+          //     ),
+          //   ),
+          // ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
             child: SizedBox(
@@ -162,14 +162,13 @@ class _EvenementsAVenirViewState extends State<EvenementsAVenirView> {
         children: [
           ClipRRect(
             borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
-            child: Image.asset(
-              event['image'],
-              height: 180,
-              width: double.infinity,
-              fit: BoxFit.cover,
-            ),
-          ),
-          Padding(
+            // child: Image.network(
+            //   'https://example.com/path/to/your/image.jpg', // Replace with your image URL
+            //   height: 180,
+            //   width: double.infinity,
+            //   fit: BoxFit.cover,
+            // ),
+          ),          Padding(
             padding: const EdgeInsets.all(12.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

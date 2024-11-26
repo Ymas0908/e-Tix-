@@ -97,7 +97,7 @@ class _LoginState extends State<Login> {
           style: GoogleFonts.raleway(
               textStyle: const TextStyle(
                   color: Colors.black,
-                  fontWeight: FontWeight.normal,
+                  fontWeight: FontWeight.bold,
                   fontSize: 16)),
         ),
         const SizedBox(
@@ -107,7 +107,7 @@ class _LoginState extends State<Login> {
           style: GoogleFonts.raleway(
               textStyle: const TextStyle(
                   color: Colors.black,
-                  fontWeight: FontWeight.normal,
+                  fontWeight: FontWeight.bold,
                   fontSize: 16)),
           controller: _emailController,
           decoration: InputDecoration(
