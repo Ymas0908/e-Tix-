@@ -165,7 +165,7 @@ class _LoginState extends State<Login> {
                 borderRadius: BorderRadius.circular(14)),
             suffixIcon: IconButton(
               icon: Icon(
-                _obscureText ? Icons.visibility_off : Icons.visibility,
+                _obscureText ? Icons.visibility : Icons.visibility_off,
                 color: Colors.grey,
               ),
               onPressed: _togglePasswordView, // Basculer la visibilité

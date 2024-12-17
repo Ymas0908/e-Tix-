@@ -1,16 +1,27 @@
 import 'package:auth_firebase/firebase_options.dart';
-import 'package:auth_firebase/views/home/home.dart';
 import 'package:auth_firebase/views/pageacceuil.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import '../../views_model/evenement_viewmodel.dart';
+import '../views/home/home.dart';
+
+import 'package:provider/provider.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform
   );
-  
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider<EvenementViewModel>(
+          create: (context) => EvenementViewModel(),
+        ),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -20,7 +31,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Pageacceuil()
+      home: Home()
     );
   }
 }
