@@ -1,36 +1,49 @@
+import 'enumeration/type_event.dart';
 class EventModel {
-  String? title;
+  String? nom;
   String? lieu;
-  String? prix;
   String? date;
-  String? description;
-  String? image;
-
-  EventModel(
-      {this.title,
-        this.lieu,
-        this.prix,
-        this.date,
-        this.description,
-        this.image});
+TypeEvent? typeEvenement;
+  EventModel({this.nom, this.lieu, this.date, this.typeEvenement});
 
   EventModel.fromJson(Map<String, dynamic> json) {
-    title = json['title'];
+    nom = json['nom'];
     lieu = json['lieu'];
-    prix = json['prix'];
     date = json['date'];
-    description = json['description'];
-    image = json['image'];
+    typeEvenement = stringToTypeEvent(json['typeEvenement']);
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['title'] = this.title;
+    data['nom'] = this.nom;
     data['lieu'] = this.lieu;
-    data['prix'] = this.prix;
     data['date'] = this.date;
-    data['description'] = this.description;
-    data['image'] = this.image;
+    data['typeEvenement'] = this.typeEvenement;
     return data;
+  }
+
+  TypeEvent? stringToTypeEvent(String typeEvenement) {
+    switch (typeEvenement) {
+      case 'CONCERT':
+        return TypeEvent.CONCERT;
+      case 'CINEMA':
+        return TypeEvent.CINEMA;
+      case 'THEATRE':
+        return TypeEvent.THEATRE;
+      default:
+        return null;
+    }
+  }
+String? typeEventToString(TypeEvent typeEvenement) {
+    switch (typeEvenement) {
+      case TypeEvent.CONCERT:
+        return 'CONCERT';
+      case TypeEvent.CINEMA:
+        return 'CINEMA';
+      case TypeEvent.THEATRE:
+        return 'THEATRE';
+      default:
+        return null;
+    }
   }
 }

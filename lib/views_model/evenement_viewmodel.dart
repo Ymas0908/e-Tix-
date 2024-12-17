@@ -15,6 +15,7 @@ class EvenementViewModel extends ChangeNotifier {
 
   List<EventModel> evenementavenir = [];
   List<EventModel> evenementpopulaires = [];
+  List<EventModel> evenements = [];
 
   Future<void> getEvenementavenir(int idEvenement) async {
     var response = await evenementRepository.getEvenementavenir(idEvenement);
@@ -47,4 +48,24 @@ class EvenementViewModel extends ChangeNotifier {
         }
     );
   }
+
+  Future<void> getLesEvenements(int idEvenement) async {
+    var response = await evenementRepository.getLesEvenements(idEvenement);
+    response.fold(
+            (l) {
+          error = l as Failure;
+          isLoading = false;
+          notifyListeners();
+        },
+            (r) {
+              evenements = r;
+          isLoading = false;
+          notifyListeners();
+        }
+    );
+  }
+
+
+
+
 }

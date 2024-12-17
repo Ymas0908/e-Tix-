@@ -1,3 +1,4 @@
+import 'package:auth_firebase/views/evenements/evenements.dart';
 import 'package:auth_firebase/views/evenements/evenements_a_venir_view.dart';
 import 'package:auth_firebase/views/evenements/evenements_populaires_view.dart';
 import 'package:flutter/material.dart';
@@ -271,6 +272,21 @@ class _HomeState extends State<Home> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => EvenementsPopulairesView()),
+                );
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.event, color: Color(0xff0D6EFD)),
+              title: Text(
+                'Evénements ',
+                style: GoogleFonts.raleway(
+                  fontSize: 16,
+                ),
+              ),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Evenements()),
                 );
               },
             ),

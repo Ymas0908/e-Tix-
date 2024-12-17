@@ -35,7 +35,9 @@ class AuthService {
       );
     } catch (e) {}
   }
-
+/*
+ * Methode pour se connecter
+ */
   Future<void> signin(
       {required String email,
       required String password,
@@ -64,7 +66,9 @@ class AuthService {
       );
     } catch (e) {}
   }
-
+/*
+ * Methode pour déconnecter l'usager
+ */
   Future<void> signout({required BuildContext context}) async {
     await FirebaseAuth.instance.signOut();
     await Future.delayed(const Duration(seconds: 1));
@@ -72,6 +76,10 @@ class AuthService {
         context, MaterialPageRoute(builder: (BuildContext context) => Login()));
   }
 
+
+  /*
+   *  Methode pour le reset du mot de passe par adresse email
+   */
   Future<void> resetPassword(
       {required String email, required BuildContext context}) async {
     try {

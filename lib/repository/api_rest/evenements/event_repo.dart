@@ -7,5 +7,7 @@ abstract class IEvenementRepository {
 
   Future<Either<Object, List<EventModel>>> getEvenementpopulaire(int idEvenement);
 
+  Future<Either<Object, List<EventModel>>> getLesEvenements(int idEvenement);
+
 
 }
