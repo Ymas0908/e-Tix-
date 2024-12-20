@@ -2,7 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../composants/LoadingDialog.dart';
+import '../../ressources/composants/LoadingDialog.dart';
 import '../../services/auth_service.dart';
 import '../home/home.dart';
 import '../login/login.dart';

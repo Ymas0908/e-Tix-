@@ -82,16 +82,6 @@ class _EvenementsAVenirViewState extends State<EvenementsAVenirView> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Align(
-          //   alignment: Alignment.centerLeft,
-          //   child: Text(
-          //     'Catégories',
-          //     style: GoogleFonts.raleway(
-          //       fontSize: 20,
-          //       fontWeight: FontWeight.bold,
-          //     ),
-          //   ),
-          // ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
             child: SizedBox(

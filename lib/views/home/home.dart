@@ -1,10 +1,10 @@
-import 'package:auth_firebase/views/evenements/evenements.dart';
-import 'package:auth_firebase/views/evenements/evenements_a_venir_view.dart';
-import 'package:auth_firebase/views/evenements/evenements_populaires_view.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:auth_firebase/services/auth_service.dart';
+import '../../services/auth_service.dart';
+import '../evenements/evenements.dart';
+import '../evenements/evenements_a_venir_view.dart';
+import '../evenements/evenements_populaires_view.dart';
 import '../login/login.dart';
 import '../messages/messages.dart';
 
@@ -16,23 +16,23 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  // final List<Map<String, dynamic>> upcomingEvents = [
-  //   {
-  //     'title': 'Concert Jazz Festival',
-  //     'date': '15 Dec 2024',
-  //     'location': 'Palais des Congrès',
-  //     'price': '50€',
-  //     'image': 'assets/images/jazz.jpg'
-  //   },
-  //   {
-  //     'title': 'Match de Football',
-  //     'date': '20 Dec 2024',
-  //     'location': 'Stade Municipal',
-  //     'price': '35€',
-  //     'image': 'assets/images/football.jpg'
-  //   },
-  //   // Ajoutez plus d'événements ici
-  // ];
+  final List<Map<String, dynamic>> upcomingEvents = [
+    {
+      'title': 'Concert Jazz Festival',
+      'date': '15 Dec 2024',
+      'location': 'Palais des Congrès',
+      'price': '50€',
+      'image': 'assets/images/jazz.jpg'
+    },
+    {
+      'title': 'Match de Football',
+      'date': '20 Dec 2024',
+      'location': 'Stade Municipal',
+      'price': '35€',
+      'image': 'assets/images/football.jpg'
+    },
+    // Ajoutez plus d'événements ici
+  ];
 
   final List<String> categories = [
     'Tous',
@@ -158,25 +158,7 @@ class _HomeState extends State<Home> {
                   ),
                 ),
 
-                const SizedBox(height: 24),
 
-                // Événements à venir
-                // Text(
-                //   'Événements à venir',
-                //   style: GoogleFonts.raleway(
-                //     fontSize: 20,
-                //     fontWeight: FontWeight.bold,
-                //   ),
-                // ),
-                const SizedBox(height: 16),
-                // ListView.builder(
-                //   shrinkWrap: true,
-                //   physics: const NeverScrollableScrollPhysics(),
-                //   itemCount: upcomingEvents.length,
-                //   itemBuilder: (context, index) {
-                //     return EvenementsAVenirView(event: upcomingEvents[index]);
-                //   },
-                // ),
 
 
                 const SizedBox(height: 24),

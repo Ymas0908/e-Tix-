@@ -1,6 +1,7 @@
-import 'package:auth_firebase/views/evenements/detail_evenements.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import 'detail_evenements.dart';
 
 class EvenementsPopulairesView extends StatelessWidget {
   final List<Map<String, dynamic>> evenementsPopulaires = [
@@ -68,12 +69,12 @@ class EvenementsPopulairesView extends StatelessWidget {
             children: [
               ClipRRect(
                 borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
-                child: Image.asset(
-                  event['image'],
-                  height: 200,
-                  width: double.infinity,
-                  fit: BoxFit.cover,
-                ),
+                // child: Image.asset(
+                //   event['image'],
+                //   height: 200,
+                //   width: double.infinity,
+                //   fit: BoxFit.cover,
+                // ),
               ),
               Positioned(
                 top: 10,

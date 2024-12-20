@@ -1,11 +1,11 @@
 import 'dart:core';
 import 'dart:core';
 
-import 'package:auth_firebase/models/event_model.dart';
-import 'package:auth_firebase/repository/api_rest/evenements/event_repo.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../repository/api_rest/evenements/event_impl.dart';
+import '../models/evenement_model.dart';
+import '../repository/api_rest/evenements/evenement_impl.dart';
+import '../repository/api_rest/evenements/evenement_repo.dart';
 import '../repository/network/response.dart';
 
 class EvenementViewModel extends ChangeNotifier {
@@ -13,59 +13,27 @@ class EvenementViewModel extends ChangeNotifier {
   bool isLoading = false;
   Failure? error;
 
-  List<EventModel> evenementavenir = [];
-  List<EventModel> evenementpopulaires = [];
-  List<EventModel> evenements = [];
 
-  Future<void> getEvenementavenir(int idEvenement) async {
-    var response = await evenementRepository.getEvenementavenir(idEvenement);
+  List<EvenementModel> evenements = [];
+
+
+
+  Future<void> getEvenements(int idEvenement) async {
+    var response = await evenementRepository.getEvenements(idEvenement);
     response.fold(
-            (l) {
-          error = l as Failure;
-          isLoading = false;
-          notifyListeners();
-        },
-            (r) {
-          evenementavenir = r;
-          isLoading = false;
-          notifyListeners();
-        }
+          (l) {
+        error = l as Failure?;
+        print('Error: $error');
+        isLoading = false;
+        notifyListeners();
+      },
+          (r) {
+        evenements = r; //
+        isLoading = false; //
+
+        notifyListeners(); //
+      },
     );
+    print('evenements : ${evenements.length}');
   }
-
-  Future<void> getEvenementpopulaire(int idEvenement) async {
-    var response = await evenementRepository.getEvenementpopulaire(idEvenement);
-    response.fold(
-            (l) {
-          error = l as Failure;
-          isLoading = false;
-          notifyListeners();
-        },
-            (r) {
-          evenementpopulaires = r;
-          isLoading = false;
-          notifyListeners();
-        }
-    );
-  }
-
-  Future<void> getLesEvenements(int idEvenement) async {
-    var response = await evenementRepository.getLesEvenements(idEvenement);
-    response.fold(
-            (l) {
-          error = l as Failure;
-          isLoading = false;
-          notifyListeners();
-        },
-            (r) {
-              evenements = r;
-          isLoading = false;
-          notifyListeners();
-        }
-    );
-  }
-
-
-
-
 }
