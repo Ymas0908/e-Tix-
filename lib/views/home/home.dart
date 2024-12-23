@@ -94,10 +94,12 @@ class _HomeState extends State<Home> {
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center, // Centre verticalement
+              crossAxisAlignment: CrossAxisAlignment.center, // Centre horizontalement
               children: [
                 // Message de bienvenue
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.center, // Centre horizontalement dans Row
                   children: [
                     Text(
                       'Bienvenue, ',
@@ -109,6 +111,7 @@ class _HomeState extends State<Home> {
                     const Icon(Icons.waving_hand, color: Colors.amber),
                   ],
                 ),
+                const SizedBox(height: 8),
                 Text(
                   FirebaseAuth.instance.currentUser!.email!.toString(),
                   style: GoogleFonts.raleway(
@@ -118,69 +121,15 @@ class _HomeState extends State<Home> {
                 ),
                 const SizedBox(height: 24),
 
-                // Catégories
-                Text(
-                  'Catégories',
-                  style: GoogleFonts.raleway(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: 12),
-                SizedBox(
-                  height: 50,
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: categories.length,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.only(right: 8.0),
-                        child: ChoiceChip(
-                          label: Text(
-                            categories[index],
-                            style: GoogleFonts.raleway(),
-                          ),
-                          selected: selectedCategoryIndex == index,
-                          onSelected: (selected) {
-                            setState(() {
-                              selectedCategoryIndex = index;
-                            });
-                          },
-                          selectedColor: const Color(0xff0D6EFD),
-                          labelStyle: TextStyle(
-                            color: selectedCategoryIndex == index
-                                ? Colors.white
-                                : Colors.black,
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                ),
-
-
-
-
-                const SizedBox(height: 24),
-
-                // Événements populaires
-                // Text(
-                //   'Événements populaires',
-                //   style: GoogleFonts.raleway(
-                //     fontSize: 20,
-                //     fontWeight: FontWeight.bold,
-                //   ),
-                // ),
-                const SizedBox(height: 16),
+                // Exemple pour la zone d'événements
                 SizedBox(
                   height: 200,
-                  // child: ListView.builder(
-                  //   scrollDirection: Axis.horizontal,
-                  //   itemCount: upcomingEvents.length,
-                  //   itemBuilder: (context, index) {
-                  //     return PopularEventCard(event: upcomingEvents[index]);
-                  //   },
-                  // ),
+                  child: Center(
+                    child: Text(
+                      'Aucun événement pour le moment',
+                      style: GoogleFonts.raleway(fontSize: 16, color: Colors.grey),
+                    ),
+                  ),
                 ),
               ],
             ),
@@ -227,36 +176,36 @@ class _HomeState extends State<Home> {
                 );
               },
             ),
-            ListTile(
-              leading: const Icon(Icons.event, color: Color(0xff0D6EFD)),
-              title: Text(
-                'Evénements à venir',
-                style: GoogleFonts.raleway(
-                  fontSize: 16,
-                ),
-              ),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => EvenementsAVenirView()),
-                );
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.event, color: Color(0xff0D6EFD)),
-              title: Text(
-                'Evénements populaires',
-                style: GoogleFonts.raleway(
-                  fontSize: 16,
-                ),
-              ),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => EvenementsPopulairesView()),
-                );
-              },
-            ),
+            // ListTile(
+            //   leading: const Icon(Icons.event, color: Color(0xff0D6EFD)),
+            //   title: Text(
+            //     'Evénements à venir',
+            //     style: GoogleFonts.raleway(
+            //       fontSize: 16,
+            //     ),
+            //   ),
+            //   onTap: () {
+            //     Navigator.push(
+            //       context,
+            //       MaterialPageRoute(builder: (context) => EvenementsAVenirView()),
+            //     );
+            //   },
+            // ),
+            // ListTile(
+            //   leading: const Icon(Icons.event, color: Color(0xff0D6EFD)),
+            //   title: Text(
+            //     'Evénements populaires',
+            //     style: GoogleFonts.raleway(
+            //       fontSize: 16,
+            //     ),
+            //   ),
+            //   onTap: () {
+            //     Navigator.push(
+            //       context,
+            //       MaterialPageRoute(builder: (context) => EvenementsPopulairesView()),
+            //     );
+            //   },
+            // ),
             ListTile(
               leading: const Icon(Icons.event, color: Color(0xff0D6EFD)),
               title: Text(

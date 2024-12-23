@@ -1,17 +1,24 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:my_app/models/evenement_model.dart';
+
+import '../../ressources/format_date.dart';
 
 class DetailEvenements extends StatelessWidget {
-  final Map<String, dynamic> event;
 
-  DetailEvenements({required this.event});
+  final EvenementModel evenementModel;
+
+
+  DetailEvenements({required this.evenementModel});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          event['title'] ?? 'Événement',
+          evenementModel.libelle,
           style: GoogleFonts.raleway(
             color: Colors.white,
             fontWeight: FontWeight.bold,
@@ -27,7 +34,7 @@ class DetailEvenements extends StatelessWidget {
             Stack(
               children: [
                 Image.network(
-                  event['image'] ?? 'assets/images/photocall-du-festival-musique-minimal-plat_23-2149064035.jpg',
+                  evenementModel.urlImage,
                   height: 250,
                   width: double.infinity,
                   fit: BoxFit.cover,
@@ -42,7 +49,7 @@ class DetailEvenements extends StatelessWidget {
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Text(
-                      event['date'] ?? '',
+                      formatDate(evenementModel.dateEvenement),
                       style: GoogleFonts.raleway(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
@@ -58,7 +65,7 @@ class DetailEvenements extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    event['title'] ?? 'Titre de l\'événement',
+                    evenementModel.libelle,
                     style: GoogleFonts.raleway(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
@@ -71,7 +78,7 @@ class DetailEvenements extends StatelessWidget {
                       const Icon(Icons.location_on, color: Colors.grey),
                       const SizedBox(width: 8),
                       Text(
-                        event['location'] ?? 'Lieu non précisé',
+                        utf8.decoder.convert(evenementModel.lieu.codeUnits),
                         style: GoogleFonts.raleway(
                           fontSize: 16,
                           color: Colors.grey[600],
@@ -82,10 +89,24 @@ class DetailEvenements extends StatelessWidget {
                   const SizedBox(height: 8),
                   Row(
                     children: [
-                      const Icon(Icons.monetization_on, color: Colors.grey),
+                      const Icon(Icons.padding, color: Colors.grey),
                       const SizedBox(width: 8),
                       Text(
-                        event['price'] ?? 'Prix non précisé',
+                        "A partir de 10.000 FCFA",
+                        style: GoogleFonts.raleway(
+                          fontSize: 16,
+                          color: Colors.grey[600],
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 8),
+                  Row(
+                    children: [
+                      const Icon(Icons.person_rounded, color: Colors.grey),
+                      const SizedBox(width: 8),
+                      Text(
+                        evenementModel.promotteur,
                         style: GoogleFonts.raleway(
                           fontSize: 16,
                           color: Colors.grey[600],
@@ -103,14 +124,14 @@ class DetailEvenements extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 8),
-                  Text(
-                    event['description'] ?? 'Description non disponible pour cet événement.',
-                    style: GoogleFonts.raleway(
-                      fontSize: 16,
-                      color: Colors.black54,
-                      height: 1.4,
-                    ),
-                  ),
+                  // Text(
+                  //   utf8.decoder.convert(evenementModel.description!.codeUnits),
+                  //   style: GoogleFonts.raleway(
+                  //     fontSize: 16,
+                  //     color: Colors.black54,
+                  //     height: 1.4,
+                  //   ),
+                  // ),
                   const SizedBox(height: 24),
                   Center(
                     child: ElevatedButton(

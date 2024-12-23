@@ -1,8 +1,11 @@
-import 'package:my_app/models/enum/type_event.dart';
+import 'package:my_app/models/enum/type_evenement.dart';
+
+import 'enum/type_evenement.dart';
 
 class EvenementModel {
   int? id;
   String libelle;
+  String? description;
 String urlImage;
   DateTime dateEvenement;
   TypeEvenement typeEvenement;
@@ -11,6 +14,7 @@ String urlImage;
 
   EvenementModel(
       {required this.libelle,
+      required this.description,
       required this.urlImage,
       required this.dateEvenement,
       required this.typeEvenement,
@@ -21,6 +25,7 @@ String urlImage;
    factory EvenementModel.fromJson(Map<String, dynamic> json) {
     return EvenementModel(
       libelle: json['libelle'],
+      description: json['description'],
       urlImage: json['urlImage'],
       dateEvenement: DateTime.parse(json['dateEvenement']),
       typeEvenement: stringToTypeEvenement(json['typeEvenement']),
@@ -32,6 +37,7 @@ String urlImage;
     Map<String, dynamic> toJson() {
       final Map<String, dynamic> data = new Map<String, dynamic>();
       data['libelle'] = this.libelle;
+      data['description'] = this.description;
       data['urlImage'] = this.urlImage;
       data['dateEvenement'] = this.dateEvenement;
       data['typeEvenement'] = this.typeEvenement;
@@ -52,12 +58,14 @@ String urlImage;
         return TypeEvenement.SPECTACLE;
       case 'MATCH':
         return TypeEvenement.MATCH;
+        case 'PARTY':
+        return TypeEvenement.PARTY;
       default:
         throw Exception('Type d\'événement inconnu');
     }
   }
 
-  static String typeEvenementToString(TypeEvenement typeEvenement) {
+  static String? typeEvenementToString(TypeEvenement typeEvenement) {
     switch (typeEvenement) {
       case TypeEvenement.CONCERT:
         return 'CONCERT';
@@ -67,8 +75,10 @@ String urlImage;
         return 'SPECTACLE';
       case TypeEvenement.MATCH:
         return 'MATCH';
+        case TypeEvenement.PARTY:
+        return 'PARTY';
       default:
-        return 'UNKNOWN'; // Valeur par défaut en cas de type inconnu
+        return null; // Valeur par défaut en cas de type inconnu
     }
   }
 }

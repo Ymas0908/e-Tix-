@@ -10,11 +10,14 @@ import '../repository/network/response.dart';
 
 class EvenementViewModel extends ChangeNotifier {
   final IEvenementRepository evenementRepository = EvenementImpl();
+  TextEditingController libelleEvenement = TextEditingController();
+
   bool isLoading = false;
   Failure? error;
 
 
   List<EvenementModel> evenements = [];
+  List<EvenementModel> evenements2 = [];
 
 
 
@@ -29,6 +32,25 @@ class EvenementViewModel extends ChangeNotifier {
       },
           (r) {
         evenements = r; //
+        isLoading = false; //
+
+        notifyListeners(); //
+      },
+    );
+    print('evenements : ${evenements.length}');
+  }
+
+  Future<void> getEvenementBylibelle(String libelle) async {
+    var response = await evenementRepository.getEvenementBylibelle(libelle);
+    response.fold(
+          (l) {
+        error = l as Failure?;
+        print('Error: $error');
+        isLoading = false;
+        notifyListeners();
+      },
+          (r) {
+            evenements2 = r; //
         isLoading = false; //
 
         notifyListeners(); //

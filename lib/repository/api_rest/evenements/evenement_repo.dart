@@ -8,5 +8,7 @@ abstract class IEvenementRepository {
 
   Future<Either<Object, List<EvenementModel>>> getEvenements(int idEvenement);
 
+  Future<Either<Object, List<EvenementModel>>> getEvenementBylibelle(String libelle);
+
 
 }

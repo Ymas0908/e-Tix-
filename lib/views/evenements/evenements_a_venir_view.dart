@@ -216,10 +216,10 @@ class _EvenementsAVenirViewState extends State<EvenementsAVenirView> {
                         ),
                       ),
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => DetailEvenements(event: event)),
-                        );
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(builder: (context) => DetailEvenements(event: event)),
+                        // );
                       },
                       child: const Text(
                         'Voir détails',
