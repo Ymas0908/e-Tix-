@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 import '../../ressources/composants/Search_Input.dart';
+import '../../ressources/composants/responsive_grid.dart';
 import '../../ressources/constantes/appdefaults.dart';
 import '../../views_model/evenement_viewmodel.dart';
 import 'composants/card_evenement.dart';
@@ -70,7 +71,7 @@ class _EvenementsState extends State<Evenements> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 10),
+                   SizedBox(height: 10),
                   Expanded(
                     child: Consumer<EvenementViewModel>(
                       builder: (context, evenementViewModel, _) {
@@ -103,20 +104,10 @@ class _EvenementsState extends State<Evenements> {
                         );
 
                         // Alternative: affichage en grille (décommenter si besoin)
-                        // return GridView.builder(
-                        //   padding: const EdgeInsets.all(8.0),
-                        //   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                        //     crossAxisCount: 2, // Nombre de colonnes dynamique
-                        //     crossAxisSpacing: 10.0, // Espacement horizontal
-                        //     mainAxisSpacing: 10.0, // Espacement vertical
-                        //     childAspectRatio: 0.8, // Ratio largeur/hauteur
-                        //   ),
-                        //   itemCount: evenementViewModel.evenements.length,
-                        //   itemBuilder: (context, index) {
-                        //     return CardEvenement(
-                        //       evenementModel: evenementViewModel.evenements[index],
-                        //     );
-                        //   },
+                        // return ResponsiveGrid(
+                        //   children: evenementViewModel.evenements.map((evenement) {
+                        //     return CardEvenement(evenementModel: evenement);
+                        //   }).toList(),
                         // );
                       },
                     ),
