@@ -1,18 +1,28 @@
-import 'package:auth_firebase/firebase_options.dart';
-import 'package:auth_firebase/pages/login/login.dart';
-import 'package:auth_firebase/pages/pageacceuil.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'pages/signup/signup.dart';
+import 'package:my_app/views/pageacceuil.dart';
+import '../../views_model/evenement_viewmodel.dart';
+import '../views/home/home.dart';
 
+import 'package:provider/provider.dart';
+
+import 'firebase_options.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform
   );
-  
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider<EvenementViewModel>(
+          create: (context) => EvenementViewModel(),
+        ),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {

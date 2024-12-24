@@ -1,10 +1,10 @@
-import 'package:auth_firebase/pages/signup/signup.dart';
-import 'package:auth_firebase/services/auth_service.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../services/auth_service.dart';
 import '../resetpassword/resetpassaword.dart';
+import '../signup/signup.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -47,7 +47,7 @@ class _LoginState extends State<Login> {
             children: [
               Center(
                 child: Text(
-                  'Bienvenue sur Auth App',
+                  'e-Tix',
                   style: GoogleFonts.raleway(
                       textStyle: const TextStyle(
                           color: Colors.black,
@@ -97,7 +97,7 @@ class _LoginState extends State<Login> {
           style: GoogleFonts.raleway(
               textStyle: const TextStyle(
                   color: Colors.black,
-                  fontWeight: FontWeight.normal,
+                  fontWeight: FontWeight.bold,
                   fontSize: 16)),
         ),
         const SizedBox(
@@ -107,7 +107,7 @@ class _LoginState extends State<Login> {
           style: GoogleFonts.raleway(
               textStyle: const TextStyle(
                   color: Colors.black,
-                  fontWeight: FontWeight.normal,
+                  fontWeight: FontWeight.bold,
                   fontSize: 16)),
           controller: _emailController,
           decoration: InputDecoration(
@@ -165,7 +165,7 @@ class _LoginState extends State<Login> {
                 borderRadius: BorderRadius.circular(14)),
             suffixIcon: IconButton(
               icon: Icon(
-                _obscureText ? Icons.visibility_off : Icons.visibility,
+                _obscureText ? Icons.visibility : Icons.visibility_off,
                 color: Colors.grey,
               ),
               onPressed: _togglePasswordView, // Basculer la visibilité
