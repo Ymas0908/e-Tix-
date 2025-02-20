@@ -1,1 +1,1 @@
-App auth est une application mobile pour la gestion de l'authentification des utilisateurs
+e-Tix |  est une application mobile pour la gestion des tickets évènementielles.
