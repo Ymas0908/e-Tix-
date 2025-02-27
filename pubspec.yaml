@@ -25,6 +25,7 @@ dependencies:
   fluttertoast: ^8.2.5
   flutter_screenutil: ^5.9.3
   either_dart: ^1.0.0
+  equatable: ^2.0.7
 
 
 

@@ -101,4 +101,9 @@ class AuthService {
       print(e);
     }
   }
+
+  Future<void> signout2({required BuildContext context}) async {
+    await FirebaseAuth.instance.authStateChanges().listen((event) => null,);
+    await Future.delayed(const Duration(seconds: 1));
+  }
 }

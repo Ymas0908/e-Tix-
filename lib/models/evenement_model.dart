@@ -1,67 +1,71 @@
 import 'package:my_app/models/enum/type_evenement.dart';
 
 import 'enum/type_evenement.dart';
+import 'enum/type_ticket.dart';
 
 class EvenementModel {
   int? id;
-  String libelle;
+  String nom;
   String? description;
-String urlImage;
+String lieu;
   DateTime dateEvenement;
+  DateTime dateHeureCreation;
   TypeEvenement typeEvenement;
-  String lieu;
-  String promotteur;
 
-  EvenementModel(
-      {required this.libelle,
-      required this.description,
-      required this.urlImage,
-      required this.dateEvenement,
-      required this.typeEvenement,
-      required this.lieu,
-      required this.promotteur,
-      required this.id});
 
-   factory EvenementModel.fromJson(Map<String, dynamic> json) {
+
+  EvenementModel({
+    this.id,
+    required this.nom,
+    this.description,
+    required this.lieu,
+    required this.dateEvenement,
+    required this.dateHeureCreation,
+    required this.typeEvenement,
+  });
+
+  factory EvenementModel.fromJson(Map<String, dynamic> json) {
     return EvenementModel(
-      libelle: json['libelle'],
-      description: json['description'],
-      urlImage: json['urlImage'],
-      dateEvenement: DateTime.parse(json['dateEvenement']),
-      typeEvenement: stringToTypeEvenement(json['typeEvenement']),
-      lieu: json['lieu'],
-      promotteur: json['promotteur'],
       id: json['id'],
+      nom: json['nom'],
+      description: json['description'],
+      lieu: json['lieu'],
+      dateEvenement: DateTime.parse(json['dateEvenement']),
+      dateHeureCreation: DateTime.parse(json['dateHeureCreation']),
+      typeEvenement: TypeEvenement.values
+          .firstWhere((type) => type.name == json['typeEvenement']),
     );
   }
-    Map<String, dynamic> toJson() {
-      final Map<String, dynamic> data = new Map<String, dynamic>();
-      data['libelle'] = this.libelle;
-      data['description'] = this.description;
-      data['urlImage'] = this.urlImage;
-      data['dateEvenement'] = this.dateEvenement;
-      data['typeEvenement'] = this.typeEvenement;
-      data['lieu'] = this.lieu;
-      data['promotteur'] = this.promotteur;
-      data['id'] = this.id;
-      return data;
-    }
 
-
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'nom': nom,
+      'description': description,
+      'urlImage': lieu,
+      'dateEvenement': dateEvenement.toIso8601String(),
+      'dateHeureCreation': dateHeureCreation.toIso8601String(),
+      'typeEvenement': typeEvenement.name,
+    };
+  }
   static TypeEvenement stringToTypeEvenement(String value) {
     switch (value) {
       case 'CONCERT':
         return TypeEvenement.CONCERT;
       case 'FESTIVAL':
         return TypeEvenement.FESTIVAL;
-      case 'SPECTACLE':
-        return TypeEvenement.SPECTACLE;
-      case 'MATCH':
-        return TypeEvenement.MATCH;
-        case 'PARTY':
-        return TypeEvenement.PARTY;
+      case 'CINEMA':
+        return TypeEvenement.CINEMA;
+      case 'RELEASE_PARTY':
+        return TypeEvenement.RELEASE_PARTY;
+      case 'THEATRE':
+        return TypeEvenement.THEATRE;
+        case 'RELEASE_PARTY':
+        return TypeEvenement.RELEASE_PARTY;
+      case 'THEATRE':
+        return TypeEvenement.THEATRE;
       default:
-        throw Exception('Type d\'événement inconnu');
+        throw Exception('Type d\'evenement inconnu');
     }
   }
 
@@ -69,14 +73,50 @@ String urlImage;
     switch (typeEvenement) {
       case TypeEvenement.CONCERT:
         return 'CONCERT';
+
       case TypeEvenement.FESTIVAL:
         return 'FESTIVAL';
-      case TypeEvenement.SPECTACLE:
-        return 'SPECTACLE';
+
+      case TypeEvenement.THEATRE:
+        return 'THEATRE';
+
       case TypeEvenement.MATCH:
         return 'MATCH';
-        case TypeEvenement.PARTY:
-        return 'PARTY';
+
+      case TypeEvenement.RELEASE_PARTY:
+        return 'RELEASE_PARTY';
+
+        case TypeEvenement.CINEMA:
+        return 'CINEMA';
+
+        case TypeEvenement.EXPOSITION:
+        return 'EXPOSITION';
+      default:
+        return null; // Valeur par défaut en cas de type inconnu
+    }
+  }
+
+  static TypeTicket stringToTypeTicket(String value) {
+    switch (value) {
+      case 'GP':
+        return TypeTicket.GP;
+      case 'VIP':
+        return TypeTicket.VIP;
+      case 'VVIP':
+        return TypeTicket.VVIP;
+      default:
+        throw Exception('Type de ticket inconnu');
+    }
+  }
+
+  static String? typeTicketToString(TypeTicket typeTicket) {
+    switch (typeTicket) {
+      case TypeTicket.GP:
+        return 'GP';
+      case TypeTicket.VIP:
+        return 'VIP';
+      case TypeTicket.VVIP:
+        return 'VVIP';
       default:
         return null; // Valeur par défaut en cas de type inconnu
     }

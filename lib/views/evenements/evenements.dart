@@ -23,11 +23,9 @@ class _EvenementsState extends State<Evenements> {
   void initState() {
     super.initState();
     evenementViewModel = context.read<EvenementViewModel>();
-    evenementViewModel.getEvenements(1);
-    evenementViewModel.libelleEvenement.addListener(() {
-      evenementViewModel.getEvenementBylibelle(
-        evenementViewModel.libelleEvenement.text,
-      );
+    evenementViewModel.getAllEvenements();
+    evenementViewModel. nomEvenement.addListener(() {
+      evenementViewModel.getAllEvenements();
     });
   }
 
@@ -56,7 +54,7 @@ class _EvenementsState extends State<Evenements> {
                 children: [
                   const SizedBox(height: 10),
                   SearchInput(
-                    controller: viewModel.libelleEvenement,
+                    controller: viewModel.nomEvenement,
                     placeholder: 'Rechercher un événement',
                     icon: const Icon(Icons.search),
                   ),
@@ -66,10 +64,9 @@ class _EvenementsState extends State<Evenements> {
                     child: Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        'Liste des événements',
+                        '  ${evenementViewModel.evenements.length} évènements trouvés', // Ajoute le nombre d'événements
                         style: GoogleFonts.raleway(fontWeight: FontWeight.bold),
-                      ),
-                    ),
+                      ),                    ),
                   ),
                    SizedBox(height: 10),
                   Expanded(

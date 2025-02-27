@@ -1,7 +1,10 @@
 enum TypeEvenement {
   CONCERT,
-  SPECTACLE,
-  MATCH,
+  THEATRE,
+  CINEMA,
   FESTIVAL,
-  PARTY;
+  EXPOSITION,
+  RELEASE_PARTY,
+
+  MATCH;
 }

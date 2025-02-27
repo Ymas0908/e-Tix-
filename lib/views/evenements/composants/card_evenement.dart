@@ -39,10 +39,10 @@ class CardEvenement extends StatelessWidget {
                 height: 150,
                 width: double.infinity,
                 color: Colors.grey[300],
-                child:  Image.network(
-                  evenementModel.urlImage ?? '',
-                  fit: BoxFit.cover,
-                ),
+                // child:  Image.network(
+                //   evenementModel.urlImage ?? '',
+                //   fit: BoxFit.cover,
+                // ),
 
               ),
             ),
@@ -52,7 +52,7 @@ class CardEvenement extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    evenementModel.libelle ?? '',
+                    utf8.decoder.convert(evenementModel.nom!.codeUnits),
                     maxLines: 2,
                     style: GoogleFonts.raleway(
                       fontSize: 18,

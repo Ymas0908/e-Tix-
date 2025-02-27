@@ -18,7 +18,7 @@ class DetailEvenements extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          evenementModel.libelle,
+          evenementModel.nom,
           style: GoogleFonts.raleway(
             color: Colors.white,
             fontWeight: FontWeight.bold,
@@ -31,41 +31,41 @@ class DetailEvenements extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Stack(
-              children: [
-                Image.network(
-                  evenementModel.urlImage,
-                  height: 250,
-                  width: double.infinity,
-                  fit: BoxFit.cover,
-                ),
-                Positioned(
-                  bottom: 16,
-                  right: 16,
-                  child: Container(
-                    padding: const EdgeInsets.all(8.0),
-                    decoration: BoxDecoration(
-                      color: Colors.black54,
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Text(
-                      formatDate(evenementModel.dateEvenement),
-                      style: GoogleFonts.raleway(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
+            // Stack(
+            //   children: [
+            //     Image.network(
+            //       evenementModel.urlImage,
+            //       height: 250,
+            //       width: double.infinity,
+            //       fit: BoxFit.cover,
+            //     ),
+            //     Positioned(
+            //       bottom: 16,
+            //       right: 16,
+            //       child: Container(
+            //         padding: const EdgeInsets.all(8.0),
+            //         decoration: BoxDecoration(
+            //           color: Colors.black54,
+            //           borderRadius: BorderRadius.circular(8),
+            //         ),
+            //         child: Text(
+            //           formatDate(evenementModel.dateEvenement),
+            //           style: GoogleFonts.raleway(
+            //             color: Colors.white,
+            //             fontWeight: FontWeight.bold,
+            //           ),
+            //         ),
+            //       ),
+            //     ),
+            //   ],
+            // ),
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    evenementModel.libelle,
+                    evenementModel.nom,
                     style: GoogleFonts.raleway(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
@@ -101,19 +101,19 @@ class DetailEvenements extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 8),
-                  Row(
-                    children: [
-                      const Icon(Icons.person_rounded, color: Colors.grey),
-                      const SizedBox(width: 8),
-                      Text(
-                        evenementModel.promotteur,
-                        style: GoogleFonts.raleway(
-                          fontSize: 16,
-                          color: Colors.grey[600],
-                        ),
-                      ),
-                    ],
-                  ),
+                  // Row(
+                  //   children: [
+                  //     const Icon(Icons.person_rounded, color: Colors.grey),
+                  //     const SizedBox(width: 8),
+                  //     Text(
+                  //       evenementModel.promotteur,
+                  //       style: GoogleFonts.raleway(
+                  //         fontSize: 16,
+                  //         color: Colors.grey[600],
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
                   const SizedBox(height: 16),
                   Text(
                     'À propos de cet événement',

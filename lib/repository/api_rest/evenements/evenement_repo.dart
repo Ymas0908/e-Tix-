@@ -6,9 +6,10 @@ import '../../../models/evenement_model.dart';
 abstract class IEvenementRepository {
 
 
-  Future<Either<Object, List<EvenementModel>>> getEvenements(int idEvenement);
+  Future<Either<Object, List<EvenementModel>>> getAllEvenements();
+  Future<Either<Object, List<EvenementModel>>> getLesEvenementsByNom(String nom);
 
-  Future<Either<Object, List<EvenementModel>>> getEvenementBylibelle(String libelle);
+
 
 
 }
