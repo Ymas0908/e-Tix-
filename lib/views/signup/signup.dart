@@ -16,6 +16,7 @@ class Signup extends StatefulWidget {
 
 class _SignupState extends State<Signup> {
   final _formKey = GlobalKey<FormState>();
+  final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final RegExp _emailRegExp = RegExp(
@@ -53,7 +54,7 @@ class _SignupState extends State<Signup> {
                     style: GoogleFonts.raleway(
                       textStyle: const TextStyle(
                         color: Colors.black,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.normal,
                         fontSize: 32,
                       ),
                     ),
@@ -61,6 +62,10 @@ class _SignupState extends State<Signup> {
                 ),
                 const SizedBox(
                   height: 80,
+                ),
+                _username(),
+                const SizedBox(
+                  height: 20,
                 ),
                 _emailAddress(),
                 const SizedBox(
@@ -89,7 +94,7 @@ class _SignupState extends State<Signup> {
           style: GoogleFonts.raleway(
             textStyle: const TextStyle(
               color: Colors.black,
-              fontWeight: FontWeight.bold,
+              fontWeight: FontWeight.normal,
               fontSize: 16,
             ),
           ),
@@ -128,6 +133,55 @@ class _SignupState extends State<Signup> {
       ],
     );
   }
+  Widget _username() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Nom & Prénom',
+          style: GoogleFonts.raleway(
+            textStyle: const TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.normal,
+              fontSize: 16,
+            ),
+          ),
+        ),
+        const SizedBox(
+          height: 16,
+        ),
+        TextFormField(
+          style: GoogleFonts.raleway(
+            textStyle: const TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.normal,
+              fontSize: 16,
+            ),
+          ),
+          controller: _usernameController,
+          decoration: InputDecoration(
+            hintText: 'Saisir votre nom et prénom',
+            filled: true,
+            fillColor: const Color(0xffF7F7F9),
+            border: OutlineInputBorder(
+              borderSide: BorderSide.none,
+              borderRadius: BorderRadius.circular(14),
+            ),
+          ),
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return 'Veuillez entrer votre nom et votre prénom';
+            }
+            if (value.length < 5) {
+              return 'Veuillez entrer un nom et un prénom valide';
+            }
+            return null;
+          },
+        ),
+      ],
+    );
+  }
 
   Widget _password() {
     return Column(
@@ -139,7 +193,7 @@ class _SignupState extends State<Signup> {
           style: GoogleFonts.raleway(
               textStyle: const TextStyle(
                   color: Colors.black,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.normal,
                   fontSize: 16)),
         ),
         const SizedBox(

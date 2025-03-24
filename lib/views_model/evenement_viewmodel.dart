@@ -41,23 +41,23 @@ Future<void> getAllEvenements() async {
   );
 }
 
-Future<void> getLesEvenementsByNom(String nom) async {
-  var response = await evenementRepository.getLesEvenementsByNom(nom);
-  response.fold(
-        (l) {
-      error = l as Failure?;
-      print('Error: $error');
-      isLoading = false;
-      notifyListeners();
-    },
-        (r) {
-          evenements2 = r.cast<EvenementModel>(); //
-      isLoading = false; //
-
-      notifyListeners(); //
-    },
-  );
-}
+// Future<void> getLesEvenementsByNom(String nom) async {
+//   var response = await evenementRepository.getLesEvenementsByNom(nom);
+//   response.fold(
+//         (l) {
+//       error = l as Failure?;
+//       print('Error: $error');
+//       isLoading = false;
+//       notifyListeners();
+//     },
+//         (r) {
+//           evenements2 = r.cast<EvenementModel>(); //
+//       isLoading = false; //
+//
+//       notifyListeners(); //
+//     },
+//   );
+// }
 
 
   // Future<void> getEvenementBylibelle(String libelle) async {

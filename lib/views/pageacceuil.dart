@@ -122,7 +122,7 @@ class Pageacceuil extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const Icon(
-            Icons.login,
+            Icons.person_add,
             color: Colors.white,
           ),
           const SizedBox(

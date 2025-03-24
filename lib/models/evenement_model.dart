@@ -1,24 +1,29 @@
+import 'dart:ffi';
 import 'package:my_app/models/enum/type_evenement.dart';
-
-import 'enum/type_evenement.dart';
 import 'enum/type_ticket.dart';
 
 class EvenementModel {
   int? id;
-  String nom;
-  String? description;
-String lieu;
+  String? nom;
+  String? imageData;
+  String description;
+  String lieu;
+  String? prixTicketGP;
+  String? prixTicketVIP;
+  String? prixTicketVVIP;
   DateTime dateEvenement;
   DateTime dateHeureCreation;
   TypeEvenement typeEvenement;
 
-
-
   EvenementModel({
     this.id,
     required this.nom,
-    this.description,
+    this.imageData,
+    required this.description,
     required this.lieu,
+    required this.prixTicketGP,
+    required this.prixTicketVIP,
+    required this.prixTicketVVIP,
     required this.dateEvenement,
     required this.dateHeureCreation,
     required this.typeEvenement,
@@ -32,8 +37,12 @@ String lieu;
       lieu: json['lieu'],
       dateEvenement: DateTime.parse(json['dateEvenement']),
       dateHeureCreation: DateTime.parse(json['dateHeureCreation']),
-      typeEvenement: TypeEvenement.values
-          .firstWhere((type) => type.name == json['typeEvenement']),
+      typeEvenement: TypeEvenement.values.firstWhere(
+            (type) => type.name == json['typeEvenement'],
+      ),
+      prixTicketGP: json['prixTicketGP'],
+      prixTicketVIP: json['prixTicketVIP'],
+      prixTicketVVIP: json['prixTicketVVIP'],
     );
   }
 
@@ -42,12 +51,16 @@ String lieu;
       'id': id,
       'nom': nom,
       'description': description,
-      'urlImage': lieu,
+      'lieu': lieu,
       'dateEvenement': dateEvenement.toIso8601String(),
       'dateHeureCreation': dateHeureCreation.toIso8601String(),
       'typeEvenement': typeEvenement.name,
+      'prixTicketGP': prixTicketGP,
+      'prixTicketVIP': prixTicketVIP,
+      'prixTicketVVIP': prixTicketVVIP,
     };
   }
+
   static TypeEvenement stringToTypeEvenement(String value) {
     switch (value) {
       case 'CONCERT':
@@ -60,10 +73,10 @@ String lieu;
         return TypeEvenement.RELEASE_PARTY;
       case 'THEATRE':
         return TypeEvenement.THEATRE;
-        case 'RELEASE_PARTY':
-        return TypeEvenement.RELEASE_PARTY;
-      case 'THEATRE':
-        return TypeEvenement.THEATRE;
+      case 'MATCH':
+        return TypeEvenement.MATCH;
+      case 'EXPOSITION':
+        return TypeEvenement.EXPOSITION;
       default:
         throw Exception('Type d\'evenement inconnu');
     }
@@ -73,23 +86,17 @@ String lieu;
     switch (typeEvenement) {
       case TypeEvenement.CONCERT:
         return 'CONCERT';
-
       case TypeEvenement.FESTIVAL:
         return 'FESTIVAL';
-
       case TypeEvenement.THEATRE:
         return 'THEATRE';
-
       case TypeEvenement.MATCH:
         return 'MATCH';
-
       case TypeEvenement.RELEASE_PARTY:
         return 'RELEASE_PARTY';
-
-        case TypeEvenement.CINEMA:
+      case TypeEvenement.CINEMA:
         return 'CINEMA';
-
-        case TypeEvenement.EXPOSITION:
+      case TypeEvenement.EXPOSITION:
         return 'EXPOSITION';
       default:
         return null; // Valeur par défaut en cas de type inconnu

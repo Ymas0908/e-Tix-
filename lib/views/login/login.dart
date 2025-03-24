@@ -97,7 +97,7 @@ class _LoginState extends State<Login> {
           style: GoogleFonts.raleway(
               textStyle: const TextStyle(
                   color: Colors.black,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.normal,
                   fontSize: 16)),
         ),
         const SizedBox(
@@ -107,7 +107,7 @@ class _LoginState extends State<Login> {
           style: GoogleFonts.raleway(
               textStyle: const TextStyle(
                   color: Colors.black,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.normal,
                   fontSize: 16)),
           controller: _emailController,
           decoration: InputDecoration(
@@ -259,43 +259,4 @@ class _LoginState extends State<Login> {
     );
   }
 
-  Widget _signup(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 16),
-      child: RichText(
-        textAlign: TextAlign.center,
-        text: TextSpan(
-          children: [
-             TextSpan(
-              text: "Nouvel utilisateur ? ",
-              style: GoogleFonts.raleway(
-                textStyle: const TextStyle(
-                  color: Colors.black87,
-                  fontWeight: FontWeight.normal,
-                  fontSize: 16,
-                ),
-              ),
-            ),
-            TextSpan(
-              text: "Créer un compte",
-              style: GoogleFonts.raleway(
-                textStyle: const TextStyle(
-                  color: Color(0xff0D6EFD),
-                  fontWeight: FontWeight.normal,
-                  fontSize: 16,
-                ),
-              ),
-              recognizer: TapGestureRecognizer()
-                ..onTap = () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => Signup()),
-                  );
-                },
-            ),
-          ],
-        ),
-      ),
-    );
-  }
 }

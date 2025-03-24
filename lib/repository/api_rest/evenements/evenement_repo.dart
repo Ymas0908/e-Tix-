@@ -7,7 +7,6 @@ abstract class IEvenementRepository {
 
 
   Future<Either<Object, List<EvenementModel>>> getAllEvenements();
-  Future<Either<Object, List<EvenementModel>>> getLesEvenementsByNom(String nom);
 
 
 

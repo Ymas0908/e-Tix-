@@ -56,6 +56,8 @@ class _EvenementsState extends State<Evenements> {
                   SearchInput(
                     controller: viewModel.nomEvenement,
                     placeholder: 'Rechercher un événement',
+
+
                     icon: const Icon(Icons.search),
                   ),
                   const SizedBox(height: 10),

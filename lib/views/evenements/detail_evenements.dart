@@ -4,12 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:my_app/models/evenement_model.dart';
 
+import '../../ressources/constantes/formarCurrency.dart';
 import '../../ressources/format_date.dart';
 
 class DetailEvenements extends StatelessWidget {
-
   final EvenementModel evenementModel;
-
 
   DetailEvenements({required this.evenementModel});
 
@@ -18,7 +17,7 @@ class DetailEvenements extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          evenementModel.nom,
+          evenementModel.nom!,
           style: GoogleFonts.raleway(
             color: Colors.white,
             fontWeight: FontWeight.bold,
@@ -65,7 +64,7 @@ class DetailEvenements extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    evenementModel.nom,
+                    evenementModel.nom!,
                     style: GoogleFonts.raleway(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
@@ -77,8 +76,9 @@ class DetailEvenements extends StatelessWidget {
                     children: [
                       const Icon(Icons.location_on, color: Colors.grey),
                       const SizedBox(width: 8),
+                      // Decode using utf8.decode() instead of converting
                       Text(
-                        utf8.decoder.convert(evenementModel.lieu.codeUnits),
+                        utf8.decode(evenementModel.lieu.codeUnits, allowMalformed: true),
                         style: GoogleFonts.raleway(
                           fontSize: 16,
                           color: Colors.grey[600],
@@ -91,8 +91,9 @@ class DetailEvenements extends StatelessWidget {
                     children: [
                       const Icon(Icons.padding, color: Colors.grey),
                       const SizedBox(width: 8),
+                      // Decode using utf8.decode() instead of converting
                       Text(
-                        "A partir de 10.000 FCFA",
+                        evenementModel.prixTicketVVIP.toString(),
                         style: GoogleFonts.raleway(
                           fontSize: 16,
                           color: Colors.grey[600],
@@ -101,37 +102,21 @@ class DetailEvenements extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 8),
-                  // Row(
-                  //   children: [
-                  //     const Icon(Icons.person_rounded, color: Colors.grey),
-                  //     const SizedBox(width: 8),
-                  //     Text(
-                  //       evenementModel.promotteur,
-                  //       style: GoogleFonts.raleway(
-                  //         fontSize: 16,
-                  //         color: Colors.grey[600],
-                  //       ),
-                  //     ),
-                  //   ],
-                  // ),
-                  const SizedBox(height: 16),
-                  Text(
-                    'À propos de cet événement',
-                    style: GoogleFonts.raleway(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black87,
-                    ),
+                  Row(
+                    children: [
+                      const Icon(Icons.calendar_today, color: Colors.grey),
+                      const SizedBox(width: 8),
+                      // Decode using utf8.decode() instead of converting
+                      Text(
+                        formatDate(evenementModel.dateEvenement),
+                        style: GoogleFonts.raleway(
+                          fontSize: 16,
+                          color: Colors.grey[600],
+                        ),
+                      ),
+                    ],
                   ),
-                  const SizedBox(height: 8),
-                  // Text(
-                  //   utf8.decoder.convert(evenementModel.description!.codeUnits),
-                  //   style: GoogleFonts.raleway(
-                  //     fontSize: 16,
-                  //     color: Colors.black54,
-                  //     height: 1.4,
-                  //   ),
-                  // ),
+
                   const SizedBox(height: 24),
                   Center(
                     child: ElevatedButton(
@@ -251,7 +236,6 @@ class DetailEvenements extends StatelessWidget {
                   ),
                 ),
               ),
-
             ],
           ),
         );
