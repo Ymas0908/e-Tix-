@@ -4,7 +4,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 import '../../ressources/composants/Search_Input.dart';
-import '../../ressources/composants/responsive_grid.dart';
 import '../../ressources/constantes/appdefaults.dart';
 import '../../views_model/evenement_viewmodel.dart';
 import 'composants/card_evenement.dart';
@@ -24,8 +23,10 @@ class _EvenementsState extends State<Evenements> {
     super.initState();
     evenementViewModel = context.read<EvenementViewModel>();
     evenementViewModel.getAllEvenements();
-    evenementViewModel. nomEvenement.addListener(() {
-      evenementViewModel.getAllEvenements();
+
+    // Mise à jour des événements lorsque le texte change dans la barre de recherche
+    evenementViewModel.nomEvenement.addListener(() {
+      evenementViewModel.getLesEvenementsByNom(evenementViewModel.nomEvenement.text);
     });
   }
 
@@ -47,67 +48,54 @@ class _EvenementsState extends State<Evenements> {
           backgroundColor: const Color(0xff0D6EFD),
         ),
         body: Consumer<EvenementViewModel>(
-          builder: (context, viewModel, child) {
+          builder: (context, evenementViewModel, child) {
             return Padding(
               padding: EdgeInsets.symmetric(horizontal: AppDefaults.padding),
               child: Column(
                 children: [
                   const SizedBox(height: 10),
+                  // Bar de recherche
                   SearchInput(
-                    controller: viewModel.nomEvenement,
+                    controller: evenementViewModel.nomEvenement,
                     placeholder: 'Rechercher un événement',
-
-
                     icon: const Icon(Icons.search),
                   ),
                   const SizedBox(height: 10),
+                  // Affichage du nombre d'événements trouvés
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: AppDefaults.padding),
                     child: Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        '  ${evenementViewModel.evenements.length} évènements trouvés', // Ajoute le nombre d'événements
+                        '${evenementViewModel.evenements.length} évènements trouvés',
                         style: GoogleFonts.raleway(fontWeight: FontWeight.bold),
-                      ),                    ),
+                      ),
+                    ),
                   ),
-                   SizedBox(height: 10),
+                  const SizedBox(height: 10),
+                  // Affichage de la liste des événements
                   Expanded(
-                    child: Consumer<EvenementViewModel>(
-                      builder: (context, evenementViewModel, _) {
-                        if (evenementViewModel.isLoading) {
-                          return const Center(child: CircularProgressIndicator());
-                        }
-
-                        if (evenementViewModel.evenements.isEmpty) {
-                          return Center(
-                            child: Text(
-                              'Aucun événement disponible.',
-                              style: GoogleFonts.raleway(
-                                textStyle: const TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20,
-                                ),
-                              ),
-                            ),
-                          );
-                        }
-
-                        return ListView.builder(
-                          itemCount: evenementViewModel.evenements.length,
-                          itemBuilder: (context, index) {
-                            return CardEvenement(
-                              evenementModel: evenementViewModel.evenements[index],
-                            );
-                          },
+                    child: evenementViewModel.isLoading
+                        ? const Center(child: CircularProgressIndicator())
+                        : evenementViewModel.evenements.isEmpty
+                        ? Center(
+                      child: Text(
+                        'Aucun événement disponible.',
+                        style: GoogleFonts.raleway(
+                          textStyle: const TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                          ),
+                        ),
+                      ),
+                    )
+                        : ListView.builder(
+                      itemCount: evenementViewModel.evenements.length,
+                      itemBuilder: (context, index) {
+                        return CardEvenement(
+                          evenementModel: evenementViewModel.evenements[index],
                         );
-
-                        // Alternative: affichage en grille (décommenter si besoin)
-                        // return ResponsiveGrid(
-                        //   children: evenementViewModel.evenements.map((evenement) {
-                        //     return CardEvenement(evenementModel: evenement);
-                        //   }).toList(),
-                        // );
                       },
                     ),
                   ),

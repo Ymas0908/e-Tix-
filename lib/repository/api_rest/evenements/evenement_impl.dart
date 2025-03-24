@@ -34,10 +34,32 @@ class EvenementImpl implements IEvenementRepository {
     }
     }
 
+  @override
+  Future<Either<Object, List<EvenementModel>>> getLesEvenementsByNom(String nom) async {
 
+    try{
+      String url = "$baseUrl/getLesEvenementsByNom/$nom";
+      http.Response response = await http.get(Uri.parse(url));
+      if ( response.statusCode == 200 ) {
+        print("*******succes: ${response.body}");
+        Map<String, dynamic> data  = json.decode(response.body);
+        return Right(List<EvenementModel>.from(data["body"].map((x) => EvenementModel.fromJson(x))));
+      } else {
+        print('*******error: ${response.statusCode}');
+        return Left(Failure(code: response.statusCode, message: "Error"));
+      }
+    } on Exception catch (e) {
+      print("*******exeption: ${e.toString()}");
+      return Left(Failure(code: 0, message: e.toString()));
+    }
+  }
 
 
   }
+
+
+
+
 
 
 
