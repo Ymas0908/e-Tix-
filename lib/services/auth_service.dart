@@ -17,7 +17,7 @@ class AuthService {
 
       await Future.delayed(const Duration(seconds: 1));
       Navigator.pushReplacement(context,
-          MaterialPageRoute(builder: (BuildContext context) => const Home()));
+          MaterialPageRoute(builder: (BuildContext context) =>  Home()));
     } on FirebaseAuthException catch (e) {
       String message = '';
       if (e.code == 'weak-password') {
@@ -48,7 +48,7 @@ class AuthService {
 
       await Future.delayed(const Duration(seconds: 1));
       Navigator.pushReplacement(context,
-          MaterialPageRoute(builder: (BuildContext context) => const Home()));
+          MaterialPageRoute(builder: (BuildContext context) =>   Home()));
     } on FirebaseAuthException catch (e) {
       String message = '';
       if (e.code == 'invalid-email') {

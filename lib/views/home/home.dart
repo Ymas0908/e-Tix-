@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:my_app/views/pageacceuil.dart';
+import 'package:provider/provider.dart';
+import 'package:firebase_auth/firebase_auth.dart'; // Ajouté pour Firebase Auth
+
+import '../../ressources/composants/Search_Input.dart';
+import '../../ressources/constantes/appdefaults.dart';
 import '../../services/auth_service.dart';
+import '../../views_model/evenement_viewmodel.dart';
+import '../evenements/composants/card_evenement.dart';
 import '../evenements/evenements.dart';
-import '../evenements/evenements_a_venir_view.dart';
-import '../evenements/evenements_populaires_view.dart';
 import '../login/login.dart';
 import '../messages/messages.dart';
+import '../profile/profil-setting.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -16,31 +22,25 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  final List<Map<String, dynamic>> upcomingEvents = [
-    {
-      'title': 'Concert Jazz Festival',
-      'date': '15 Dec 2024',
-      'location': 'Palais des Congrès',
-      'price': '50€',
-      'image': 'assets/images/jazz.jpg'
-    },
-    {
-      'title': 'Match de Football',
-      'date': '20 Dec 2024',
-      'location': 'Stade Municipal',
-      'price': '35€',
-      'image': 'assets/images/football.jpg'
-    },
-    // Ajoutez plus d'événements ici
-  ];
+  late EvenementViewModel evenementViewModel;
+  int _currentIndex = 0; // 📌 Gestion de l'index pour afficher la bonne page
 
-  final List<String> categories = [
-    'Tous',
-    'Concerts',
-    'Sport',
-    'Théâtre',
-    'Festivals',
-    'Cinéma'
+  @override
+  void initState() {
+    super.initState();
+    evenementViewModel = context.read<EvenementViewModel>();
+    evenementViewModel.getAllEvenements();
+    evenementViewModel.nomEvenement.addListener(() {
+      evenementViewModel.getLesEvenementsByNom(evenementViewModel.nomEvenement.text);
+    });
+  }
+
+  // 📌 Liste des vues associées aux onglets du `BottomNavigationBar`
+  final List<Widget> _pages = [
+    HomeContent(), // 🏠 Page d'accueil avec événements
+    Evenements(), // 🌍 Page d'exploration des événements
+    Messages(), // 🗺️ Page des messages
+    Profilsetting(), // 👤 Page des paramètres du profil
   ];
 
   int selectedCategoryIndex = 0;
@@ -50,14 +50,15 @@ class _HomeState extends State<Home> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text('e-Tix',
-            style: GoogleFonts.raleway(
-              textStyle: const TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
-              ),
-            )
+        title: Text(
+          'e-Tix',
+          style: GoogleFonts.raleway(
+            textStyle: const TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+            ),
+          ),
         ),
         backgroundColor: const Color(0xff0D6EFD),
         leading: Builder(
@@ -71,73 +72,31 @@ class _HomeState extends State<Home> {
             );
           },
         ),
-        actions: [
-          IconButton(
-            color: Colors.white,
 
-            icon: const Icon(Icons.search),
-            onPressed: () {
-              // Implémenter la recherche
-            },
-          ),
-          IconButton(
-            icon: const Icon(Icons.notifications_none),
-            onPressed: () {
-              // Implémenter les notifications
-            },
-          ),
-        ],
       ),
       drawer: _buildDrawer(context),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center, // Centre verticalement
-              crossAxisAlignment: CrossAxisAlignment.center, // Centre horizontalement
-              children: [
-                // Message de bienvenue
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center, // Centre horizontalement dans Row
-                  children: [
-                    Text(
-                      'Bienvenue, ',
-                      style: GoogleFonts.raleway(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const Icon(Icons.waving_hand, color: Colors.amber),
-                  ],
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  FirebaseAuth.instance.currentUser!.email!.toString(),
-                  style: GoogleFonts.raleway(
-                    fontSize: 16,
-                    color: Colors.grey[600],
-                  ),
-                ),
-                const SizedBox(height: 24),
-
-                // Exemple pour la zone d'événements
-                SizedBox(
-                  height: 200,
-                  child: Center(
-                    child: Text(
-                      'Aucun événement pour le moment',
-                      style: GoogleFonts.raleway(fontSize: 16, color: Colors.grey),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
+      body: _pages[_currentIndex], // 📌 Affichage dynamique des pages
+      bottomNavigationBar: BottomNavigationBar(
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.dashboard), label: 'Acceuil'),
+          BottomNavigationBarItem(icon: Icon(Icons.explore), label: 'Explore'),
+          BottomNavigationBarItem(icon: Icon(Icons.message), label: 'Messages'),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profil'), // 📌 Icône Profil
+        ],
+        currentIndex: _currentIndex,
+        selectedItemColor: const Color(0xff0D6EFD),
+        unselectedItemColor: Colors.grey,
+        showUnselectedLabels: true,
+        onTap: (index) {
+          setState(() {
+            _currentIndex = index; // 📌 Mise à jour de l'index lors du clic
+          });
+        },
       ),
     );
   }
+
+  // Méthode de déconnexion
 
   Widget _buildDrawer(BuildContext context) {
     return Drawer(
@@ -160,114 +119,102 @@ class _HomeState extends State<Home> {
                 ),
               ),
             ),
-            const SizedBox(height: 50),
-            ListTile(
-              leading: const Icon(Icons.message, color: Color(0xff0D6EFD)),
-              title: Text(
-                'Messages',
-                style: GoogleFonts.raleway(
-                  fontSize: 16,
-                ),
-              ),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => Messages()),
-                );
-              },
-            ),
-            // ListTile(
-            //   leading: const Icon(Icons.event, color: Color(0xff0D6EFD)),
-            //   title: Text(
-            //     'Evénements à venir',
-            //     style: GoogleFonts.raleway(
-            //       fontSize: 16,
-            //     ),
-            //   ),
-            //   onTap: () {
-            //     Navigator.push(
-            //       context,
-            //       MaterialPageRoute(builder: (context) => EvenementsAVenirView()),
-            //     );
-            //   },
-            // ),
-            // ListTile(
-            //   leading: const Icon(Icons.event, color: Color(0xff0D6EFD)),
-            //   title: Text(
-            //     'Evénements populaires',
-            //     style: GoogleFonts.raleway(
-            //       fontSize: 16,
-            //     ),
-            //   ),
-            //   onTap: () {
-            //     Navigator.push(
-            //       context,
-            //       MaterialPageRoute(builder: (context) => EvenementsPopulairesView()),
-            //     );
-            //   },
-            // ),
-            ListTile(
-              leading: const Icon(Icons.event, color: Color(0xff0D6EFD)),
-              title: Text(
-                'Evénements ',
-                style: GoogleFonts.raleway(
-                  fontSize: 16,
-                ),
-              ),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => Evenements()),
-                );
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.settings, color: Color(0xff0D6EFD)),
-              title: Text(
-                'Paramètres',
-                style: GoogleFonts.raleway(
-                  fontSize: 16,
-                ),
-              ),
-              onTap: () {
-                Navigator.pushNamed(context, '/settings');
-              },
-            ),
-            const Spacer(),
-            _logout(context),
+            // Ajoutez d'autres éléments de menu ici, s'ils existent
+            const Spacer(), // Ajoute un espacement flexible qui pousse le bouton vers le bas
+            _logout(context), // Déconnexion en bas du Drawer
+            const SizedBox(height: 16),
           ],
         ),
       ),
     );
   }
-
-  Widget _logout(BuildContext context) {
-    return ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        backgroundColor: const Color(0xff0D6EFD),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(14),
-        ),
-        minimumSize: const Size(double.infinity, 60),
-        elevation: 0,
+}
+Widget _logout(BuildContext context) {
+  return ElevatedButton(
+    style: ElevatedButton.styleFrom(
+      backgroundColor: const Color(0xff0D6EFD),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(14),
       ),
-      onPressed: () async {
-        await AuthService().signout(context: context);
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => Login()),
-        );
-      },
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+      minimumSize: const Size(double.infinity, 60),
+      elevation: 0,
+    ),
+    onPressed: () async {
+      await AuthService().signout(context: context);
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => Pageacceuil()),
+      );
+    },
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        const Icon(Icons.logout, color: Colors.white),
+        const SizedBox(width: 10),
+        Text(
+          "Se déconnecter",
+          style: GoogleFonts.raleway(
+            color: Colors.white,
+            fontSize: 16,
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
+
+// 🏠 **Page d'accueil avec la liste des événements**
+class HomeContent extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final evenementViewModel = context.watch<EvenementViewModel>();
+
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: AppDefaults.padding),
+      child: Column(
         children: [
-          const Icon(Icons.logout, color: Colors.white),
-          const SizedBox(width: 10),
-          Text(
-            "Se déconnecter",
-            style: GoogleFonts.raleway(
-              color: Colors.white,
-              fontSize: 16,
+          const SizedBox(height: 10),
+          SearchInput(
+            controller: evenementViewModel.nomEvenement,
+            placeholder: 'Rechercher un événement',
+            icon: const Icon(Icons.search),
+          ),
+          const SizedBox(height: 10),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: AppDefaults.padding),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                '${evenementViewModel.evenements.length} événements trouvés',
+                style: GoogleFonts.raleway(fontWeight: FontWeight.bold),
+              ),
+            ),
+          ),
+          const SizedBox(height: 10),
+          Expanded(
+            child: evenementViewModel.isLoading
+                ? const Center(child: CircularProgressIndicator())
+                : evenementViewModel.evenements.isEmpty
+                ? Center(
+              child: Text(
+                'Aucun événement disponible.',
+                style: GoogleFonts.raleway(
+                  textStyle: const TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  ),
+                ),
+              ),
+            )
+                : ListView.builder(
+              itemCount: evenementViewModel.evenements.length,
+              itemBuilder: (context, index) {
+                return CardEvenement(
+                  evenementModel: evenementViewModel.evenements[index],
+                );
+              },
             ),
           ),
         ],

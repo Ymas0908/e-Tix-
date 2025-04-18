@@ -5,6 +5,7 @@ import 'enum/type_ticket.dart';
 class EvenementModel {
   int? id;
   String? nom;
+  String? libelle;
   String? imageData;
   String description;
   String lieu;
@@ -18,6 +19,7 @@ class EvenementModel {
   EvenementModel({
     this.id,
     required this.nom,
+    required this.libelle,
     this.imageData,
     required this.description,
     required this.lieu,
@@ -33,6 +35,7 @@ class EvenementModel {
     return EvenementModel(
       id: json['id'],
       nom: json['nom'],
+      libelle: json['libelle'],
       description: json['description'],
       lieu: json['lieu'],
       dateEvenement: DateTime.parse(json['dateEvenement']),
@@ -50,10 +53,11 @@ class EvenementModel {
     return {
       'id': id,
       'nom': nom,
+      'libelle': libelle,
       'description': description,
       'lieu': lieu,
-      'dateEvenement': dateEvenement.toIso8601String(),
-      'dateHeureCreation': dateHeureCreation.toIso8601String(),
+      'dateEvenement': dateEvenement,
+      'dateHeureCreation': dateHeureCreation,
       'typeEvenement': typeEvenement.name,
       'prixTicketGP': prixTicketGP,
       'prixTicketVIP': prixTicketVIP,

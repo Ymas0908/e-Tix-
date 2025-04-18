@@ -4,7 +4,6 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../services/auth_service.dart';
 import '../resetpassword/resetpassaword.dart';
-import '../signup/signup.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -17,9 +16,7 @@ class _LoginState extends State<Login> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final RegExp _emailRegExp = RegExp(
-    r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$",
-  );
+  final RegExp _emailRegExp = RegExp(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$");
   bool _obscureText = true;
 
   void _togglePasswordView() {
@@ -31,100 +28,114 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      resizeToAvoidBottomInset: true,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        automaticallyImplyLeading: true, // pour afficher la flèche de retour
         elevation: 0,
         toolbarHeight: 50,
-      ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Center(
-                child: Text(
-                  'e-Tix',
-                  style: GoogleFonts.raleway(
-                      textStyle: const TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 25)),
-                ),
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              Text(
-                "Connectez-vous pour continuer",
-                style: GoogleFonts.raleway(
-                    textStyle: const TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.normal,
-                        fontSize: 16)),
-              ),
-              const SizedBox(
-                height: 50,
-              ),
-              _emailAddress(),
-              const SizedBox(
-                height: 20,
-              ),
-              _password(),
-              _forgortPassword(context),
-              const SizedBox(
-                height: 50,
-              ),
-              _signin(context),
-
-            ],
+        backgroundColor: Colors.transparent,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () => Navigator.pop(context),
+        ),
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Color(0xFF0F65D4), Color(0xFF052A6E)],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
           ),
         ),
+      ),
+
+      body: Stack(
+        children: [
+          // Fond dégradé
+          Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                colors: [Color(0xFF0F65D4), Color(0xFF052A6E)],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+            ),
+          ),
+
+          // Bulles décoratives
+          Positioned(top: 80, left: 30, child: _buildBubble(60)),
+          Positioned(top: 200, right: 50, child: _buildBubble(40)),
+          Positioned(bottom: 150, left: 60, child: _buildBubble(70)),
+          Positioned(bottom: 300, right: 30, child: _buildBubble(90)),
+
+          // Formulaire
+          SingleChildScrollView(
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 60),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  Center(
+                    child: Text(
+                      'e-Tix',
+                      style: GoogleFonts.poppins(
+                        fontSize: 32,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  Text(
+                    "Connectez-vous pour continuer",
+                    style: GoogleFonts.poppins(
+                      fontSize: 14,
+                      color: Colors.white70,
+                    ),
+                  ),
+                  const SizedBox(height: 50),
+                  _emailAddress(),
+                  const SizedBox(height: 20),
+                  _password(),
+                  _forgotPassword(context),
+                  const SizedBox(height: 40),
+                  _signin(context),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
 
   Widget _emailAddress() {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           'Adresse e-mail',
-          style: GoogleFonts.raleway(
-              textStyle: const TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.normal,
-                  fontSize: 16)),
+          style: GoogleFonts.poppins(
+            fontSize: 16,
+            color: Colors.white,
+          ),
         ),
-        const SizedBox(
-          height: 16,
-        ),
+        const SizedBox(height: 10),
         TextFormField(
-          style: GoogleFonts.raleway(
-              textStyle: const TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.normal,
-                  fontSize: 16)),
           controller: _emailController,
+          style: const TextStyle(color: Colors.white),
           decoration: InputDecoration(
             hintText: 'Saisir votre adresse e-mail',
+            hintStyle: const TextStyle(color: Colors.white70),
             filled: true,
-            fillColor: const Color(0xffF7F7F9),
+            fillColor: Colors.white.withOpacity(0.2),
             border: OutlineInputBorder(
-                borderSide: BorderSide.none,
-                borderRadius: BorderRadius.circular(14)),
+              borderRadius: BorderRadius.circular(14),
+              borderSide: BorderSide.none,
+            ),
           ),
           validator: (value) {
-            if (value == null || value.isEmpty) {
-              return 'Veuillez entrer une adresse e-mail';
-            }
-            if (!_emailRegExp.hasMatch(value)) {
-              return 'Veuillez entrer une adresse e-mail valide';
-            }
+            if (value == null || value.isEmpty) return 'Veuillez entrer une adresse e-mail';
+            if (!_emailRegExp.hasMatch(value)) return 'Veuillez entrer une adresse e-mail valide';
             return null;
           },
         ),
@@ -134,50 +145,40 @@ class _LoginState extends State<Login> {
 
   Widget _password() {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           'Mot de passe',
-          style: GoogleFonts.raleway(
-              textStyle: const TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.normal,
-                  fontSize: 16)),
+          style: GoogleFonts.poppins(
+            fontSize: 16,
+            color: Colors.white,
+          ),
         ),
-        const SizedBox(
-          height: 16,
-        ),
+        const SizedBox(height: 10),
         TextFormField(
-          style: GoogleFonts.raleway(
-              textStyle: const TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.normal,
-                  fontSize: 16)),
           controller: _passwordController,
-          obscureText: _obscureText, // Masquage du mot de passe
+          obscureText: _obscureText,
+          style: const TextStyle(color: Colors.white),
           decoration: InputDecoration(
             hintText: 'Saisir votre mot de passe',
+            hintStyle: const TextStyle(color: Colors.white70),
             filled: true,
-            fillColor: const Color(0xffF7F7F9),
+            fillColor: Colors.white.withOpacity(0.2),
             border: OutlineInputBorder(
-                borderSide: BorderSide.none,
-                borderRadius: BorderRadius.circular(14)),
+              borderRadius: BorderRadius.circular(14),
+              borderSide: BorderSide.none,
+            ),
             suffixIcon: IconButton(
               icon: Icon(
                 _obscureText ? Icons.visibility : Icons.visibility_off,
-                color: Colors.grey,
+                color: Colors.white,
               ),
-              onPressed: _togglePasswordView, // Basculer la visibilité
+              onPressed: _togglePasswordView,
             ),
           ),
           validator: (value) {
-            if (value == null || value.isEmpty) {
-              return 'Veuillez entrer un mot de passe';
-            }
-            if (value.length < 5) {
-              return 'Le mot de passe doit contenir au moins 5 caractères';
-            }
+            if (value == null || value.isEmpty) return 'Veuillez entrer un mot de passe';
+            if (value.length < 5) return 'Le mot de passe doit contenir au moins 5 caractères';
             return null;
           },
         ),
@@ -185,29 +186,21 @@ class _LoginState extends State<Login> {
     );
   }
 
-  Widget _forgortPassword(BuildContext context) {
+  Widget _forgotPassword(BuildContext context) {
     return Align(
       alignment: Alignment.centerRight,
       child: TextButton(
         onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (BuildContext context) => ResetPassword(),
-            ),
-          );
-           AuthService().resetPassword
-             (email: _emailController.text,
-             context: context,
-           );
+          Navigator.push(context, MaterialPageRoute(builder: (_) => ResetPassword()));
+          AuthService().resetPassword(email: _emailController.text, context: context);
         },
         child: Text(
           'Mot de passe oublié ?',
-          style: GoogleFonts.raleway(
-              textStyle: const TextStyle(
-                  color: Color(0xff0D6EFD),
-                  fontWeight: FontWeight.normal,
-                  fontSize: 14)),
+          style: GoogleFonts.poppins(
+            fontSize: 14,
+            color: Colors.white70,
+            decoration: TextDecoration.underline,
+          ),
         ),
       ),
     );
@@ -216,16 +209,14 @@ class _LoginState extends State<Login> {
   Widget _signin(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        backgroundColor: const Color(0xff0D6EFD),
+        backgroundColor: Colors.white,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(14),
+          borderRadius: BorderRadius.circular(20),
         ),
-        minimumSize: const Size(double.infinity, 60),
-        elevation: 0,
+        padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 50),
       ),
       onPressed: () {
         if (_formKey.currentState?.validate() ?? false) {
-          // Process data
           AuthService().signin(
             email: _emailController.text,
             password: _passwordController.text,
@@ -233,30 +224,25 @@ class _LoginState extends State<Login> {
           );
         }
       },
-
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Icon(
-            Icons.login,
-            color: Colors.white,
-          ),
-          const SizedBox(
-            width: 10,
-          ),
-          Text(
-            "Se connecter",
-            style: GoogleFonts.raleway(
-              textStyle: const TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.normal,
-                fontSize: 16,
-              ),
-            ),
-          ),
-        ],
+      child: Text(
+        "Se connecter",
+        style: GoogleFonts.poppins(
+          fontSize: 16,
+          color: Colors.blue.shade900,
+          fontWeight: FontWeight.bold,
+        ),
       ),
     );
   }
 
+  Widget _buildBubble(double size) {
+    return Container(
+      width: size,
+      height: size,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: Colors.white.withOpacity(0.3),
+      ),
+    );
+  }
 }

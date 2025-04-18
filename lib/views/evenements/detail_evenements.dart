@@ -5,7 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:my_app/models/evenement_model.dart';
 
 import '../../ressources/constantes/formarCurrency.dart';
-import '../../ressources/format_date.dart';
+import '../../ressources/constantes/format_date.dart';
 
 class DetailEvenements extends StatelessWidget {
   final EvenementModel evenementModel;

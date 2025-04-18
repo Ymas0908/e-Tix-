@@ -18,7 +18,6 @@ class EvenementViewModel extends ChangeNotifier {
 
 
   List<EvenementModel> evenements = [];
-  List<EvenementModel> evenements2 = [];
   // List<TypeTicket> TypeTickets = [];
 
 

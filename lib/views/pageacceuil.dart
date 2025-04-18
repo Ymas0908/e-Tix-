@@ -1,97 +1,120 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:my_app/views/login/login.dart';
 import 'package:my_app/views/signup/signup.dart';
 
-import 'login/login.dart';
+
 
 class Pageacceuil extends StatelessWidget {
-  const Pageacceuil({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      resizeToAvoidBottomInset: true,
-      body: Center(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              const SizedBox(
-                height: 20,
-              ),
-              Center(
-                child: Text(
-                  'Bienvenue sur e-Tix',
-                  style: GoogleFonts.raleway(
-                      textStyle: const TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 25)),
-                ),
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              Text(
-                "Votre application de gestion de tickets évenementiel.",
-                style: GoogleFonts.raleway(
-                    textStyle: const TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.normal,
-                        fontSize: 16)),
-              ),
-              const SizedBox(
-                height: 50,
-              ),
-              _signin(context),
-              const SizedBox(
-                height: 51,
-              ),
-              _signup(context)
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _signin(BuildContext context) {
-    return ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        backgroundColor: const Color(0xff0D6EFD),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(14),
-        ),
-        minimumSize: const Size(double.infinity, 60),
-        elevation: 0,
-      ),
-      onPressed: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (BuildContext context) => const Login(),
-          ),
-        );
-      },
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+      body: Stack(
         children: [
-          const Icon(
-            Icons.login,
-            color: Colors.white,
+          // Fond bleu avec dégradé
+          Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                colors: [Color(0xFF0F65D4), Color(0xFF052A6E)],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+            ),
           ),
-          const SizedBox(
-            width: 10,
-          ),
-          Text(
-            "Connexion",
-            style: GoogleFonts.raleway(
-              textStyle: const TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.normal,
-                fontSize: 16,
+
+          // Bulles de décoration
+          Positioned(top: 80, left: 30, child: _buildBubble(60)),
+          Positioned(top: 200, right: 50, child: _buildBubble(40)),
+          Positioned(bottom: 150, left: 60, child: _buildBubble(70)),
+          Positioned(bottom: 300, right: 30, child: _buildBubble(90)),
+
+          // Contenu principal
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Bienvenue sur \neTix !",
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.poppins(
+                      fontSize: 32,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  Text(
+                    "Votre application de gestion de tickets évenementiels.",
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.poppins(
+                      fontSize: 14,
+                      color: Colors.white70,
+                    ),
+                  ),
+                  const SizedBox(height: 40),
+
+                  // Bouton "Sign up"
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Signup()),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 15,
+                        horizontal: 50,
+                      ),
+                    ),
+                    child: Text(
+                      "S'inscrire",
+                      style: GoogleFonts.poppins(
+                        fontSize: 16,
+                        color: Colors.blue.shade900,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+
+                  const SizedBox(height: 10),
+
+                  // Texte "Sign in"
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Login()),
+                      );
+
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 15,
+                        horizontal: 50,
+                      ),
+                    ),
+                    child: Text(
+                      "Se connecter",
+                      style: GoogleFonts.poppins(
+                        fontSize: 16,
+                        color: Colors.blue.shade900,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+
+                ],
               ),
             ),
           ),
@@ -100,45 +123,13 @@ class Pageacceuil extends StatelessWidget {
     );
   }
 
-  Widget _signup(BuildContext context) {
-    return ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        backgroundColor: const Color(0xff0D6EFD),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(14),
-        ),
-        minimumSize: const Size(double.infinity, 60),
-        elevation: 0,
-      ),
-      onPressed: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (BuildContext context) => const Signup(),
-          ),
-        );
-      },
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Icon(
-            Icons.person_add,
-            color: Colors.white,
-          ),
-          const SizedBox(
-            width: 10,
-          ),
-          Text(
-            "Inscription",
-            style: GoogleFonts.raleway(
-              textStyle: const TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.normal,
-                fontSize: 16,
-              ),
-            ),
-          ),
-        ],
+  Widget _buildBubble(double size) {
+    return Container(
+      width: size,
+      height: size,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: Colors.white.withOpacity(0.3),
       ),
     );
   }

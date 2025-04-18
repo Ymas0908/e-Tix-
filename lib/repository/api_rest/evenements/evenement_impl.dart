@@ -18,7 +18,7 @@ class EvenementImpl implements IEvenementRepository {
    */
     Future<Either<Object, List<EvenementModel>>> getAllEvenements() async {
     try{
-      String url = "$baseUrl/getAllEvenements";
+      String url = "$baseUrl/getAllEvenements/";
       http.Response response = await http.get(Uri.parse(url));
       if ( response.statusCode == 200 ) {
         print("*******succes: ${response.body}");

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../models/evenement_model.dart';
-import '../../../ressources/format_date.dart';
+import '../../../ressources/constantes/format_date.dart';
 import '../detail_evenements.dart';
 
 class CardEvenement extends StatelessWidget {

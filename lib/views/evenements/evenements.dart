@@ -34,19 +34,6 @@ class _EvenementsState extends State<Evenements> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-          title: Text(
-            'Événements',
-            style: GoogleFonts.raleway(
-              textStyle: const TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
-              ),
-            ),
-          ),
-          backgroundColor: const Color(0xff0D6EFD),
-        ),
         body: Consumer<EvenementViewModel>(
           builder: (context, evenementViewModel, child) {
             return Padding(
