@@ -22,13 +22,19 @@ class _EvenementsState extends State<Evenements> {
   void initState() {
     super.initState();
     evenementViewModel = context.read<EvenementViewModel>();
-    evenementViewModel.getAllEvenements();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
 
-    // Mise à jour des événements lorsque le texte change dans la barre de recherche
-    evenementViewModel.nomEvenement.addListener(() {
-      evenementViewModel.getLesEvenementsByNom(evenementViewModel.nomEvenement.text);
+
+      if (evenementViewModel.evenements.isEmpty) {
+        evenementViewModel.getLesEvenementsByNom(context);
+      }
+
+      if (evenementViewModel.evenements.isEmpty) {
+        evenementViewModel.getEvenementBylibelle(context);
+      }
     });
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -42,10 +48,34 @@ class _EvenementsState extends State<Evenements> {
                 children: [
                   const SizedBox(height: 10),
                   // Bar de recherche
-                  SearchInput(
-                    controller: evenementViewModel.nomEvenement,
-                    placeholder: 'Rechercher un événement',
-                    icon: const Icon(Icons.search),
+                  TextField(
+                    onChanged: evenementViewModel.filterEvenements,
+                    keyboardType: TextInputType.text,
+                    style: const TextStyle(
+                        fontFamily: 'Poppins',
+                        fontSize: 14,
+                        color: Colors.black),
+                    enableInteractiveSelection: true,
+                    showCursor: true,
+                    controller: evenementViewModel.searchEventController,
+                    decoration: InputDecoration(
+                      suffixIcon: evenementViewModel
+                          .searchEventController.text.isNotEmpty
+                          ? IconButton(
+                        icon: const Icon(Icons.clear),
+                        onPressed: () =>
+                            evenementViewModel.searchEventController.clear(),
+                      )
+                          : null,
+                      prefixIcon: const Icon(Icons.search),
+                      border: OutlineInputBorder(
+                          borderSide: const BorderSide(
+                            color: Colors.grey,
+                            width: 0.5,
+                          ),
+                          borderRadius: BorderRadius.circular(10)),
+                      hintText: 'Rechercher un événement',
+                    ),
                   ),
                   const SizedBox(height: 10),
                   // Affichage du nombre d'événements trouvés
@@ -62,7 +92,7 @@ class _EvenementsState extends State<Evenements> {
                   const SizedBox(height: 10),
                   // Affichage de la liste des événements
                   Expanded(
-                    child: evenementViewModel.isLoading
+                    child: evenementViewModel.isEventLoading
                         ? const Center(child: CircularProgressIndicator())
                         : evenementViewModel.evenements.isEmpty
                         ? Center(

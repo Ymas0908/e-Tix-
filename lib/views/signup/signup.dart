@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:my_app/views/pageacceuil.dart';
 
 import '../../ressources/composants/LoadingDialog.dart';
-import '../../services/auth_service.dart';
+import '../../web_services/services/auth_service.dart';
 import '../home/home.dart';
 import '../login/login.dart';
 

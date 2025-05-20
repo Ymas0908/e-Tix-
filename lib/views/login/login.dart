@@ -2,7 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../services/auth_service.dart';
+import '../../web_services/services/auth_service.dart';
 import '../resetpassword/resetpassaword.dart';
 
 class Login extends StatefulWidget {
@@ -33,10 +33,6 @@ class _LoginState extends State<Login> {
         elevation: 0,
         toolbarHeight: 50,
         backgroundColor: Colors.transparent,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () => Navigator.pop(context),
-        ),
         flexibleSpace: Container(
           decoration: const BoxDecoration(
             gradient: LinearGradient(
@@ -125,7 +121,7 @@ class _LoginState extends State<Login> {
           style: const TextStyle(color: Colors.white),
           decoration: InputDecoration(
             hintText: 'Saisir votre adresse e-mail',
-            hintStyle: const TextStyle(color: Colors.white70),
+            hintStyle: GoogleFonts.poppins(color: Colors.white70),
             filled: true,
             fillColor: Colors.white.withOpacity(0.2),
             border: OutlineInputBorder(
@@ -139,6 +135,7 @@ class _LoginState extends State<Login> {
             return null;
           },
         ),
+
       ],
     );
   }
@@ -161,7 +158,7 @@ class _LoginState extends State<Login> {
           style: const TextStyle(color: Colors.white),
           decoration: InputDecoration(
             hintText: 'Saisir votre mot de passe',
-            hintStyle: const TextStyle(color: Colors.white70),
+            hintStyle: GoogleFonts.poppins(color: Colors.white70),
             filled: true,
             fillColor: Colors.white.withOpacity(0.2),
             border: OutlineInputBorder(
@@ -176,11 +173,6 @@ class _LoginState extends State<Login> {
               onPressed: _togglePasswordView,
             ),
           ),
-          validator: (value) {
-            if (value == null || value.isEmpty) return 'Veuillez entrer un mot de passe';
-            if (value.length < 5) return 'Le mot de passe doit contenir au moins 5 caractères';
-            return null;
-          },
         ),
       ],
     );
@@ -216,14 +208,40 @@ class _LoginState extends State<Login> {
         padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 50),
       ),
       onPressed: () {
-        if (_formKey.currentState?.validate() ?? false) {
-          AuthService().signin(
-            email: _emailController.text,
-            password: _passwordController.text,
-            context: context,
+        final email = _emailController.text.trim();
+        final password = _passwordController.text.trim();
+
+        // Vérification si les champs sont vides
+        if (email.isEmpty || password.isEmpty) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text("Veuillez remplir tous les champs."),
+              backgroundColor: Colors.red,
+            ),
           );
+          return;
         }
+
+        // Vérification si le mot de passe est trop court
+        if (password.length < 5) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text("Le mot de passe doit contenir au moins 5 caractères."),
+              backgroundColor: Colors.red,
+            ),
+          );
+          return;
+        }
+
+        // Vérification via le formulaire (si d'autres champs existent)
+        if (!(_formKey.currentState?.validate() ?? false)) {
+          return;
+        }
+
+        // Si tout est valide, on lance la connexion
+        AuthService().signin(email: email, password: password, context: context,);
       },
+
       child: Text(
         "Se connecter",
         style: GoogleFonts.poppins(

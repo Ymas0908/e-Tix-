@@ -2,98 +2,141 @@ import 'dart:core';
 import 'dart:core';
 
 import 'package:flutter/cupertino.dart';
-import 'package:my_app/models/enum/type_ticket.dart';
+import 'package:flutter/foundation.dart';
+import 'package:my_app/models/enum/type_evenement.dart';
+import 'package:my_app/web_services/services/evenement_service.dart';
+import 'package:my_app/web_services/services/paytech_sayement_service.dart';
+import 'package:provider/provider.dart';
 
 import '../models/evenement_model.dart';
-import '../repository/api_rest/evenements/evenement_impl.dart';
-import '../repository/api_rest/evenements/evenement_repo.dart';
-import '../repository/network/response.dart';
+
 
 class EvenementViewModel extends ChangeNotifier {
-  final IEvenementRepository evenementRepository = EvenementImpl();
-  TextEditingController nomEvenement = TextEditingController();
+  final EvenementService evenementService;
+  final PaytechPaymentService paymentService;
 
-  bool isLoading = false;
-  Failure? error;
+  EvenementViewModel({
+    required this.paymentService, required this.evenementService});
+
+  bool _isEventLoading = false;
+
+  bool get isEventLoading => _isEventLoading;
 
 
+  // void _seEventLoading(bool value) {
+  //   _isEventLoading = value;
+  //   notifyListeners();
+  // }
+
+  final TextEditingController searchEventController = TextEditingController();
   List<EvenementModel> evenements = [];
+  List<EvenementModel> _allEvenements = [];
+
+  EvenementModel? selectedEvenement;
+
   // List<TypeTicket> TypeTickets = [];
 
 
+  void setSelectedEvenement(EvenementModel evenement) {
+    selectedEvenement = evenement;
+    notifyListeners();
+  }
 
-Future<void> getAllEvenements() async {
-  var response = await evenementRepository.getAllEvenements();
-  response.fold(
-        (l) {
-      error = l as Failure?;
-      print('Error: $error');
-      isLoading = false;
+
+  Future<void> getAllEvenements() async {
+    try {
+      await evenementService.getAllEvenements();
       notifyListeners();
-    },
-        (r) {
-          evenements = r.cast<EvenementModel>(); //
-      isLoading = false; //
+      print(evenements.length.toString() + "   récupérés avec succès");
+    } catch (e) {
+      if (kDebugMode) {
+        print("Une erreur s'est produite: $e");
+      }
+    }
+  }
 
-      notifyListeners(); //
-    },
-  );
-}
+  Future<void> getLesEvenementsByNom(BuildContext context) async {
+    try {
+      String? nom = context
+          .read<EvenementViewModel>()
+          .selectedEvenement
+          ?.nom;
 
-Future<void> getLesEvenementsByNom(String nom) async {
-  var response = await evenementRepository.getLesEvenementsByNom(nom);
-  response.fold(
-        (l) {
-      error = l as Failure?;
-      print('Error: $error');
-      isLoading = false;
+      await evenementService.getLesEvenementsByNom(nom ?? '');
       notifyListeners();
-    },
-        (r) {
-          evenements = r.cast<EvenementModel>(); //
-      isLoading = false; //
-
-      notifyListeners(); //
-    },
-  );
-}
+      print(evenements.length.toString() + "   récupérés avec succès");
+    } catch (e) {
+      if (kDebugMode) {
+        print("Une erreur s'est produite: $e");
+      }
+    }
+  }
 
 
-  // Future<void> getEvenementBylibelle(String libelle) async {
-  //   var response = await evenementRepository.getEvenementBylibelle(libelle);
-  //   response.fold(
-  //         (l) {
-  //       error = l as Failure?;
-  //       print('Error: $error');
-  //       isLoading = false;
-  //       notifyListeners();
-  //     },
-  //         (r) {
-  //           evenements2 = r; //
-  //       isLoading = false; //
-  //
-  //       notifyListeners(); //
-  //     },
-  //   );
-  //   print('evenements : ${evenements.length}');
-  // }
+  Future<void> getEvenementBylibelle(BuildContext context) async {
+    try {
+      String? libelle = context
+          .read<EvenementViewModel>()
+          .selectedEvenement
+          ?.libelle;
+      await evenementService.getEvenementBylibelle(libelle ?? '');
+      notifyListeners();
+    } catch (e) {
+      if (kDebugMode) {
+        print("Une erreur s'est produite: $e");
+      }
+    }
 
-  // Future<void> getEvenementByTypeTicket(int idEvenement) async {
-  //   var response = await evenementRepository.getEvenementByTypeTicket(idEvenement);
-  //   response.fold(
-  //         (l) {
-  //       error = l as Failure?;
-  //       print('Error: $error');
-  //       isLoading = false;
-  //       notifyListeners();
-  //     },
-  //         (r) {
-  //           TypeTickets = r.cast<TypeTicket>(); //
-  //       isLoading = false; //
-  //
-  //       notifyListeners(); //
-  //     },
-  //   );
-  //   print('evenements : ${evenements.length}');
-  // }
+
+    Future<void> initierPaiement(BuildContext context) async {
+      try {
+        await paymentService.initierPaiement;
+        notifyListeners();
+      } catch (e) {
+        if (kDebugMode) {
+          print("Une erreur s'est produite: $e");
+        }
+      }
+    }
+  }
+
+  Future<void> filterEvenements(String searchTerm) async {
+    try {
+      final term = searchTerm.trim().toLowerCase();
+      print("Term: $term");
+      print("evenements length: ${evenements.length}");
+      print("m_evenements.length: ${evenements.length}");
+      if (term.isEmpty) {
+        evenements = [..._allEvenements];
+      } else {
+        evenements = _allEvenements.where((event) {
+          final libelle = event.libelle?.toLowerCase() ?? '';
+          return libelle.contains(term);
+        }).toList();
+      }
+    } catch (e) {
+      debugPrint('Erreur lors du filtrage: $e');
+      evenements = [..._allEvenements];
+    } finally {
+      notifyListeners();
+    }
+  }
+
+
+  List<EvenementModel> listeStubs = [
+    EvenementModel(
+      id: 1,
+      nom: "DIDI B en concert",
+      dateEvenement: DateTime.now(),
+      prixTicketGP: "",
+      prixTicketVIP: "",
+      dateHeureCreation: DateTime.now(),
+      prixTicketVVIP: "50",
+      typeEvenement: TypeEvenement.MATCH,
+      urlImage: "",
+      libelle: "DIDI B",
+      lieu: "Stade de Bouaké",
+      description: "Description 1",
+    ),
+  ];
 }

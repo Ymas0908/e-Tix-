@@ -150,6 +150,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_contacts:
+    dependency: "direct main"
+    description:
+      name: flutter_contacts
+      sha256: "388d32cd33f16640ee169570128c933b45f3259bddbfae7a100bb49e5ffea9ae"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.9+2"
   flutter_lints:
     dependency: "direct dev"
     description:
@@ -166,6 +174,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.9.3"
+  flutter_skeleton_ui:
+    dependency: "direct main"
+    description:
+      name: flutter_skeleton_ui
+      sha256: "2585c4af785dbdf38be3d8489c80e5a42798b720a4e9524cda05eb762abef39b"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.6"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -193,13 +209,13 @@ packages:
     source: hosted
     version: "5.1.0"
   http:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: http
-      sha256: b9c29a161230ee03d3ccf545097fccd9b87a5264228c5d348202e0f0c28f9010
+      sha256: "2c11f3f94c687ee9bad77c171151672986360b2b001d109814ee7140b2cf261b"
       url: "https://pub.dev"
     source: hosted
-    version: "1.2.2"
+    version: "1.4.0"
   http_parser:
     dependency: transitive
     description:
@@ -494,5 +510,5 @@ packages:
     source: hosted
     version: "1.1.0"
 sdks:
-  dart: ">=3.5.0 <4.0.0"
+  dart: ">=3.5.0 <3.22.0"
   flutter: ">=3.24.0"

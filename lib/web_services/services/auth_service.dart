@@ -2,11 +2,15 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-import '../views/home/home.dart';
-import '../views/login/login.dart';
+import '../../views/home/home.dart';
+import '../../views/login/login.dart';
 
 
 class AuthService {
+
+  /***
+   * Methode pour s'inscrire
+   */
   Future<void> signup(
       {required String email,
       required String password,
@@ -38,34 +42,48 @@ class AuthService {
 /*
  * Methode pour se connecter
  */
-  Future<void> signin(
-      {required String email,
-      required String password,
-      required BuildContext context}) async {
+  Future<void> signin({
+    required String email,
+    required String password,
+    required BuildContext context,
+  }) async {
     try {
       await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
 
       await Future.delayed(const Duration(seconds: 1));
-      Navigator.pushReplacement(context,
-          MaterialPageRoute(builder: (BuildContext context) =>   Home()));
+
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => Home()),
+      );
     } on FirebaseAuthException catch (e) {
       String message = '';
+
       if (e.code == 'invalid-email') {
-        message = 'Aucun compte n\'est associe à cette adresse email.';
+        message = 'Aucun compte n\'est associé à cette adresse email.';
       } else if (e.code == 'invalid-credential') {
         message = 'Mot de passe invalide.';
+      } else {
+        message = 'Erreur de connexion : ${e.message}';
       }
-      Fluttertoast.showToast(
-        msg: message,
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.SNACKBAR,
-        backgroundColor: Colors.black54,
-        textColor: Colors.white,
-        fontSize: 14.0,
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(message),
+          backgroundColor: Colors.red,
+        ),
       );
-    } catch (e) {}
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Une erreur est survenue. Veuillez réessayer.'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
   }
+
 /*
  * Methode pour déconnecter l'usager
  */

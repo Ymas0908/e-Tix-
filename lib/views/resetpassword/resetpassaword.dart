@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../services/auth_service.dart';
+import '../../web_services/services/auth_service.dart';
 
 class ResetPassword extends StatefulWidget {
   const ResetPassword({super.key});
