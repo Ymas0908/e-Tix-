@@ -60,10 +60,14 @@ class _HomeState extends State<Home> {
       ),
       drawer: _buildDrawer(context),
       body: RefreshIndicator(
-          onRefresh: () async {
-            await evenementViewModel.getAllEvenements();
-          },          child: HomeContent(),
-      backgroundColor: Colors.grey.shade200), // Affichage de la page d'accueil seulement
+        onRefresh: () async {
+          await evenementViewModel.getAllEvenements();
+        },
+        child: Container(
+          color: Colors.grey.shade100, // 🔹 Couleur de fond ici
+          child: HomeContent(),
+        ),
+      ),
     );
   }
 
@@ -193,11 +197,9 @@ class HomeContent extends StatelessWidget {
           padding: const EdgeInsets.all(8),
           sliver: SliverGrid.builder(
             itemCount: evenementViewModel.listeStubs.length,
-            gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+            gridDelegate:
+            const SliverGridDelegateWithMaxCrossAxisExtent(
               maxCrossAxisExtent: 200,
-              mainAxisSpacing: 10,
-              crossAxisSpacing: 10,
-              childAspectRatio: 0.75,
             ),
             itemBuilder: (context, index) {
               final event = evenementViewModel.listeStubs[index];
@@ -206,11 +208,11 @@ class HomeContent extends StatelessWidget {
                   if (!evenementViewModel.isEventLoading) {
                     evenementViewModel.setSelectedEvenement(event);
                     Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => DetailEvenements(),
-                      ),
-                    );
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                           DetailEvenements(),
+                        ));
                   }
                 },
                 child: Skeleton(
