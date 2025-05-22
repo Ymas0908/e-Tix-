@@ -246,7 +246,7 @@ class _LoginState extends State<Login> {
         "Se connecter",
         style: GoogleFonts.poppins(
           fontSize: 16,
-          color: Colors.blue.shade900,
+          color: Color(0xffD9AFA0),
           fontWeight: FontWeight.bold,
         ),
       ),

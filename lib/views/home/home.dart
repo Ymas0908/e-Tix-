@@ -10,6 +10,7 @@ import '../../ressources/composants/Search_Input.dart';
 import '../../ressources/constantes/appdefaults.dart';
 import '../../web_services/services/auth_service.dart';
 import '../../views_model/evenement_viewmodel.dart';
+import '../Test.dart';
 import '../evenements/composants/card_evenement.dart';
 
 class Home extends StatefulWidget {
@@ -26,7 +27,7 @@ class _HomeState extends State<Home> {
   void initState() {
     super.initState();
     evenementViewModel = context.read<EvenementViewModel>();
-    evenementViewModel.getAllEvenements();
+    evenementViewModel.getAllEvenements(context);
     evenementViewModel.getEvenementBylibelle(context);
   }
 
@@ -36,32 +37,78 @@ class _HomeState extends State<Home> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text(
-          'e-Tix',
-          style: GoogleFonts.raleway(
+          'Accueil',
+          style: GoogleFonts.poppins(
             textStyle: const TextStyle(
-              color: Colors.white,
+              color: Colors.black,
               fontWeight: FontWeight.bold,
               fontSize: 20,
             ),
           ),
         ),
-        backgroundColor: const Color(0xff0D6EFD),
-        leading: Builder(
-          builder: (BuildContext context) {
-            return IconButton(
-              color: Colors.white,
-              icon: const Icon(Icons.menu),
-              onPressed: () {
-                Scaffold.of(context).openDrawer();
-              },
+        backgroundColor: const Color(0xffD9AFA0),
+      ),
+      drawer: Drawer(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Center(
+                child: DrawerHeader(
+                  child: Text(
+                    'Menu',
+                    style: GoogleFonts.poppins(
+                      textStyle: const TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 24,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+        ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: const Color(0xffD9AFA0),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(14),
+            ),
+            minimumSize: const Size(double.infinity, 60),
+            elevation: 0,
+          ),
+          onPressed: () async {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Test()),
             );
           },
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Icon(Icons.logout, color: Colors.black),
+              const SizedBox(width: 10),
+              Text(
+                "Voir les évenements",
+                style: GoogleFonts.poppins(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
+            ],
+          ),
+        ),
+              const Spacer(),
+              _logout(context),
+              const SizedBox(height: 16),
+            ],
+          ),
         ),
       ),
-      drawer: _buildDrawer(context),
       body: RefreshIndicator(
         onRefresh: () async {
-          await evenementViewModel.getAllEvenements();
+          await evenementViewModel.getAllEvenements(context);
         },
         child: Container(
           color: Colors.grey.shade100, // 🔹 Couleur de fond ici
@@ -71,40 +118,12 @@ class _HomeState extends State<Home> {
     );
   }
 
-  Widget _buildDrawer(BuildContext context) {
-    return Drawer(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Center(
-              child: DrawerHeader(
-                child: Text(
-                  'Menu',
-                  style: GoogleFonts.raleway(
-                    textStyle: const TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 24,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            const Spacer(),
-            _logout(context),
-            const SizedBox(height: 16),
-          ],
-        ),
-      ),
-    );
-  }
+
 
   Widget _logout(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        backgroundColor: const Color(0xff0D6EFD),
+        backgroundColor: const Color(0xffD9AFA0),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(14),
         ),
@@ -121,12 +140,13 @@ class _HomeState extends State<Home> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Icon(Icons.logout, color: Colors.white),
+          const Icon(Icons.logout, color: Colors.black),
           const SizedBox(width: 10),
           Text(
             "Se déconnecter",
-            style: GoogleFonts.raleway(
-              color: Colors.white,
+            style: GoogleFonts.poppins(
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
               fontSize: 16,
             ),
           ),
@@ -152,10 +172,7 @@ class HomeContent extends StatelessWidget {
                 TextField(
                   onChanged: evenementViewModel.filterEvenements,
                   keyboardType: TextInputType.text,
-                  style: const TextStyle(
-                      fontFamily: 'Poppins',
-                      fontSize: 14,
-                      color: Colors.black),
+                  style: GoogleFonts.poppins(fontWeight: FontWeight.bold, fontSize: 14),
                   enableInteractiveSelection: true,
                   showCursor: true,
                   controller: evenementViewModel.searchEventController,
@@ -180,13 +197,44 @@ class HomeContent extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 10),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    '${evenementViewModel.evenements.length} événements trouvés',
-                    style: GoogleFonts.raleway(fontWeight: FontWeight.bold),
+                SizedBox(
+                  height: 40,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: evenementViewModel.listTypeEvenement.length,
+                    itemBuilder: (context, index) {
+                      final type = evenementViewModel.listTypeEvenement[index];
+                      final isSelected = evenementViewModel.selectedTypeEvenement == type;
+
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        child: ChoiceChip(
+                          backgroundColor: Colors.white,
+                          label: Text(
+                            type.name.replaceAll('_', ' ').toString(),
+                            style: GoogleFonts.poppins(
+                              color: isSelected ? Colors.white : Colors.black,
+                            ),
+                          ),
+                          selected: isSelected,
+                          selectedColor: const Color(0xffD9AFA0),
+                          onSelected: (_) {
+                            evenementViewModel.setSelectedTypeEvenement(type);
+                          },
+                        ),
+                      );
+                    },
                   ),
                 ),
+                const SizedBox(height: 10),
+
+                // Align(
+                //   alignment: Alignment.centerLeft,
+                //   child: Text(
+                //     '${evenementViewModel.evenements.length} événements trouvés',
+                //     style: GoogleFonts.poppins(fontWeight: FontWeight.bold),
+                //   ),
+                // ),
                 const SizedBox(height: 10),
               ],
             ),
@@ -196,13 +244,13 @@ class HomeContent extends StatelessWidget {
         SliverPadding(
           padding: const EdgeInsets.all(8),
           sliver: SliverGrid.builder(
-            itemCount: evenementViewModel.listeStubs.length,
+            itemCount: evenementViewModel.evenements.length,
             gridDelegate:
             const SliverGridDelegateWithMaxCrossAxisExtent(
               maxCrossAxisExtent: 200,
             ),
             itemBuilder: (context, index) {
-              final event = evenementViewModel.listeStubs[index];
+              final event = evenementViewModel.evenements[index];
               return GestureDetector(
                 onTap: () {
                   if (!evenementViewModel.isEventLoading) {

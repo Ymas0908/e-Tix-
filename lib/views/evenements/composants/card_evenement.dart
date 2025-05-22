@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:my_app/models/evenement_model.dart';
 import 'package:my_app/views_model/evenement_viewmodel.dart';
 import 'package:provider/provider.dart';
@@ -46,22 +47,17 @@ class _CardEvenementState extends State<CardEvenement> {
                   widget.evenementModel.libelle! ?? '',
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                    color: Colors.black,
-                    fontWeight: FontWeight.w600,
-                    fontSize: 15,
-                  ),
+                  style: GoogleFonts.poppins(fontWeight: FontWeight.bold, fontSize: 16),
+
                 ),
                 const SizedBox(height: 4),
                 Expanded(
                   child: Text(
                     widget.evenementModel.description ?? '',
-                    maxLines: 2,
+                    maxLines: 5,
                     overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: Colors.black,
-                      fontSize: 12,
-                    ),
+                    style: GoogleFonts.poppins(fontWeight: FontWeight.normal, fontSize: 12),
+
                   ),
                 ),
               ],

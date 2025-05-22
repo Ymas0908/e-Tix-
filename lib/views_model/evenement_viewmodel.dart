@@ -13,10 +13,8 @@ import '../models/evenement_model.dart';
 
 class EvenementViewModel extends ChangeNotifier {
   final EvenementService evenementService;
-  final PaytechPaymentService paymentService;
 
-  EvenementViewModel({
-    required this.paymentService, required this.evenementService});
+  EvenementViewModel({required this.evenementService});
 
   bool _isEventLoading = false;
 
@@ -31,19 +29,33 @@ class EvenementViewModel extends ChangeNotifier {
   final TextEditingController searchEventController = TextEditingController();
   List<EvenementModel> evenements = [];
   List<EvenementModel> _allEvenements = [];
+  List<TypeEvenement> listTypeEvenement = [
+    TypeEvenement.MATCH,
+    TypeEvenement.THEATRE,
+    TypeEvenement.CINEMA,
+    TypeEvenement.EXPOSITION,
+    TypeEvenement.CONCERT,
+    TypeEvenement.FESTIVAL,
+    TypeEvenement.RELEASE_PARTY
+  ];
 
   EvenementModel? selectedEvenement;
+  TypeEvenement? selectedTypeEvenement;
+
 
   // List<TypeTicket> TypeTickets = [];
 
-
+void setSelectedTypeEvenement(TypeEvenement typeEvenement) {
+  selectedTypeEvenement = typeEvenement;
+  notifyListeners();
+}
   void setSelectedEvenement(EvenementModel evenement) {
     selectedEvenement = evenement;
     notifyListeners();
   }
 
 
-  Future<void> getAllEvenements() async {
+  Future<void> getAllEvenements( BuildContext context) async {
     try {
       await evenementService.getAllEvenements();
       notifyListeners();
@@ -57,10 +69,7 @@ class EvenementViewModel extends ChangeNotifier {
 
   Future<void> getLesEvenementsByNom(BuildContext context) async {
     try {
-      String? nom = context
-          .read<EvenementViewModel>()
-          .selectedEvenement
-          ?.nom;
+      String? nom = context.read<EvenementViewModel>().selectedEvenement?.nom;
 
       await evenementService.getLesEvenementsByNom(nom ?? '');
       notifyListeners();
@@ -88,16 +97,6 @@ class EvenementViewModel extends ChangeNotifier {
     }
 
 
-    Future<void> initierPaiement(BuildContext context) async {
-      try {
-        await paymentService.initierPaiement;
-        notifyListeners();
-      } catch (e) {
-        if (kDebugMode) {
-          print("Une erreur s'est produite: $e");
-        }
-      }
-    }
   }
 
   Future<void> filterEvenements(String searchTerm) async {
@@ -133,7 +132,7 @@ class EvenementViewModel extends ChangeNotifier {
       prixTicketVVIP: "30000",
       dateHeureCreation: DateTime.now(),
       typeEvenement: TypeEvenement.CONCERT,
-      urlImage: "https://example.com/images/magic-system.jpg",
+      urlImage: "https://baab.ci/wp-content/uploads/2024/01/Concert-live-avec-Magic-System-BAAB.jpeg",
       libelle: "Magic System Live",
       lieu: "Palais de la Culture, Abidjan",
       description: "Vivez une soirée inoubliable avec Magic System en live.",

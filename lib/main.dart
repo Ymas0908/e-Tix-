@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:my_app/views/login/login.dart';
 import 'package:my_app/views/pageacceuil.dart';
 import 'package:my_app/views/signup/signup.dart';
+import 'package:my_app/views_model/network_status_view_model.dart';
 import 'package:my_app/web_services/implementations/EvenementImpl.dart';
-import 'package:my_app/web_services/implementations/PaytechPayementImpl.dart';
 import '../../views_model/evenement_viewmodel.dart';
 import '../views/home/home.dart';
 
@@ -23,9 +23,11 @@ Future<void> main() async {
         ChangeNotifierProvider<EvenementViewModel>(
           create: (context) => EvenementViewModel(
             evenementService: Evenementimpl(),
-            paymentService: Paytechpayementimpl(),
           ),
         ),
+        // ChangeNotifierProvider<NetworkStatusViewModel>(
+        //   create: (context) => NetworkStatusViewModel(),
+        // ),
       ],
       child: const MyApp(),
     ),

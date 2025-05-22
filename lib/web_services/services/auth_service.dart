@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -16,8 +17,7 @@ class AuthService {
       required String password,
       required BuildContext context}) async {
     try {
-      await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(email: email, password: password);
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
 
       await Future.delayed(const Duration(seconds: 1));
       Navigator.pushReplacement(context,
@@ -39,17 +39,16 @@ class AuthService {
       );
     } catch (e) {}
   }
-/*
- * Methode pour se connecter
- */
+  /***
+   * Methode pour se connecter
+   */
   Future<void> signin({
     required String email,
     required String password,
     required BuildContext context,
   }) async {
     try {
-      await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: email, password: password);
+      await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
 
       await Future.delayed(const Duration(seconds: 1));
 
@@ -84,9 +83,9 @@ class AuthService {
     }
   }
 
-/*
- * Methode pour déconnecter l'usager
- */
+  /***
+   * Methode pour se deconnecter
+   */
   Future<void> signout({required BuildContext context}) async {
     await FirebaseAuth.instance.signOut();
     await Future.delayed(const Duration(seconds: 1));
@@ -95,8 +94,8 @@ class AuthService {
   }
 
 
-  /*
-   *  Methode pour le reset du mot de passe par adresse email
+  /***
+   * Methode pour réinitialiser le mot de passe par email
    */
   Future<void> resetPassword(
       {required String email, required BuildContext context}) async {
@@ -124,4 +123,7 @@ class AuthService {
     await FirebaseAuth.instance.authStateChanges().listen((event) => null,);
     await Future.delayed(const Duration(seconds: 1));
   }
+
+
+
 }

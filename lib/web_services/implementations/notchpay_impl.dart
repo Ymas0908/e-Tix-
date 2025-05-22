@@ -1,44 +1,29 @@
-import 'package:my_app/models/evenement_model.dart';
+import 'package:my_app/models/notchpay_request_model.dart';
+import 'package:my_app/web_services/services/notchPay_service.dart';
+
 import '../../utils/const.dart';
 import 'package:http/http.dart' as http;
-import '../../utils/execption/execption.dart';
-import '../../utils/secure_storage.dart';
-import '../services/evenement_service.dart';
 import 'dart:convert';
 
+import '../../utils/execption/execption.dart';
+import '../../utils/secure_storage.dart';
 
-class Evenementimpl implements EvenementService {
+class NotchpayImpl implements NotchpayService {
   @override
-
-
-  @override
-  Future<List<EvenementModel>> getEvenementBylibelle(String libelle) {
-    // TODO: implement getEvenementBylibelle
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<List<EvenementModel>> getLesEvenementsByNom(String nom) {
-    // TODO: implement getLesEvenementsByNom
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<List<EvenementModel>> getAllEvenements() async {
+  Future<void> initierPaiement(NotchPayRequest notchPayRequest) async {
     try {
       // String? token = await getToken();
       Map<String, String> headers = {
         'Content-Type': 'application/json',
         // 'Authorization': 'Bearer $token',
       };
-      String url = "$baseUrl/getAllEvenements";
-      return http.get(Uri.parse(url), headers: headers).then((response) {
+      String url = "$baseUrl/initierpaiement";
+      return http.post(Uri.parse(url), headers: headers).then((response) {
         int statusCode = response.statusCode;
         if (statusCode == 200) {
           // Operation retrieved successfully
-          Map<String, dynamic> body = json.decode(response.body);
-          List<dynamic> data = body['body'];
-          return data.map((e) => EvenementModel.fromJson(e)).toList();
+          Map<String, dynamic> data = json.decode(response.body);
+          return NotchPayRequest.fromJson(data);
         } else if (statusCode == 404) {
           // Operation not found
           throw NotFoundException();
@@ -56,15 +41,11 @@ class Evenementimpl implements EvenementService {
           throw BadRequestException();
         } else {
           // Handle error
-          throw Exception("Une erreur s'est produite: ${response.body}");
+          throw Exception("Error: ${response.body}");
         }
       });
     } catch (e) {
       rethrow;
     }
   }
-
-  }
-
-
-
+}
