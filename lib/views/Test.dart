@@ -169,7 +169,6 @@ class _TestState extends State<Test> {
                             ),
                           ),
                           child: CardEvenement(
-                            evenementModel: event,
                           ),
                         ),
                       );

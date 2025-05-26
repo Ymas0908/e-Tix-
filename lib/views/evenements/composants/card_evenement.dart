@@ -8,11 +8,9 @@ import 'package:provider/provider.dart';
 class CardEvenement extends StatefulWidget {
   const CardEvenement({
     super.key,
-    required this.evenementModel,
     this.icon,
   });
 
-  final EvenementModel evenementModel;
   final Icon? icon;
 
   @override
@@ -40,11 +38,19 @@ class _CardEvenementState extends State<CardEvenement> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: 45),
-
+                // Image
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: Image.network(evenementViewModel.selectedEvenement?.urlImage ?? '', // Remplace par le bon champ
+                    height: 50,
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) => const Icon(Icons.image_not_supported),
+                  ),
+                ),
                 // Contenu texte
                 Text(
-                  widget.evenementModel.libelle! ?? '',
+                  evenementViewModel.selectedEvenement?.libelle! ?? '',
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: GoogleFonts.poppins(fontWeight: FontWeight.bold, fontSize: 16),
@@ -53,7 +59,7 @@ class _CardEvenementState extends State<CardEvenement> {
                 const SizedBox(height: 4),
                 Expanded(
                   child: Text(
-                    widget.evenementModel.description ?? '',
+                    evenementViewModel.selectedEvenement?.description ?? '',
                     maxLines: 5,
                     overflow: TextOverflow.ellipsis,
                     style: GoogleFonts.poppins(fontWeight: FontWeight.normal, fontSize: 12),

@@ -8,7 +8,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import '../../ressources/composants/Search_Input.dart';
 import '../../ressources/constantes/appdefaults.dart';
-import '../../views_model/authentification_viewmodel.dart';
 import '../../web_services/services/auth_service.dart';
 import '../../views_model/evenement_viewmodel.dart';
 import '../Test.dart';
@@ -23,7 +22,6 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   late EvenementViewModel evenementViewModel;
-  late AuthViewModel authViewModel;
 
   @override
   void initState() {
@@ -31,8 +29,6 @@ class _HomeState extends State<Home> {
     evenementViewModel = context.read<EvenementViewModel>();
     evenementViewModel.getAllEvenements(context);
     evenementViewModel.getEvenementBylibelle(context);
-    authViewModel = context.read<AuthViewModel>();
-    authViewModel.signout(context);
   }
 
   @override
@@ -135,7 +131,7 @@ class _HomeState extends State<Home> {
         elevation: 0,
       ),
       onPressed: () async {
-        await authViewModel.signout(context);
+        await AuthService().signout(context: context);
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => Pageacceuil()),
@@ -277,7 +273,6 @@ class HomeContent extends StatelessWidget {
                     ),
                   ),
                   child: CardEvenement(
-                    evenementModel: event,
                   ),
                 ),
               );

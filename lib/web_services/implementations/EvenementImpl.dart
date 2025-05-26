@@ -31,7 +31,7 @@ class Evenementimpl implements EvenementService {
         'Content-Type': 'application/json',
         // 'Authorization': 'Bearer $token',
       };
-      String url = "$baseUrl/getAllEvenements";
+      String url = "$baseUrl/evenements";
       return http.get(Uri.parse(url), headers: headers).then((response) {
         int statusCode = response.statusCode;
         if (statusCode == 200) {

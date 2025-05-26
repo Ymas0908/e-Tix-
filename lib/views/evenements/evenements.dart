@@ -111,7 +111,6 @@ class _EvenementsState extends State<Evenements> {
                       itemCount: evenementViewModel.evenements.length,
                       itemBuilder: (context, index) {
                         return CardEvenement(
-                          evenementModel: evenementViewModel.evenements[index],
                         );
                       },
                     ),
