@@ -15,7 +15,7 @@ class AuthService {
   Future<void> signup(
       {required String email,
       required String password,
-      required BuildContext context}) async {
+      required context}) async {
     try {
       await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
 
@@ -45,7 +45,7 @@ class AuthService {
   Future<void> signin({
     required String email,
     required String password,
-    required BuildContext context,
+    required  context,
   }) async {
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
@@ -86,11 +86,15 @@ class AuthService {
   /***
    * Methode pour se deconnecter
    */
-  Future<void> signout({required BuildContext context}) async {
+  Future<void> signout(context) async {
     await FirebaseAuth.instance.signOut();
     await Future.delayed(const Duration(seconds: 1));
-    Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (BuildContext context) => Login()));
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (BuildContext context) => const Login(),
+      ),
+    );
   }
 
 
@@ -98,7 +102,7 @@ class AuthService {
    * Methode pour réinitialiser le mot de passe par email
    */
   Future<void> resetPassword(
-      {required String email, required BuildContext context}) async {
+      {required String email,  context}) async {
     try {
       await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
       await Future.delayed(const Duration(seconds: 1));
@@ -119,7 +123,7 @@ class AuthService {
     }
   }
 
-  Future<void> signout2({required BuildContext context}) async {
+  Future<void> signout2({ context}) async {
     await FirebaseAuth.instance.authStateChanges().listen((event) => null,);
     await Future.delayed(const Duration(seconds: 1));
   }
