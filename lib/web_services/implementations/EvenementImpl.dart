@@ -13,8 +13,45 @@ class Evenementimpl implements EvenementService {
 
   @override
   Future<List<EvenementModel>> getEvenementBylibelle(String libelle) {
-    // TODO: implement getEvenementBylibelle
-    throw UnimplementedError();
+   try {
+     // String? token = await getToken();
+     Map<String, String> headers = {
+       'Content-Type': 'application/json',
+       // 'Authorization': 'Bearer $token',
+     };
+     String url = "$baseUrl/evenements/$libelle";
+     return http.get(Uri.parse(url), headers: headers).then((response) {
+       int statusCode = response.statusCode;
+       print("body: ${response.body}");
+       if (statusCode == 200) {
+         // Operation retrieved successfully
+         Map<String, dynamic> body = json.decode(response.body);
+         List<dynamic> data = body['body'];
+         return data.map((e) => EvenementModel.fromJson(e)).toList();
+       }
+         else if (statusCode == 404) {
+         // Operation not found
+         throw NotFoundException();
+       } else if (statusCode == 500) {
+         // Internal server error
+         throw ServerException();
+       } else if (statusCode == 401) {
+         // Unauthorized access
+         throw UnauthorizedException();
+       } else if (statusCode == 403) {
+         // Forbidden access
+         throw ForbiddenException();
+       } else if (statusCode == 400) {
+         // Bad request
+         throw BadRequestException();
+       } else {
+         // Handle error
+         throw Exception("Une erreur s'est produite: ${response.body}");
+       }
+     });
+   } catch (e) {
+     rethrow;
+   }
   }
 
   @override
@@ -34,12 +71,14 @@ class Evenementimpl implements EvenementService {
       String url = "$baseUrl/evenements";
       return http.get(Uri.parse(url), headers: headers).then((response) {
         int statusCode = response.statusCode;
+        print("Success event body: ${response.body}");
         if (statusCode == 200) {
-          // Operation retrieved successfully
+
           Map<String, dynamic> body = json.decode(response.body);
           List<dynamic> data = body['body'];
           return data.map((e) => EvenementModel.fromJson(e)).toList();
-        } else if (statusCode == 404) {
+        }
+        else if (statusCode == 404) {
           // Operation not found
           throw NotFoundException();
         } else if (statusCode == 500) {

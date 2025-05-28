@@ -19,15 +19,16 @@ class Test extends StatefulWidget {
 }
 
 class _TestState extends State<Test> {
-  late EvenementViewModel evnementViewModel;
+  late EvenementViewModel evenementViewModel;
 
 
   @override
   void initState() {
     super.initState();
-    final evnementViewModel = Provider.of<EvenementViewModel>(context, listen: false);
-    evnementViewModel.getAllEvenements(context);
+    evenementViewModel = Provider.of<EvenementViewModel>(context, listen: false);
+    evenementViewModel.getAllEvenements(context);
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -38,14 +39,14 @@ class _TestState extends State<Test> {
           title: const Text("Tous les évènements",)),
       body: Consumer<EvenementViewModel>(
         builder:
-            (context, evnementViewModel, _) {
-          if (evnementViewModel.isEventLoading) {
+            (context, evenementViewModel, _) {
+          if (evenementViewModel.isEventLoading) {
             return const Center(child: CircularProgressIndicator());
           }
 
           return RefreshIndicator(
             onRefresh: () async {
-              // await evnementViewModel.refreshMmps(context);
+              // await evenementViewModel.refreshMmps(context);
             },
             child: CustomScrollView(
               physics: const BouncingScrollPhysics(),
@@ -56,8 +57,8 @@ class _TestState extends State<Test> {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 10, vertical: 10),
                       child: Skeleton(
-                        isLoading: evnementViewModel.isEventLoading &&
-                            evnementViewModel.isEventLoading,
+                        isLoading: evenementViewModel.isEventLoading &&
+                            evenementViewModel.isEventLoading,
                         skeleton: SkeletonAvatar(
                           style: SkeletonAvatarStyle(
                             width: double.infinity,
@@ -65,7 +66,7 @@ class _TestState extends State<Test> {
                           ),
                         ),
                         child: TextField(
-                          onChanged: evnementViewModel.filterEvenements,
+                          onChanged: evenementViewModel.filterEvenements,
                           keyboardType: TextInputType.text,
                           style: const TextStyle(
                               fontFamily: 'Poppins',
@@ -73,14 +74,14 @@ class _TestState extends State<Test> {
                               color: Colors.black),
                           enableInteractiveSelection: true,
                           showCursor: true,
-                          controller: evnementViewModel.searchEventController,
+                          controller: evenementViewModel.searchEventController,
                           decoration: InputDecoration(
-                            suffixIcon: evnementViewModel
+                            suffixIcon: evenementViewModel
                                 .searchEventController.text.isNotEmpty
                                 ? IconButton(
                               icon: const Icon(Icons.clear),
                               onPressed: () =>
-                                  evnementViewModel.searchEventController.clear(),
+                                  evenementViewModel.searchEventController.clear(),
                             )
                                 : null,
                             prefixIcon: const Icon(Icons.search),
@@ -102,8 +103,8 @@ class _TestState extends State<Test> {
                 //   child:,
                 // ),
                 // Message si aucn événement trouvé
-                evnementViewModel.evenements.isEmpty &&
-                    !evnementViewModel.isEventLoading
+                evenementViewModel.evenements.isEmpty &&
+                    !evenementViewModel.isEventLoading
                     ? SliverToBoxAdapter(
                   child: SizedBox(
                     height: 200,
@@ -136,21 +137,21 @@ class _TestState extends State<Test> {
                   ),
                 )
                     :
-                // Liste des mini-marketplaces sous forme de grille
+                // Liste des evenements sous forme de grille
                 SliverPadding(
                   padding: const EdgeInsets.all(8),
                   sliver: SliverGrid.builder(
-                    itemCount: evnementViewModel.evenements.length,
+                    itemCount: evenementViewModel.evenements.length,
                     gridDelegate:
                     const SliverGridDelegateWithMaxCrossAxisExtent(
                       maxCrossAxisExtent: 200,
                     ),
                     itemBuilder: (context, index) {
-                      final event = evnementViewModel.evenements[index];
+                      final event = evenementViewModel.evenements[index];
                       return GestureDetector(
                         onTap: () {
-                          if (!evnementViewModel.isEventLoading) {
-                            evnementViewModel.setSelectedEvenement(event);
+                          if (!evenementViewModel.isEventLoading) {
+                            evenementViewModel.setSelectedEvenement(event);
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -160,7 +161,7 @@ class _TestState extends State<Test> {
                           }
                         },
                         child: Skeleton(
-                          isLoading: evnementViewModel.isEventLoading,
+                          isLoading: evenementViewModel.isEventLoading,
                           skeleton: const SkeletonAvatar(
                             style: SkeletonAvatarStyle(
                               padding: EdgeInsets.all(10),
@@ -169,6 +170,7 @@ class _TestState extends State<Test> {
                             ),
                           ),
                           child: CardEvenement(
+                            evenementModel: event,
                           ),
                         ),
                       );

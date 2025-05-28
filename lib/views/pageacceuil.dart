@@ -15,7 +15,7 @@ class Pageacceuil extends StatelessWidget {
           Container(
             decoration: const BoxDecoration(
               gradient: LinearGradient(
-                colors: [Color(0xFF0F65D4), Color(0xFF052A6E)],
+                colors: [Color(0xffD9AFA0), Color(0xFF052A6E)],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               ),
@@ -23,7 +23,8 @@ class Pageacceuil extends StatelessWidget {
           ),
 
           // Bulles de décoration
-          Positioned(top: 80, left: 30, child: _buildBubble(60)),
+          Positioned(top: 80, left: 30, child:
+          _buildBubble(60)),
           Positioned(top: 200, right: 50, child: _buildBubble(40)),
           Positioned(bottom: 150, left: 60, child: _buildBubble(70)),
           Positioned(bottom: 300, right: 30, child: _buildBubble(90)),
@@ -123,6 +124,10 @@ class Pageacceuil extends StatelessWidget {
     );
   }
 
+
+  /***
+   * Widget pour les bulles de décoration
+   */
   Widget _buildBubble(double size) {
     return Container(
       width: size,

@@ -32,6 +32,7 @@ class EvenementModel {
   });
 
   factory EvenementModel.fromJson(Map<String, dynamic> json) {
+    print("EvenementModel json: $json");
     return EvenementModel(
       id: json['id'],
       nom: json['nom'],

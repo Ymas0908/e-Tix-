@@ -4,6 +4,8 @@ import 'dart:core';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:my_app/models/enum/type_evenement.dart';
+import 'package:my_app/models/enum/type_ticket.dart';
+import 'package:my_app/models/ticket_model.dart';
 import 'package:my_app/web_services/services/evenement_service.dart';
 import 'package:my_app/web_services/services/paytech_sayement_service.dart';
 import 'package:provider/provider.dart';
@@ -38,13 +40,30 @@ class EvenementViewModel extends ChangeNotifier {
     TypeEvenement.FESTIVAL,
     TypeEvenement.RELEASE_PARTY
   ];
+  List<TypeTicket> listTypeTicket = [
+    TypeTicket.GP,
+    TypeTicket.VIP,
+    TypeTicket.VVIP
+  ];
+
+
 
   EvenementModel? selectedEvenement;
+  TicketModel? selectedTicket;
   TypeEvenement? selectedTypeEvenement;
+  TypeTicket? selectedTypeTicket;
 
-
+void setSelectedTicket(TicketModel ticket) {
+  selectedTicket = ticket;
+  notifyListeners();
+  selectedTicket = null;
+}
   // List<TypeTicket> TypeTickets = [];
-
+void setSelectedTypeTicket(TypeTicket typeTicket) {
+  selectedTypeTicket = typeTicket;
+  notifyListeners();
+  selectedTypeTicket = null;
+}
 void setSelectedTypeEvenement(TypeEvenement typeEvenement) {
   selectedTypeEvenement = typeEvenement;
   notifyListeners();
@@ -57,9 +76,9 @@ void setSelectedTypeEvenement(TypeEvenement typeEvenement) {
 
   Future<void> getAllEvenements( BuildContext context) async {
     try {
-      await evenementService.getAllEvenements();
+      evenements = await evenementService.getAllEvenements();
       notifyListeners();
-      print(evenements.length.toString() + "   récupérés avec succès");
+      print(evenements.length.toString() + " événements récupérés avec succès");
     } catch (e) {
       if (kDebugMode) {
         print("Une erreur s'est produite: $e");
@@ -71,9 +90,9 @@ void setSelectedTypeEvenement(TypeEvenement typeEvenement) {
     try {
       String? nom = context.read<EvenementViewModel>().selectedEvenement?.nom;
 
-      await evenementService.getLesEvenementsByNom(nom ?? '');
+      evenements = await evenementService.getLesEvenementsByNom(nom ?? '');
       notifyListeners();
-      print(evenements.length.toString() + "   récupérés avec succès");
+      print(evenements.length.toString() + "  événements récupérés avec succès");
     } catch (e) {
       if (kDebugMode) {
         print("Une erreur s'est produite: $e");
@@ -88,7 +107,7 @@ void setSelectedTypeEvenement(TypeEvenement typeEvenement) {
           .read<EvenementViewModel>()
           .selectedEvenement
           ?.libelle;
-      await evenementService.getEvenementBylibelle(libelle ?? '');
+       evenements = await evenementService.getEvenementBylibelle(libelle ?? '');
       notifyListeners();
     } catch (e) {
       if (kDebugMode) {
@@ -122,48 +141,4 @@ void setSelectedTypeEvenement(TypeEvenement typeEvenement) {
   }
 
 
-  List<EvenementModel> listeStubs = [
-    EvenementModel(
-      id: 1,
-      nom: "Concert Magic System",
-      dateEvenement: DateTime(2025, 6, 15, 20, 0),
-      prixTicketGP: "5000",
-      prixTicketVIP: "15000",
-      prixTicketVVIP: "30000",
-      dateHeureCreation: DateTime.now(),
-      typeEvenement: TypeEvenement.CONCERT,
-      urlImage: "https://baab.ci/wp-content/uploads/2024/01/Concert-live-avec-Magic-System-BAAB.jpeg",
-      libelle: "Magic System Live",
-      lieu: "Palais de la Culture, Abidjan",
-      description: "Vivez une soirée inoubliable avec Magic System en live.",
-    ),
-    EvenementModel(
-      id: 2,
-      nom: "Festival de la bière",
-      dateEvenement: DateTime(2025, 7, 2, 18, 0),
-      prixTicketGP: "3000",
-      prixTicketVIP: "10000",
-      prixTicketVVIP: "20000",
-      dateHeureCreation: DateTime.now(),
-      typeEvenement: TypeEvenement.FESTIVAL,
-      urlImage: "https://example.com/images/festival-biere.jpg",
-      libelle: "Bière Fest 2025",
-      lieu: "Parc des Sports, Treichville",
-      description: "Des dégustations de bières locales et internationales, concerts et animations.",
-    ),
-    EvenementModel(
-      id: 3,
-      nom: "Finale Coupe Nationale",
-      dateEvenement: DateTime(2025, 8, 20, 17, 0),
-      prixTicketGP: "2000",
-      prixTicketVIP: "5000",
-      prixTicketVVIP: "10000",
-      dateHeureCreation: DateTime.now(),
-      typeEvenement: TypeEvenement.MATCH,
-      urlImage: "https://example.com/images/finale-coupe.jpg",
-      libelle: "Finale Football",
-      lieu: "Stade Olympique d'Ebimpé",
-      description: "Les deux meilleures équipes s'affrontent pour le titre national.",
-    ),
-  ];
 }

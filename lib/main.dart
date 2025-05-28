@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:my_app/views/internet_not_available.dart';
 import 'package:my_app/views/login/login.dart';
 import 'package:my_app/views/pageacceuil.dart';
 import 'package:my_app/views/signup/signup.dart';
@@ -25,9 +26,9 @@ Future<void> main() async {
             evenementService: Evenementimpl(),
           ),
         ),
-        // ChangeNotifierProvider<NetworkStatusViewModel>(
-        //   create: (context) => NetworkStatusViewModel(),
-        // ),
+        ChangeNotifierProvider<NetworkStatusViewModel>(
+          create: (context) => NetworkStatusViewModel(),
+        ),
       ],
       child: const MyApp(),
     ),

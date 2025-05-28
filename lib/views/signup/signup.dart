@@ -34,6 +34,19 @@ class _SignupState extends State<Signup> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: Align(
+          alignment: Alignment.center,
+          child: Text(
+            'S\'inscrire',
+            style: GoogleFonts.poppins(
+              textStyle: const TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 25,
+              ),
+            ),
+          ),
+        ),
         automaticallyImplyLeading: true,
         elevation: 0,
         toolbarHeight: 50,
@@ -45,7 +58,7 @@ class _SignupState extends State<Signup> {
         flexibleSpace: Container(
           decoration: const BoxDecoration(
             gradient: LinearGradient(
-              colors: [Color(0xFF0F65D4), Color(0xFF052A6E)],
+              colors: [Color(0xffD9AFA0), Color(0xFF052A6E)],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ),
@@ -58,17 +71,14 @@ class _SignupState extends State<Signup> {
           Container(
             decoration: const BoxDecoration(
               gradient: LinearGradient(
-                colors: [Color(0xFF0F65D4), Color(0xFF052A6E)],
+                colors: [Color(0xffD9AFA0), Color(0xFF052A6E)],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               ),
             ),
           ),
           // Bulles décoratives
-          Positioned(top: 80, left: 30, child: _buildBubble(60)),
-          Positioned(top: 200, right: 50, child: _buildBubble(40)),
-          Positioned(bottom: 150, left: 60, child: _buildBubble(70)),
-          Positioned(bottom: 300, right: 30, child: _buildBubble(90)),
+
           // Formulaire
           SingleChildScrollView(
             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 40),
@@ -76,16 +86,6 @@ class _SignupState extends State<Signup> {
               key: _formKey,
               child: Column(
                 children: [
-                  Center(
-                    child: Text(
-                      'S\'inscrire',
-                      style: GoogleFonts.poppins(
-                        fontSize: 32,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
                   const SizedBox(height: 50),
                   _username(),
                   const SizedBox(height: 20),
@@ -240,8 +240,7 @@ class _SignupState extends State<Signup> {
             await AuthService().signup(
               email: _emailController.text,
               password: _passwordController.text,
-              context: context,
-            );
+              context: context,);
             Navigator.of(context).pop(); // Close the loading dialog
             Navigator.of(context).pushReplacement(
               MaterialPageRoute(builder: (context) => Home()),
@@ -284,14 +283,14 @@ class _SignupState extends State<Signup> {
     );
   }
 
-  Widget _buildBubble(double size) {
-    return Container(
-      width: size,
-      height: size,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: Colors.white.withOpacity(0.3),
-      ),
-    );
-  }
+  // Widget _buildBubble(double size) {
+  //   return Container(
+  //     width: size,
+  //     height: size,
+  //     decoration: BoxDecoration(
+  //       shape: BoxShape.circle,
+  //       color: Colors.white.withOpacity(0.3),
+  //     ),
+  //   );
+  // }
 }
