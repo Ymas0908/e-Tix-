@@ -1,7 +1,9 @@
+import 'package:eTix/views/signup/signup.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:my_app/views/login/login.dart';
-import 'package:my_app/views/signup/signup.dart';
+
+
+import 'login/login.dart';
 
 
 

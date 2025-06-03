@@ -1,5 +1,4 @@
-import 'dart:ffi';
-import 'package:my_app/models/enum/type_evenement.dart';
+import 'enum/type_evenement.dart';
 import 'enum/type_ticket.dart';
 
 class EvenementModel {

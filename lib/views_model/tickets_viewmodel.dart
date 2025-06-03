@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:my_app/models/ticket_model.dart';
-import 'package:my_app/web_services/services/tickets_service.dart';
+import '../models/ticket_model.dart';
 import '../web_services/services/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
+import '../web_services/services/tickets_service.dart';
 
 
 class TicketsViewmodel extends ChangeNotifier {

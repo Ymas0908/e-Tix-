@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:my_app/web_services/services/auth_service.dart';
 
 class ProfilSettingView extends StatefulWidget {
   @override

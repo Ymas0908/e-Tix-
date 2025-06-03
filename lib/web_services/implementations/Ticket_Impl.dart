@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:my_app/models/ticket_model.dart';
 
+import '../../models/ticket_model.dart';
 import '../../utils/const.dart';
 import '../services/tickets_service.dart';
 import 'package:http/http.dart' as http;

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:my_app/models/evenement_model.dart';
-import 'package:my_app/views/evenements/evenements.dart';
-import 'package:my_app/views_model/evenement_viewmodel.dart';
 import 'package:provider/provider.dart';
+
+import '../../../models/evenement_model.dart';
+import '../../../views_model/evenement_viewmodel.dart';
 
 class CardEvenement extends StatefulWidget {
   const CardEvenement({

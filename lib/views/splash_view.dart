@@ -1,6 +1,6 @@
+import 'package:eTix/views/pageacceuil.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:my_app/views/pageacceuil.dart';
 
 class SplashView extends StatefulWidget {
   const SplashView({super.key});

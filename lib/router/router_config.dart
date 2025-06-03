@@ -1,8 +1,8 @@
+import 'package:eTix/router/route_name.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
-import 'package:my_app/router/route_name.dart';
-import 'package:my_app/views/login/login.dart';
 
+import '../views/login/login.dart';
 import '../views/splash_view.dart';
 
 // GoRouter configuration

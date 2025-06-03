@@ -1,16 +1,17 @@
 
+import 'package:eTix/views/splash_view.dart';
+import 'package:eTix/views_model/authentification_viewmodel.dart';
+import 'package:eTix/views_model/evenement_viewmodel.dart';
+import 'package:eTix/views_model/network_status_view_model.dart';
+import 'package:eTix/web_services/implementations/EvenementImpl.dart';
+import 'package:eTix/web_services/implementations/Ticket_Impl.dart';
+import 'package:eTix/web_services/services/auth_service.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_skeleton_ui/flutter_skeleton_ui.dart';
-import 'package:my_app/views/splash_view.dart';
-import 'package:my_app/views_model/authentification_viewmodel.dart';
-import 'package:my_app/views_model/evenement_viewmodel.dart';
-import 'package:my_app/views_model/network_status_view_model.dart';
-import 'package:my_app/web_services/implementations/EvenementImpl.dart';
-import 'package:my_app/web_services/implementations/Ticket_Impl.dart';
-import 'package:my_app/web_services/services/auth_service.dart';
+
 import 'package:provider/provider.dart';
 
 import 'firebase_options.dart';

@@ -1,12 +1,12 @@
-import 'package:my_app/models/notchpay_request_model.dart';
-import 'package:my_app/web_services/services/notchPay_service.dart';
 
+import '../../models/notchpay_request_model.dart';
 import '../../utils/const.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 import '../../utils/execption/execption.dart';
 import '../../utils/secure_storage.dart';
+import '../services/notchPay_service.dart';
 
 class NotchpayImpl implements NotchpayService {
   @override

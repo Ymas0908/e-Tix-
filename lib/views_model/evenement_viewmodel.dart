@@ -3,15 +3,15 @@ import 'dart:core';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
-import 'package:my_app/models/enum/type_evenement.dart';
-import 'package:my_app/models/enum/type_ticket.dart';
-import 'package:my_app/models/ticket_model.dart';
-import 'package:my_app/web_services/services/evenement_service.dart';
-import 'package:my_app/web_services/services/paytech_sayement_service.dart';
-import 'package:my_app/web_services/services/tickets_service.dart';
+
 import 'package:provider/provider.dart';
 
+import '../models/enum/type_evenement.dart';
+import '../models/enum/type_ticket.dart';
 import '../models/evenement_model.dart';
+import '../models/ticket_model.dart';
+import '../web_services/services/evenement_service.dart';
+import '../web_services/services/tickets_service.dart';
 
 
 class EvenementViewModel extends ChangeNotifier {

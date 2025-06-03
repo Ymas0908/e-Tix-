@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:my_app/views/pageacceuil.dart';
 import 'package:provider/provider.dart';
 
 import '../../ressources/composants/LoadingDialog.dart';

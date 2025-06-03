@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
-import 'package:my_app/web_services/services/notchPay_service.dart';
 
 import '../models/notchpay_request_model.dart';
+import '../web_services/services/notchPay_service.dart';
 
 class NotchpayViewmodel extends ChangeNotifier {
 

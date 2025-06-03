@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_skeleton_ui/flutter_skeleton_ui.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:my_app/ressources/composants/AppDrawer.dart';
-import 'package:my_app/utils/network_status_listener.dart';
-import 'package:my_app/views/evenements/detail_evenements.dart';
-import 'package:my_app/views/pageacceuil.dart';
-import 'package:my_app/web_services/services/notchPay_service.dart';
+
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import '../../ressources/composants/AppDrawer.dart';
 import '../../ressources/composants/Search_Input.dart';
 import '../../ressources/constantes/appdefaults.dart';
+import '../../utils/network_status_listener.dart';
 import '../../views_model/authentification_viewmodel.dart';
 import '../../web_services/services/auth_service.dart';
 import '../../views_model/evenement_viewmodel.dart';
+import '../../web_services/services/notchPay_service.dart';
 import '../Test.dart';
 import '../evenements/composants/card_evenement.dart';
+import '../evenements/detail_evenements.dart';
 import '../profile/profil-setting.dart';
 
 class Home extends StatefulWidget {

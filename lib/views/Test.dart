@@ -4,12 +4,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_skeleton_ui/flutter_skeleton_ui.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:my_app/views/evenements/composants/card_evenement.dart';
-import 'package:my_app/views/evenements/detail_evenements.dart';
-import 'package:my_app/views_model/evenement_viewmodel.dart';
 import 'package:provider/provider.dart';
 
 import '../utils/network_status_listener.dart';
+import '../views_model/evenement_viewmodel.dart';
+import 'evenements/composants/card_evenement.dart';
+import 'evenements/detail_evenements.dart';
 
 class Test extends StatefulWidget {
   const Test({super.key});
@@ -161,7 +161,7 @@ class _TestState extends State<Test> {
                           }
                         },
                         child: Skeleton(
-                          isLoading: evenementViewModel.isEventLoading,
+                          isLoading: evenementViewModel!.isEventLoading,
                           skeleton: const SkeletonAvatar(
                             style: SkeletonAvatarStyle(
                               padding: EdgeInsets.all(10),

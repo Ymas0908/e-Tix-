@@ -1,4 +1,4 @@
-import 'package:my_app/models/evenement_model.dart';
+import '../../models/evenement_model.dart';
 import '../../utils/const.dart';
 import 'package:http/http.dart' as http;
 import '../../utils/execption/execption.dart';

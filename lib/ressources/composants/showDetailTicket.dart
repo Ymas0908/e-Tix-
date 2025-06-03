@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:my_app/models/enum/type_ticket.dart';
-import 'package:my_app/views_model/evenement_viewmodel.dart';
 import 'package:provider/provider.dart';
+
+import '../../models/enum/type_ticket.dart';
+import '../../views_model/evenement_viewmodel.dart';
 
 class ShowDetailTicket extends StatefulWidget {
   const ShowDetailTicket({super.key});
@@ -64,7 +65,7 @@ late EvenementViewModel viewModel;
                items: viewModel.listTypeTicket.map(
                      (typeTicket) => DropdownMenuItem(
                    value: typeTicket,
-                   child: Text(typeTicket.name,style: GoogleFonts.poppins(),),
+                   child: Text(typeTicket!.name,style: GoogleFonts.poppins(),),
                  ),
                ).toList(),
                onChanged: (value) {
@@ -78,7 +79,7 @@ late EvenementViewModel viewModel;
              ),
              const SizedBox(height: 16),
              TextField(
-               controller: viewModel.prixTicketController,
+               controller: viewModel?.prixTicketController,
                readOnly: true,
                keyboardType: TextInputType.number,
                decoration: InputDecoration(
