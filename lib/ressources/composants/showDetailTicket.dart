@@ -13,7 +13,7 @@ class ShowDetailTicket extends StatefulWidget {
 
 class _ShowDetailTicketState extends State<ShowDetailTicket> {
   int ticketQuantity = 1;
-
+late EvenementViewModel viewModel;
 
   // void _reserveTicket() {
   //   Navigator.pop(context); // Ferme le BottomSheet par exemple
@@ -33,6 +33,13 @@ class _ShowDetailTicketState extends State<ShowDetailTicket> {
   //     ),
   //   );
   // }
+
+  @override
+  void initState() {
+    super.initState();
+    viewModel = Provider.of<EvenementViewModel>(context, listen: false);
+    viewModel.getAllTickets(context);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -70,19 +77,20 @@ class _ShowDetailTicketState extends State<ShowDetailTicket> {
                ),
              ),
              const SizedBox(height: 16),
-             // TextField(
-             //   controller: viewModel.selectedTicket!.prix,
-             //   keyboardType: TextInputType.number,
-             //   decoration: InputDecoration(
-             //     contentPadding: const EdgeInsets.symmetric(
-             //         vertical: 16, horizontal: 16),
-             //     labelText: "Prix du ticket",
-             //     labelStyle: GoogleFonts.poppins(),
-             //     border: OutlineInputBorder(
-             //       borderRadius: BorderRadius.circular(15),
-             //     ),
-             //   ),
-             // ),
+             TextField(
+               controller: viewModel.prixTicketController,
+               readOnly: true,
+               keyboardType: TextInputType.number,
+               decoration: InputDecoration(
+                 contentPadding: const EdgeInsets.symmetric(
+                     vertical: 16, horizontal: 16),
+                 labelText: "Prix du ticket",
+                 labelStyle: GoogleFonts.poppins(),
+                 border: OutlineInputBorder(
+                   borderRadius: BorderRadius.circular(15),
+                 ),
+               ),
+             ),
 
 
              // Sélection du nombre de tickets

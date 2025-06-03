@@ -64,7 +64,7 @@ class _LoadingDialogState extends State<LoadingDialog>
                     ),
                     child: const CircularProgressIndicator(
                       strokeWidth: 3,
-                      valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
+                      valueColor: AlwaysStoppedAnimation<Color>(Color(0xffD9AFA0)),
                     ),
                   ),
                 );

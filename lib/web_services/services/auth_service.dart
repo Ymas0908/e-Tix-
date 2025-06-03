@@ -39,32 +39,51 @@ class AuthService {
       );
     } catch (e) {}
   }
+
+
   /***
    * Methode pour se connecter
    */
+
   Future<void> signin({
     required String email,
     required String password,
     required BuildContext context,
   }) async {
     try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
+      // Tentative de connexion avec Firebase
+      final UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
 
-      await Future.delayed(const Duration(seconds: 1));
-
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => Home()),
-      );
-    } on FirebaseAuthException catch (e) {
-      String message = '';
-
-      if (e.code == 'invalid-email') {
-        message = 'Aucun compte n\'est associé à cette adresse email.';
-      } else if (e.code == 'invalid-credential') {
-        message = 'Mot de passe invalide.';
+      // Si la connexion réussit, redirection vers la page d'accueil
+      if (userCredential.user != null) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => Home()),
+        );
       } else {
-        message = 'Erreur de connexion : ${e.message}';
+        // Ce cas est rare, mais on le gère quand même
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text("Impossible de récupérer les informations de l'utilisateur."),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    } on FirebaseAuthException catch (e) {
+      String message;
+
+      switch (e.code) {
+        case 'invalid-email':
+          message = 'Adresse email invalide.';
+          break;
+        case 'invalid-credential':
+          message = 'Mot de passe incorrect ou compte inexistant.';
+          break;
+        case 'user-disabled':
+          message = 'Ce compte a été désactivé.';
+          break;
+        default:
+          message = 'Erreur : ${e.message ?? "Une erreur est survenue."}';
       }
 
       ScaffoldMessenger.of(context).showSnackBar(
@@ -74,12 +93,8 @@ class AuthService {
         ),
       );
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Une erreur est survenue. Veuillez réessayer.'),
-          backgroundColor: Colors.red,
-        ),
-      );
+      print(e);
+
     }
   }
 
@@ -123,6 +138,10 @@ class AuthService {
     await FirebaseAuth.instance.authStateChanges().listen((event) => null,);
     await Future.delayed(const Duration(seconds: 1));
   }
+
+
+
+
 
 
 

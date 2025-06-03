@@ -1,18 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_skeleton_ui/flutter_skeleton_ui.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:my_app/ressources/composants/AppDrawer.dart';
 import 'package:my_app/utils/network_status_listener.dart';
 import 'package:my_app/views/evenements/detail_evenements.dart';
 import 'package:my_app/views/pageacceuil.dart';
+import 'package:my_app/web_services/services/notchPay_service.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import '../../ressources/composants/Search_Input.dart';
 import '../../ressources/constantes/appdefaults.dart';
+import '../../views_model/authentification_viewmodel.dart';
 import '../../web_services/services/auth_service.dart';
 import '../../views_model/evenement_viewmodel.dart';
 import '../Test.dart';
 import '../evenements/composants/card_evenement.dart';
+import '../profile/profil-setting.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -23,6 +27,8 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   late EvenementViewModel evenementViewModel;
+  late NotchpayService notchpayService;
+  late AuthViewModel authViewModel;
 
   @override
   void initState() {
@@ -50,101 +56,7 @@ class _HomeState extends State<Home> {
           ),
           backgroundColor: const Color(0xffD9AFA0),
         ),
-        drawer: Drawer(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Center(
-                  child: DrawerHeader(
-                    child: Text(
-                      'Menu',
-                      style: GoogleFonts.poppins(
-                        textStyle: const TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 24,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 16),
-
-                ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xffD9AFA0),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(14),
-              ),
-              minimumSize: const Size(double.infinity, 60),
-              elevation: 0,
-            ),
-            onPressed: () async {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => Test()),
-              );
-            },
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Icon(Icons.logout, color: Colors.black),
-                const SizedBox(width: 10),
-                Text(
-                  "Voir les évenements",
-                  style: GoogleFonts.poppins(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                  ),
-                ),
-              ],
-            ),
-          ),
-                const SizedBox(height: 16),
-
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xffD9AFA0),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(14),
-                    ),
-                    minimumSize: const Size(double.infinity, 60),
-                    elevation: 0,
-                  ),
-                  onPressed: () async {
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(builder: (context) => ParametresView()),
-                    // );
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Icon(Icons.settings, color: Colors.black),
-                      const SizedBox(width: 10),
-                      Text(
-                        "Paramètres",
-                        style: GoogleFonts.poppins(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-
-                const Spacer(),
-                const SizedBox(height: 16),
-
-                _logout(context),
-              ],
-            ),
-          ),
-        ),
+        drawer: Appdrawer(),
         body: RefreshIndicator(
           color: Color(0xffD9AFA0),
           onRefresh: () async {
@@ -298,40 +210,6 @@ class _HomeState extends State<Home> {
 
 
 
-  Widget _logout(BuildContext context) {
-    return ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        backgroundColor: const Color(0xffD9AFA0),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(14),
-        ),
-        minimumSize: const Size(double.infinity, 60),
-        elevation: 0,
-      ),
-      onPressed: () async {
-        await AuthService().signout(context: context);
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => Pageacceuil()),
-        );
-      },
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Icon(Icons.logout, color: Colors.black),
-          const SizedBox(width: 10),
-          Text(
-            "Se déconnecter",
-            style: GoogleFonts.poppins(
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
-              fontSize: 16,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 }
 
 

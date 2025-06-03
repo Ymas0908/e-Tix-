@@ -8,6 +8,7 @@ import 'package:my_app/models/enum/type_ticket.dart';
 import 'package:my_app/models/ticket_model.dart';
 import 'package:my_app/web_services/services/evenement_service.dart';
 import 'package:my_app/web_services/services/paytech_sayement_service.dart';
+import 'package:my_app/web_services/services/tickets_service.dart';
 import 'package:provider/provider.dart';
 
 import '../models/evenement_model.dart';
@@ -15,8 +16,9 @@ import '../models/evenement_model.dart';
 
 class EvenementViewModel extends ChangeNotifier {
   final EvenementService evenementService;
+  final TicketService ticketService;
 
-  EvenementViewModel({required this.evenementService});
+  EvenementViewModel({required this.evenementService, required this.ticketService});
 
   bool _isEventLoading = false;
 
@@ -29,6 +31,7 @@ class EvenementViewModel extends ChangeNotifier {
   // }
 
   final TextEditingController searchEventController = TextEditingController();
+  final TextEditingController prixTicketController = TextEditingController();
   List<EvenementModel> evenements = [];
   List<EvenementModel> _allEvenements = [];
   List<TypeEvenement> listTypeEvenement = [
@@ -45,6 +48,7 @@ class EvenementViewModel extends ChangeNotifier {
     TypeTicket.VIP,
     TypeTicket.VVIP
   ];
+  List<TicketModel> tickets = [];
 
 
 
@@ -62,7 +66,6 @@ void setSelectedTicket(TicketModel ticket) {
 void setSelectedTypeTicket(TypeTicket typeTicket) {
   selectedTypeTicket = typeTicket;
   notifyListeners();
-  selectedTypeTicket = null;
 }
 void setSelectedTypeEvenement(TypeEvenement typeEvenement) {
   selectedTypeEvenement = typeEvenement;
@@ -70,9 +73,23 @@ void setSelectedTypeEvenement(TypeEvenement typeEvenement) {
 }
   void setSelectedEvenement(EvenementModel evenement) {
     selectedEvenement = evenement;
+    selectedTypeTicket = null;
+
     notifyListeners();
   }
 
+
+  Future<void> getAllTickets(BuildContext context) async {
+    try {
+      tickets = await ticketService.getAllTickets();
+      notifyListeners();
+      print(tickets.length.toString() + " tickets récupérés avec succès");
+    } catch (e) {
+      if (kDebugMode) {
+        print("Une erreur s'est produite: $e");
+      }
+    }
+  }
 
   Future<void> getAllEvenements( BuildContext context) async {
     try {

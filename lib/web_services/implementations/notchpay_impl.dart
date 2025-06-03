@@ -17,7 +17,7 @@ class NotchpayImpl implements NotchpayService {
         'Content-Type': 'application/json',
         // 'Authorization': 'Bearer $token',
       };
-      String url = "$baseUrl/initierpaiement";
+      String url = "$baseUrlNotchPay/payments";
       return http.post(Uri.parse(url), headers: headers).then((response) {
         int statusCode = response.statusCode;
         if (statusCode == 200) {
