@@ -21,7 +21,6 @@ class NotchpayViewmodel extends ChangeNotifier {
       final notchPayRequest = NotchPayRequest(
         amount: int.parse(amountController.text),
         description: descriptionController.text,
-        reference: DateTime.now().millisecondsSinceEpoch.toString(), // ou autre générateur
         currency: 'XOF',
       );
 
