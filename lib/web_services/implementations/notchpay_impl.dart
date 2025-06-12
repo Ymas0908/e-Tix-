@@ -12,10 +12,10 @@ class NotchpayImpl implements NotchpayService {
   @override
   Future<void> initierPaiement(NotchPayRequest notchPayRequest) async {
     try {
-      // String? token = await getToken();
+      String? token = await getToken();
       Map<String, String> headers = {
         'Content-Type': 'application/json',
-        // 'Authorization': 'Bearer $token',
+        'Authorization': 'Bearer $token',
       };
       String url = "$baseUrlNotchPay/payments";
       return http.post(Uri.parse(url), headers: headers).then((response) {

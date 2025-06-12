@@ -1,11 +1,16 @@
 
+import 'package:eTix/utils/secure_storage.dart';
+import 'package:eTix/views/home/home.dart';
 import 'package:eTix/views/splash_view.dart';
 import 'package:eTix/views_model/authentification_viewmodel.dart';
 import 'package:eTix/views_model/evenement_viewmodel.dart';
 import 'package:eTix/views_model/network_status_view_model.dart';
+import 'package:eTix/views_model/notchpay_viewmodel.dart';
 import 'package:eTix/web_services/implementations/EvenementImpl.dart';
 import 'package:eTix/web_services/implementations/Ticket_Impl.dart';
+import 'package:eTix/web_services/implementations/notchpay_impl.dart';
 import 'package:eTix/web_services/services/auth_service.dart';
+import 'package:eTix/web_services/services/notchPay_service.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +22,8 @@ import 'package:provider/provider.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {
+  await initializeSecureStorage();
+
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform
@@ -49,6 +56,11 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<AuthViewModel>(
           create: (context) => AuthViewModel(
             authService: AuthService(),
+          ),
+        ),
+        ChangeNotifierProvider<NotchpayViewmodel>(
+          create: (context) => NotchpayViewmodel(
+            notchPayService: NotchpayImpl(),
           ),
         ),
 
@@ -91,7 +103,7 @@ class MyApp extends StatelessWidget {
           tileMode: TileMode.clamp,
         ), child: const MaterialApp(
           debugShowCheckedModeBanner: false,
-          home: SplashView(),
+          home: Home(),
         ),
       ),
     );

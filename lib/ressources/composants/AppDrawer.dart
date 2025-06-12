@@ -2,18 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
+import '../../models/notchpay_request_model.dart';
+import '../../views/PaiementView.dart';
 import '../../views/Test.dart';
 import '../../views/mes_tickets_view.dart';
 import '../../views/pageacceuil.dart';
 import '../../views/profile/profil-setting.dart';
 import '../../views_model/authentification_viewmodel.dart';
+import '../../views_model/notchpay_viewmodel.dart';
 import 'LoadingDialog.dart';
 
-class Appdrawer extends StatelessWidget {
+class Appdrawer extends StatefulWidget {
+  @override
+  State<Appdrawer> createState() => _AppdrawerState();
+}
+
+class _AppdrawerState extends State<Appdrawer> {
   @override
   Widget build(BuildContext context) {
-    return Consumer<AuthViewModel>(
-      builder: (context,  authViewModel, child) {
+    return Consumer2<AuthViewModel,NotchpayViewmodel>(
+      builder: (context,  authViewModel, notchpayViewmodel ,child) {
         return Drawer(
           child: Padding(
             padding: const EdgeInsets.all(16.0),
@@ -81,8 +89,11 @@ class Appdrawer extends StatelessWidget {
                     minimumSize: const Size(double.infinity, 60),
                     elevation: 0,
                   ),
-                  onPressed: () {
-                    // Action à définir
+                  onPressed: ()  {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => PaiementView()),
+                    );
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,

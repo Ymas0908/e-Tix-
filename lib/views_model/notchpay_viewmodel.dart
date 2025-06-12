@@ -12,10 +12,23 @@ class NotchpayViewmodel extends ChangeNotifier {
 
 
 
-  Future<void> initierPaiement(NotchPayRequest notchPayRequest) async {
+  final TextEditingController amountController = TextEditingController();
+  final TextEditingController descriptionController = TextEditingController();
+
+
+  Future<void> initierPaiement() async {
     try {
-      await notchPayService.initierPaiement(notchPayRequest);
-      print("initierPaiement" + notchPayRequest.toString());
+      final notchPayRequest = NotchPayRequest(
+        amount: int.parse(amountController.text),
+        description: descriptionController.text,
+        reference: DateTime.now().millisecondsSinceEpoch.toString(), // ou autre générateur
+        currency: 'XOF',
+      );
+
+      print("initierPaiement: $notchPayRequest");
+
+      await notchPayService.initierPaiement(notchPayRequest); // Appel réel du service
+
       notifyListeners();
     } catch (e) {
       if (kDebugMode) {
