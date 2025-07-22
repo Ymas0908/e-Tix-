@@ -2,10 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-import '../../models/notchpay_request_model.dart';
-import '../../views/PaiementView.dart';
-import '../../views/Test.dart';
-import '../../views/mes_tickets_view.dart';
 import '../../views/pageacceuil.dart';
 import '../../views/profile/profil-setting.dart';
 import '../../views_model/authentification_viewmodel.dart';
@@ -45,72 +41,72 @@ class _AppdrawerState extends State<Appdrawer> {
                 const SizedBox(height: 16),
 
                 // Bouton Voir les événements
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xffD9AFA0),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(14),
-                    ),
-                    minimumSize: const Size(double.infinity, 60),
-                    elevation: 0,
-                  ),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Test()),
-                    );
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Icon(Icons.event, color: Colors.black),
-                      const SizedBox(width: 10),
-                      Text(
-                        "Voir les événements",
-                        style: GoogleFonts.poppins(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                // ElevatedButton(
+                //   style: ElevatedButton.styleFrom(
+                //     backgroundColor: const Color(0xffD9AFA0),
+                //     shape: RoundedRectangleBorder(
+                //       borderRadius: BorderRadius.circular(14),
+                //     ),
+                //     minimumSize: const Size(double.infinity, 60),
+                //     elevation: 0,
+                //   ),
+                //   onPressed: () {
+                //     Navigator.push(
+                //       context,
+                //       MaterialPageRoute(builder: (context) => Test()),
+                //     );
+                //   },
+                //   child: Row(
+                //     mainAxisAlignment: MainAxisAlignment.center,
+                //     children: [
+                //       const Icon(Icons.event, color: Colors.black),
+                //       const SizedBox(width: 10),
+                //       Text(
+                //         "Voir les événements",
+                //         style: GoogleFonts.poppins(
+                //           color: Colors.black,
+                //           fontWeight: FontWeight.bold,
+                //           fontSize: 16,
+                //         ),
+                //       ),
+                //     ],
+                //   ),
+                // ),
 
                 const SizedBox(height: 16),
 
                 // Bouton Effectuer Paiement
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xffD9AFA0),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(14),
-                    ),
-                    minimumSize: const Size(double.infinity, 60),
-                    elevation: 0,
-                  ),
-                  onPressed: ()  {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => PaiementView()),
-                    );
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Icon(Icons.payments, color: Colors.black),
-                      const SizedBox(width: 10),
-                      Text(
-                        "Effectuer Paiement",
-                        style: GoogleFonts.poppins(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                // ElevatedButton(
+                //   style: ElevatedButton.styleFrom(
+                //     backgroundColor: const Color(0xffD9AFA0),
+                //     shape: RoundedRectangleBorder(
+                //       borderRadius: BorderRadius.circular(14),
+                //     ),
+                //     minimumSize: const Size(double.infinity, 60),
+                //     elevation: 0,
+                //   ),
+                //   onPressed: ()  {
+                //     Navigator.push(
+                //       context,
+                //       MaterialPageRoute(builder: (context) => PaiementView()),
+                //     );
+                //   },
+                //   child: Row(
+                //     mainAxisAlignment: MainAxisAlignment.center,
+                //     children: [
+                //       const Icon(Icons.payments, color: Colors.black),
+                //       const SizedBox(width: 10),
+                //       Text(
+                //         "Effectuer Paiement",
+                //         style: GoogleFonts.poppins(
+                //           color: Colors.black,
+                //           fontWeight: FontWeight.bold,
+                //           fontSize: 16,
+                //         ),
+                //       ),
+                //     ],
+                //   ),
+                // ),
 
                 const SizedBox(height: 16),
 

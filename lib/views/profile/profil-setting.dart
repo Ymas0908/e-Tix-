@@ -45,13 +45,14 @@ class _ProfilSettingViewState extends State<ProfilSettingView> {
             const SizedBox(height: 16),
             Center(
               child: Text(
-                FirebaseAuth.instance.currentUser!.email.toString(),
+                FirebaseAuth.instance.currentUser?.email ?? "",
                 style: GoogleFonts.raleway(
                   fontSize: 22,
                   fontWeight: FontWeight.bold,
                 ),
               ),
             ),
+
             const SizedBox(height: 8),
 
             const Divider(),
