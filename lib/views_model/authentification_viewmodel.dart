@@ -32,6 +32,7 @@ class AuthViewModel extends ChangeNotifier {
       emailController.clear();
       passwordController.clear();
     } on Exception catch (e) {
+      // Gérer les erreurs d'inscription
       print("Une erreur s'est produite: $e");
       print(e);    }
     setLoading(false);
@@ -64,7 +65,7 @@ class AuthViewModel extends ChangeNotifier {
    */
   Future<void> signout(BuildContext context) async {setLoading(true);
     try {
-      print("Deconnexion."+ "Utilisateur déconnecté ");
+      print("Deconnexion."+ "Utilisateu  déconnecté");
       await authService.signout(context: context);
       emailController.clear();
       passwordController.clear();

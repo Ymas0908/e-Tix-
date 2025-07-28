@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
+import '../../views/PaiementView.dart';
+import '../../views/Test.dart';
 import '../../views/pageacceuil.dart';
 import '../../views/profile/profil-setting.dart';
 import '../../views_model/authentification_viewmodel.dart';
@@ -41,72 +43,72 @@ class _AppdrawerState extends State<Appdrawer> {
                 const SizedBox(height: 16),
 
                 // Bouton Voir les événements
-                // ElevatedButton(
-                //   style: ElevatedButton.styleFrom(
-                //     backgroundColor: const Color(0xffD9AFA0),
-                //     shape: RoundedRectangleBorder(
-                //       borderRadius: BorderRadius.circular(14),
-                //     ),
-                //     minimumSize: const Size(double.infinity, 60),
-                //     elevation: 0,
-                //   ),
-                //   onPressed: () {
-                //     Navigator.push(
-                //       context,
-                //       MaterialPageRoute(builder: (context) => Test()),
-                //     );
-                //   },
-                //   child: Row(
-                //     mainAxisAlignment: MainAxisAlignment.center,
-                //     children: [
-                //       const Icon(Icons.event, color: Colors.black),
-                //       const SizedBox(width: 10),
-                //       Text(
-                //         "Voir les événements",
-                //         style: GoogleFonts.poppins(
-                //           color: Colors.black,
-                //           fontWeight: FontWeight.bold,
-                //           fontSize: 16,
-                //         ),
-                //       ),
-                //     ],
-                //   ),
-                // ),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xffD9AFA0),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(14),
+                    ),
+                    minimumSize: const Size(double.infinity, 60),
+                    elevation: 0,
+                  ),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Test()),
+                    );
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(Icons.event, color: Colors.black),
+                      const SizedBox(width: 10),
+                      Text(
+                        "Voir les événements",
+                        style: GoogleFonts.poppins(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
 
                 const SizedBox(height: 16),
 
                 // Bouton Effectuer Paiement
-                // ElevatedButton(
-                //   style: ElevatedButton.styleFrom(
-                //     backgroundColor: const Color(0xffD9AFA0),
-                //     shape: RoundedRectangleBorder(
-                //       borderRadius: BorderRadius.circular(14),
-                //     ),
-                //     minimumSize: const Size(double.infinity, 60),
-                //     elevation: 0,
-                //   ),
-                //   onPressed: ()  {
-                //     Navigator.push(
-                //       context,
-                //       MaterialPageRoute(builder: (context) => PaiementView()),
-                //     );
-                //   },
-                //   child: Row(
-                //     mainAxisAlignment: MainAxisAlignment.center,
-                //     children: [
-                //       const Icon(Icons.payments, color: Colors.black),
-                //       const SizedBox(width: 10),
-                //       Text(
-                //         "Effectuer Paiement",
-                //         style: GoogleFonts.poppins(
-                //           color: Colors.black,
-                //           fontWeight: FontWeight.bold,
-                //           fontSize: 16,
-                //         ),
-                //       ),
-                //     ],
-                //   ),
-                // ),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xffD9AFA0),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(14),
+                    ),
+                    minimumSize: const Size(double.infinity, 60),
+                    elevation: 0,
+                  ),
+                  onPressed: ()  {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => PaiementView()),
+                    );
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(Icons.payments, color: Colors.black),
+                      const SizedBox(width: 10),
+                      Text(
+                        "Effectuer Paiement",
+                        style: GoogleFonts.poppins(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
 
                 const SizedBox(height: 16),
 
@@ -194,23 +196,31 @@ class _AppdrawerState extends State<Appdrawer> {
                     showDialog(
                       context: context,
                       barrierDismissible: false,
-                      builder: (_) => const LoadingDialog(
+                      builder: (_) => LoadingDialog(
                         message: "Déconnexion en cours...",
                       ),
                     );
+
                     try {
                       await authViewModel.signout(context);
-                      Navigator.push(
+
+                      Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(builder: (context) => Pageacceuil()),
+                            (route) => false,
                       );
 
-                    }catch (e) {
-                      Navigator.of(context).pop(); // close loading
+                    } catch (e, stacktrace) {
+                      print("Erreur lors de la déconnexion : $stacktrace");
+                      print("Erreur : $e");
+                      Navigator.of(context).pop(); // fermer loading
+
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                            content: Text(
-                                "Erreur lors de la déconnexion : $e")),
+                          content: Text("Erreur lors de la déconnexion : $e"),
+                          backgroundColor: Colors.red,
+                          duration: const Duration(seconds: 3),
+                        ),
                       );
                     }
                   },

@@ -20,6 +20,8 @@ class NotchpayImpl implements NotchpayService {
       String url = "$baseUrlNotchPay/payments";
       return http.post(Uri.parse(url), headers: headers).then((response) {
         int statusCode = response.statusCode;
+        print("Success to paiement ::::::: ${statusCode}");
+
         if (statusCode == 200) {
           // Operation retrieved successfully
           Map<String, dynamic> data = json.decode(response.body);

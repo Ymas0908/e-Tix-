@@ -222,16 +222,13 @@ class _LoginState extends State<Login> {
                             padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 50),
                           ),
                           onPressed: () async {
-                            // Récupération des valeurs
                             final email = authViewModel.emailController.text.trim();
                             final password = authViewModel.passwordController.text.trim();
 
-                            // Validation du formulaire
                             if (!formKeyLogin.currentState!.validate()) {
                               return;
                             }
 
-                            // Affichage du loading dès le début de la tentative de connexion
                             showDialog(
                               context: context,
                               barrierDismissible: false,
@@ -241,34 +238,32 @@ class _LoginState extends State<Login> {
                             );
 
                             try {
-                              // Tentative de connexion
                               await authViewModel.signin(
                                 email: email,
                                 password: password,
                                 context: context,
                               );
 
-                              // Fermer le loading si toujours monté
-                              if (mounted) {
-                                Navigator.of(context).pop(); // Fermer le loading
-
-                                // Navigation vers l'écran Home
+                               if (context.mounted) {
+                                 Navigator.of(context).pop(); // Fermer le loading
+                                // Naviguer après avoir fermé le pop
                                 Navigator.of(context).pushReplacement(
-                                  MaterialPageRoute(builder: (context) => Home()),
+                                  MaterialPageRoute(builder: (context) => const Home()),
                                 );
                               }
-                            } catch (e) {
-                              // Gestion des erreurs
-                              if (mounted) {
+                            } catch (e, stacktrace) {
+                              print("Erreur lors de la connexion : $stacktrace");
+                              if (context.mounted) {
                                 Navigator.of(context).pop(); // Fermer le loading
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
                                     content: Text(
-                                      "Erreur de connexion: ${e.toString().replaceAll('Exception: ', '')}",
+                                      "Une erreur est survenue lors de la connexion : $e",
                                     ),
                                     backgroundColor: Colors.red,
                                     duration: const Duration(seconds: 3),
                                   ),
+
                                 );
                               }
                             }

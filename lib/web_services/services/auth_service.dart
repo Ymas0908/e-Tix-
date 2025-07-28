@@ -37,7 +37,17 @@ class AuthService {
         textColor: Colors.white,
         fontSize: 14.0,
       );
-    } catch (e) {}
+    } catch (e) {
+      print(e);
+      Fluttertoast.showToast(
+        msg: 'Une erreur est survenue lors de l\'inscription.',
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.SNACKBAR,
+        backgroundColor: Colors.black54,
+        textColor: Colors.white,
+        fontSize: 14.0,
+      );
+    }
   }
 
 
@@ -51,52 +61,19 @@ class AuthService {
     required BuildContext context,
   }) async {
     try {
-      // Tentative de connexion avec Firebase
-      final UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
-
-      // Si la connexion réussit, redirection vers la page d'accueil
-      if (userCredential.user != null) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => Home()),
-        );
-      } else {
-        // Ce cas est rare, mais on le gère quand même
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text("Impossible de récupérer les informations de l'utilisateur."),
-            backgroundColor: Colors.red,
-          ),
-        );
-      }
-    } on FirebaseAuthException catch (e) {
-      String message;
-
-      switch (e.code) {
-        case 'invalid-email':
-          message = 'Adresse email invalide.';
-          break;
-        case 'invalid-credential':
-          message = 'Mot de passe incorrect ou compte inexistant.';
-          break;
-        case 'user-disabled':
-          message = 'Ce compte a été désactivé.';
-          break;
-        default:
-          message = 'Erreur : ${e.message ?? "Une erreur est survenue."}';
-      }
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(message),
-          backgroundColor: Colors.red,
-        ),
+      final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: email,
+          password: password
       );
-    } catch (e) {
-      print(e);
-
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'Utilisateur non trouvé') {
+        print('Utilisateur non trouve pour cet email.');
+      } else if (e.code == 'Mot de passe incorrect') {
+        print('Mot de passe incorrect fourni pour cet utilisateur');
+      }
     }
   }
+
 
   /***
    * Methode pour se deconnecter

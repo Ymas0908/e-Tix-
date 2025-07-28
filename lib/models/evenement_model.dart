@@ -11,7 +11,7 @@ class EvenementModel {
   String? prixTicketGP;
   String? prixTicketVIP;
   String? prixTicketVVIP;
-  DateTime dateEvenement;
+  DateTime dateHeureEvenement;
   DateTime dateHeureCreation;
   TypeEvenement typeEvenement;
 
@@ -25,7 +25,7 @@ class EvenementModel {
     required this.prixTicketGP,
     required this.prixTicketVIP,
     required this.prixTicketVVIP,
-    required this.dateEvenement,
+    required this.dateHeureEvenement,
     required this.dateHeureCreation,
     required this.typeEvenement,
   });
@@ -39,7 +39,7 @@ class EvenementModel {
       libelle: json['libelle'],
       description: json['description'],
       lieu: json['lieu'],
-      dateEvenement: DateTime.parse(json['dateEvenement']),
+      dateHeureEvenement: DateTime.parse(json['dateHeureEvenement']),
       dateHeureCreation: DateTime.parse(json['dateHeureCreation']),
       typeEvenement: TypeEvenement.values.firstWhere(
             (type) => type.name == json['typeEvenement'],
@@ -58,7 +58,7 @@ class EvenementModel {
       'libelle': libelle,
       'description': description,
       'lieu': lieu,
-      'dateEvenement': dateEvenement,
+      'dateEvenement': dateHeureEvenement,
       'dateHeureCreation': dateHeureCreation,
       'typeEvenement': typeEvenement.name,
       'prixTicketGP': prixTicketGP,

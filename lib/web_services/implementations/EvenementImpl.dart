@@ -71,7 +71,7 @@ class Evenementimpl implements EvenementService {
       String url = "$baseUrl/evenements";
       return http.get(Uri.parse(url), headers: headers).then((response) {
         int statusCode = response.statusCode;
-        print("Success event body: ${response.body}");
+        print("Success::::::: ${statusCode}");
         if (statusCode == 200) {
 
           Map<String, dynamic> body = json.decode(response.body);
@@ -95,6 +95,7 @@ class Evenementimpl implements EvenementService {
           throw BadRequestException();
         } else {
           // Handle error
+          print("Error::::::: ${response.body}");
           throw Exception("Une erreur s'est produite: ${response.body}");
         }
       });

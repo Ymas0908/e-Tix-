@@ -16,7 +16,6 @@ class Signup extends StatefulWidget {
 }
 
 class _SignupState extends State<Signup> {
-
   bool _obscureText = true;
   final GlobalKey<FormState> formKeySignup = GlobalKey<FormState>();
 
@@ -28,7 +27,6 @@ class _SignupState extends State<Signup> {
 
   @override
   void dispose() {
-
     super.dispose();
   }
 
@@ -223,16 +221,17 @@ class _SignupState extends State<Signup> {
                             );
                             Navigator.of(context).pop(); // close loading
                             Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(
-                                  builder: (context) => Home()),
+                              MaterialPageRoute(builder: (context) => Home()),
                             );
                           } catch (e) {
                             Navigator.of(context).pop(); // close loading
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                   content: Text(
-                                      "Erreur lors de l'inscription : $e")),
+                                      "Une erreur est survenue lors de l'inscription."),
+                                  backgroundColor: Colors.red),
                             );
+                            print(e);
                           }
                         }
                       },

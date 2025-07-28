@@ -1,6 +1,9 @@
 
+import 'package:eTix/models/evenement_model.dart';
 import 'package:eTix/utils/secure_storage.dart';
+import 'package:eTix/views/evenements/composants/card_evenement.dart';
 import 'package:eTix/views/home/home.dart';
+import 'package:eTix/views/pageacceuil.dart';
 import 'package:eTix/views/splash_view.dart';
 import 'package:eTix/views_model/authentification_viewmodel.dart';
 import 'package:eTix/views_model/evenement_viewmodel.dart';
@@ -11,6 +14,7 @@ import 'package:eTix/web_services/implementations/Ticket_Impl.dart';
 import 'package:eTix/web_services/implementations/notchpay_impl.dart';
 import 'package:eTix/web_services/services/auth_service.dart';
 import 'package:eTix/web_services/services/notchPay_service.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -28,11 +32,20 @@ Future<void> main() async {
   await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform
   );
-  runApp(const MyApp());
+  /**
+   * Initialisation de Firebase Auth pour l'authentification
+   *  ceci permet de vérifier si l'utilisateur est déjà connecté
+   *  Si connecté, il sera redirigé vers la page d'accueil
+   */
+  User? user = FirebaseAuth.instance.currentUser;
+
+  runApp(MyApp(isLoggedIn: user != null));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final bool isLoggedIn;
+
+  const MyApp({super.key, required this.isLoggedIn});
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +56,6 @@ class MyApp extends StatelessWidget {
           model.initialize();
           return model;
         }),
-
         ChangeNotifierProvider<EvenementViewModel>(
           create: (context) => EvenementViewModel(
             evenementService: Evenementimpl(),
@@ -101,9 +113,11 @@ class MyApp extends StatelessWidget {
           begin: Alignment(-2.4, -0.2),
           end: Alignment(2.4, 0.2),
           tileMode: TileMode.clamp,
-        ), child: const MaterialApp(
+        ), child: MaterialApp(
           debugShowCheckedModeBanner: false,
-          home: Home(),
+          home: isLoggedIn
+              ? Home()
+              : SplashView(), // Redirige vers la page d'accueil si connecté, sinon vers la page de connexion
         ),
       ),
     );

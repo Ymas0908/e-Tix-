@@ -57,27 +57,41 @@ class EvenementViewModel extends ChangeNotifier {
   TypeEvenement? selectedTypeEvenement;
   TypeTicket? selectedTypeTicket;
 
-void setSelectedTicket(TicketModel ticket) {
-  selectedTicket = ticket;
-  notifyListeners();
-  selectedTicket = null;
-}
-  // List<TypeTicket> TypeTickets = [];
-void setSelectedTypeTicket(TypeTicket typeTicket) {
-  selectedTypeTicket = typeTicket;
-  notifyListeners();
-}
-void setSelectedTypeEvenement(TypeEvenement typeEvenement) {
-  selectedTypeEvenement = typeEvenement;
-  notifyListeners();
-}
-  void setSelectedEvenement(EvenementModel evenement) {
-    selectedEvenement = evenement;
-    selectedTypeTicket = null;
+
+  /**
+   * Cette méthode permet de collecter le prix d'un ticket en fonction du type de ticket sélectionné.
+   */
+  void setSelectedTypeTicket(TypeTicket typeTicket) {
+    selectedTypeTicket = typeTicket;
+    if (selectedEvenement != null) {
+      switch (typeTicket) {
+        case TypeTicket.GP:
+          prixTicketController.text = selectedEvenement!.prixTicketGP ?? '';
+          break;
+        case TypeTicket.VIP:
+          prixTicketController.text = selectedEvenement!.prixTicketVIP ?? '';
+          break;
+        case TypeTicket.VVIP:
+          prixTicketController.text = selectedEvenement!.prixTicketVVIP ?? '';
+          break;
+      }
+    }
 
     notifyListeners();
   }
 
+
+  void setSelectedEvenement(EvenementModel evenement) {
+    selectedEvenement = evenement;
+    selectedTypeTicket = null;
+    prixTicketController.clear();
+
+    notifyListeners();
+  }
+
+  /**
+   * Cette méthode permet de récupérer tous les tickets disponibles.
+   */
 
   Future<void> getAllTickets(BuildContext context) async {
     try {
@@ -91,17 +105,26 @@ void setSelectedTypeEvenement(TypeEvenement typeEvenement) {
     }
   }
 
-  Future<void> getAllEvenements( BuildContext context) async {
+  /**
+   * Cette méthode permet de récupérer tous les événements disponibles.
+   */
+  Future<void> getAllEvenements(BuildContext context) async {
+
     try {
-      evenements = await evenementService.getAllEvenements();
+      _isEventLoading = true;
       notifyListeners();
-      print(evenements.length.toString() + " événements récupérés avec succès");
+      evenements = await evenementService.getAllEvenements();
+      print('${evenements.length} événements récupérés avec succès');
     } catch (e) {
       if (kDebugMode) {
         print("Une erreur s'est produite: $e");
       }
+    } finally {
+      _isEventLoading = false;
+      notifyListeners();
     }
   }
+
 
   Future<void> getLesEvenementsByNom(BuildContext context) async {
     try {

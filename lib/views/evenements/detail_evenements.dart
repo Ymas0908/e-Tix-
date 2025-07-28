@@ -28,7 +28,7 @@ class _DetailEvenementsState extends State<DetailEvenements> {
         return Scaffold(
           appBar: AppBar(
             title: Text(
-              evenement.nom.toString(),
+              evenement.nom ??'',
               style: GoogleFonts.poppins(
                 textStyle: const TextStyle(
                   color: Colors.black,
@@ -46,11 +46,19 @@ class _DetailEvenementsState extends State<DetailEvenements> {
               children: [
                 Stack(
                   children: [
+                    // Image.network(
+                    //   evenement.urlImage.toString(),
+                    //   width: double.infinity,
+                    //   height: 300,
+                    //   fit: BoxFit.cover,
+                    // ),
                     Image.network(
-                      evenement.urlImage.toString(),
-                      width: double.infinity,
+                        evenement.urlImage.toString(),
                       height: 300,
+                      width: double.infinity,
                       fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) =>
+                      Center(child: const Icon(Icons.image_not_supported, size: 300)),
                     ),
                   ],
                 ),
@@ -68,7 +76,7 @@ class _DetailEvenementsState extends State<DetailEvenements> {
                           Text("Date", style: GoogleFonts.poppins(fontWeight: FontWeight.bold)),
                           const SizedBox(height: 4),
                           Text(
-                            formatDate(evenement.dateEvenement),
+                            formatDate(evenement.dateHeureEvenement),
                             style: GoogleFonts.poppins(fontWeight: FontWeight.w500),
                           ),
                         ],
@@ -129,7 +137,8 @@ class _DetailEvenementsState extends State<DetailEvenements> {
                       Text("Description", style: GoogleFonts.poppins(fontWeight: FontWeight.bold)),
                       const SizedBox(height: 8),
                       Text(
-                        evenement.description ?? "Pas de description disponible.",
+                        evenement.description ?? "",
+                        maxLines: 10,
                         style: GoogleFonts.poppins(height: 1.5),
                       ),
                     ],
